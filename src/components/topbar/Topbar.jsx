@@ -21,11 +21,12 @@ export default function Topbar({ menuOpen, setMenuOpen }) {
         </div>
         <div className="right">
           {menuOpen && (
-            <Close className="close" onClick={() => setMenuOpen(false)} />
+            <Close className="closeButton" onClick={() => setMenuOpen(false)} />
           )}
+
           {!menuOpen && (
             <Menu
-              className="menu"
+              className="menuButton"
               onClick={() => {
                 setMenuOpen(true);
               }}
