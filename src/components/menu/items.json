@@ -1,0 +1,14 @@
+[
+    {
+        "name":"Home",
+        "location":"#home"
+    },
+    {
+      "name": "Portfolio",
+      "location": "#portfolio"
+    },
+    {
+      "name": "Education",
+      "location": "#education"
+    }
+]

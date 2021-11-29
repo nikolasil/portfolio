@@ -1,9 +1,10 @@
 @import '../../global.scss';
+
 .portfolio {
   display: flex;
   flex-direction: column;
   align-items: center;
-  // background-color: goldenrod;
+  background-color: $mainColorFaded5;
   .container {
     scrollbar-width: none; // for firefox
     &::-webkit-scrollbar {

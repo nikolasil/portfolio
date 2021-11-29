@@ -1,46 +1,22 @@
 import React from 'react';
 import './menu.scss';
+import list from './items.json';
 
 export default function Menu({ menuOpen, setMenuOpen }) {
   return (
     <div className={'menu ' + (menuOpen && 'active')}>
       <ul>
-        <li
-          onClick={() => {
-            setMenuOpen(false);
-          }}
-        >
-          <a href="#intro" class={'' + (menuOpen && 'active')}>
-            Home
-          </a>
-        </li>
-        <li
-          onClick={() => {
-            setMenuOpen(false);
-          }}
-        >
-          <a href="#portfolio" class={'' + (menuOpen && 'active')}>
-            Portfolio
-          </a>
-        </li>
-        <li
-          onClick={() => {
-            setMenuOpen(false);
-          }}
-        >
-          <a href="#projects" class={'' + (menuOpen && 'active')}>
-            Projects
-          </a>
-        </li>
-        <li
-          onClick={() => {
-            setMenuOpen(false);
-          }}
-        >
-          <a href="#projects" class={'' + (menuOpen && 'active')}>
-            Contact
-          </a>
-        </li>
+        {list.map((i) => (
+          <li
+            onClick={() => {
+              setMenuOpen(false);
+            }}
+          >
+            <a href={i.location} class={'' + (menuOpen && 'active')}>
+              {i.name}
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   );

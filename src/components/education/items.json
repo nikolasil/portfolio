@@ -1,0 +1,25 @@
+[
+  {
+    "type": "Secondary Education",
+    "school": "1st General Highschool of Nea Makri",
+    "department": "",
+    "dateStart": "2015",
+    "dateEnd": "2018",
+    "grade": "18.3/20"
+  },
+  {
+    "type": "Undergraduate Education",
+    "school": "National and Kapodistrian University of Athens",
+    "department": "Department of Informatics and Telecomunications",
+    "dateStart": "2018",
+    "dateEnd": "now",
+    "grade": "Pending"
+  },
+  {
+    "type": "Foreign Languages",
+    "languages": [
+      { "language": "Greek", "level": "Native" },
+      { "language": "English", "level": "Fluent (B2 Lower Michigan)" }
+    ]
+  }
+]
