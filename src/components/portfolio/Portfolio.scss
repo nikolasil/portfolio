@@ -25,7 +25,7 @@
       // background-image: linear-gradient(#184e77 0%, #25247a 100%);
       h1 {
         padding-top: 5px;
-        font-size: 50px;
+        font-size: 30px;
       }
       ul {
         margin: 10px;
@@ -48,6 +48,7 @@
       align-items: center;
       flex-wrap: wrap;
       overflow: auto;
+      scrollbar-color: white $mainColor;
       // scrollbar-width: none; // for firefox
       // &::-webkit-scrollbar {
       //   // for all the other broswers

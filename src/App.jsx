@@ -4,7 +4,7 @@ import Topbar from './components/topbar/Topbar';
 import Intro from './components/intro/Intro';
 import Portfolio from './components/portfolio/Portfolio';
 import Education from './components/education/Education';
-import Contact from './components/contact/Contact';
+import Skills from './components/skills/Skills';
 import './app.scss';
 import Menu from './components/menu/Menu';
 import { isMobile } from 'react-device-detect';
@@ -19,6 +19,7 @@ function App() {
         <Intro />
         <Portfolio />
         <Education />
+        <Skills />
       </div>
     </div>
   );

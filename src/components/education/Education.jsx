@@ -3,7 +3,6 @@ import './education.scss';
 import EducationItem from './EducationItem';
 import items from './items.json';
 
-
 export default function Education() {
   return (
     <div className="education" id="education">
@@ -13,9 +12,7 @@ export default function Education() {
         </div>
         <div className="content">
           {items.map((item) => (
-            <div>
-              <EducationItem key={item.id} item={item} />
-            </div>
+            <EducationItem key={item.id} item={item} />
           ))}
           <span>To be continued...</span>
         </div>

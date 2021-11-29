@@ -1,6 +1,7 @@
 @import '../../global.scss';
 
 .portfolioItem {
+  scrollbar-color: white $mainColor;
   cursor: pointer;
   width: 40vw;
   height: 150px;
@@ -32,10 +33,11 @@
 
   .top {
     h3 {
-      font-size: 30px;
+      font-size: 20px;
       font-family: 'Playfair Display', serif;
     }
     span {
+      font-size: 15px;
       scrollbar-width: none; // for firefox
       &::-webkit-scrollbar {
         // for all the other broswers

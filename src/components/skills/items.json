@@ -1,0 +1,29 @@
+{
+  "languages": [
+    "C",
+    "C++",
+    "Java",
+    "Python",
+    "Javascript",
+    "Typescript",
+    "Shell",
+    "Assembly"
+  ],
+  "frameworks": ["React", "Redux", "Node", "Express", "Flutter"],
+  "others": [
+    "Html",
+    "Css",
+    "Sass",
+    "Git",
+    "Latex",
+    "Markdown",
+    "VSCode",
+    "MySql",
+    "MongoDB",
+    "Matlab",
+    "Photoshop",
+    "CorelDraw",
+    "Mach3",
+    "Camduct"
+  ]
+}

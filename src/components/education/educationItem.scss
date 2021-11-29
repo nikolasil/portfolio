@@ -3,8 +3,8 @@
 .educationItem {
   //   cursor: pointer;
   width: 40vw;
-  height: 150px;
-  min-height: 150px;
+  height: 100px;
+  min-height: 100px;
   overflow-x: hidden;
   overflow-y: hidden;
   border-radius: 20px;
@@ -16,6 +16,7 @@
   display: flex;
   overflow: auto;
   flex-direction: column;
+  margin-bottom: 2vh;
   //   justify-content: space-between;
   scrollbar-width: none; // for firefox
   &::-webkit-scrollbar {
@@ -28,13 +29,15 @@
   }
 
   .top {
+    flex: 0.3;
     h3 {
-      font-size: 25px;
+      font-size: 20px;
       font-family: 'Playfair Display', serif;
       border-bottom: 1px solid $accentColor;
       border-radius: 5px;
     }
     span {
+      font-size: 15px;
       scrollbar-width: none; // for firefox
       &::-webkit-scrollbar {
         // for all the other broswers
@@ -46,15 +49,21 @@
   .bottom {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    flex: 0.7;
+    // align-items: center;
     flex-wrap: wrap;
     .school {
-      font-size: 20px;
+      font-size: 15px;
     }
     .department {
-      font-size: 20px;
+      font-size: 15px;
     }
     .date_grade {
-      font-size: 18px;
+      font-size: 15px;
+    }
+    .lang {
+      font-size: 15px;
     }
   }
   .arrow {
