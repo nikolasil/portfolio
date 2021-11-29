@@ -1,7 +1,7 @@
 @import '../../global.scss';
 
 .educationItem {
-  cursor: pointer;
+  //   cursor: pointer;
   width: 40vw;
   height: 150px;
   min-height: 150px;
@@ -16,13 +16,10 @@
   display: flex;
   overflow: auto;
   flex-direction: column;
-  justify-content: space-between;
+  //   justify-content: space-between;
   scrollbar-width: none; // for firefox
   &::-webkit-scrollbar {
     display: none;
-  }
-  &:hover {
-    background-color: $mainColorFaded;
   }
 
   &.mobile {
@@ -32,8 +29,10 @@
 
   .top {
     h3 {
-      font-size: 30px;
+      font-size: 25px;
       font-family: 'Playfair Display', serif;
+      border-bottom: 1px solid $accentColor;
+      border-radius: 5px;
     }
     span {
       scrollbar-width: none; // for firefox
@@ -46,10 +45,19 @@
 
   .bottom {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    img {
-      margin: 2px;
+    .school {
+      font-size: 20px;
     }
+    .department {
+      font-size: 20px;
+    }
+    .date_grade {
+      font-size: 18px;
+    }
+  }
+  .arrow {
   }
 }
 @keyframes slideInFromLeft {

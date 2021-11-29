@@ -13,10 +13,10 @@
     "department": "Department of Informatics and Telecomunications",
     "dateStart": "2018",
     "dateEnd": "now",
-    "grade": "Pending"
+    "grade": "In progress..."
   },
   {
-    "type": "Foreign Languages",
+    "type": "Languages",
     "languages": [
       { "language": "Greek", "level": "Native" },
       { "language": "English", "level": "Fluent (B2 Lower Michigan)" }
