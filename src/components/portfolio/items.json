@@ -1,0 +1,110 @@
+{
+  "ai|ml": [
+    {
+      "id": 1,
+      "title": "Berkeley Pacman Project 0",
+      "dec": "Short UNIX/Python tutorial in Python and the UNIX environment.",
+      "url": "https://github.com/nikolasil/Berkeley-Pacman-Project-0",
+      "used": ["Python"]
+    },
+    {
+      "id": 2,
+      "title": "Berkeley Pacman Project 1",
+      "dec": "Implement depth-first, breadth-first, uniform cost, and A* search algorithms. These algorithms are used to solve navigation and traveling salesman problems in the Pacman world.",
+      "url": "https://github.com/nikolasil/Berkeley-Pacman-Project-1",
+      "used": ["Python"]
+    },
+    {
+      "id": 3,
+      "title": "Berkeley Pacman Project 2",
+      "dec": "Implement multiagent minimax and expectimax algorithms, as well as designing evaluation functions.",
+      "url": "https://github.com/nikolasil/Berkeley-Pacman-Project-2",
+      "used": ["Python"]
+    }
+  ],
+  "os|dt": [
+    {
+      "id": 4,
+      "title": "Shared memory | Semaphores",
+      "dec": "Two Processes sends each other mesages (server-client aproach) by a third process that simulates the channel. The messages are stored and passed from shared memory with the use of semaphores.",
+      "url": "https://github.com/nikolasil/SharedMemory-Semaphores-MessagePassing",
+      "used": ["C"]
+    },
+    {
+      "id": 5,
+      "title": "RAM Pagination",
+      "dec": "This is a programm that simmulates 2 programms (bzip and gcc) with pages that are stored in ram using Hashed Paged Table and when the frames of the ram are full the page replacement happens with LRU or Second Change Algorithm.",
+      "url": "https://github.com/nikolasil/HashedPagedTable-LRU-SecondChange",
+      "used": ["C"]
+    },
+    {
+      "id": 6,
+      "title": "File Structure in Disk",
+      "dec": "Implementation of Heap File Block, Hash File Block, Secondary Hash File Block.",
+      "url": "https://github.com/nikolasil/FileStructure-BlockHeapHashFiles-SecondaryIndex",
+      "used": ["C"]
+    },
+    {
+      "id": 7,
+      "title": "Vaccine Monitor 1",
+      "dec": "This Application is a single Process that holds records of vaccinations. It has structures (Bloom Filter | Skip List) and answers commands based on the records given.",
+      "url": "https://github.com/nikolasil/vaccineMonitor_1",
+      "used": ["C++", "Shell"]
+    },
+    {
+      "id": 8,
+      "title": "Vaccine Monitor 2",
+      "dec": "Extends the Vaccine Monitor 1 by making sub Processes(a sub Process takes some countries that it is responsible). The communication between the main Process and the sub Processes is made with named-pipes.",
+      "url": "https://github.com/nikolasil/vaccineMonitor_2",
+      "used": ["C++", "Shell"]
+    },
+    {
+      "id": 9,
+      "title": "Vaccine Monitor 3",
+      "dec": "Extends the Vaccine Monitor 2 by making the sub Processes multi threading. The communication is also changed from named-pipes to web-sockets and signals.",
+      "url": "https://github.com/nikolasil/vaccineMonitor_3",
+      "used": ["C++"]
+    }
+  ],
+  "comp": [
+    {
+      "id": 10,
+      "title": "LL(1) Calculator Parser - Translator to Java",
+      "dec": "Implements a simple calculator. It supports addition, subtraction, and exponentiation operators, as well as parentheses. Also implements a parser and translator for a language supporting string operations. It supports the concatenation, function definitions, function calls and conditionals.",
+      "url": "https://github.com/nikolasil/compilers1",
+      "used": ["Java"]
+    },
+    {
+      "id": 11,
+      "title": "MiniJava Static Checking (Semantic Analysis)",
+      "dec": "Impliments a compiler for MiniJava, a subset of Java. MiniJava is designed so that its programs can be compiled by a full Java compiler like javac.",
+      "url": "https://github.com/nikolasil/compilers2",
+      "used": ["Java"]
+    },
+    {
+      "id": 12,
+      "title": "Generating intermediate code (MiniJava -> LLVM)",
+      "dec": "Impliments visitors who transform MiniJava code into the intermediate representation used by the LLVM compiler project.",
+      "url": "https://github.com/nikolasil/compilers3",
+      "used": ["Java"]
+    }
+  ],
+  "web": [
+    {
+      "id": 13,
+      "title": "My Website Portfolio",
+      "dec": "To gain experience in web development, I developed this portfolio.",
+      "url": "https://github.com/nikolasil/portfolio",
+      "used": ["React", "Sass", "Javascript", "MaterialUI"]
+    }
+  ],
+  "mobile": [
+    {
+      "id": 14,
+      "title": "Altemco HVAC",
+      "dec": "An android application that assists users in finding air conditioning error codes and receiving helpful advice on how to resolve the issue.",
+      "url": "https://play.google.com/store/apps/details?id=appinventor.ai_nikolasil2000.hvac2",
+      "used": ["MIT App Inventor", "GooglePlay"]
+    }
+  ]
+}

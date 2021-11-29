@@ -1,65 +1,56 @@
 @import '../../global.scss';
 .portfolio {
-  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  h1 {
-    font-size: 50px;
-  }
-  ul {
-    margin: 10px;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    li {
-      font-size: 14px;
-      margin-right: 50px;
-      padding: 0.7px;
-      &:active {
-        background-color: $mainColor;
-        color: white;
-        padding: 7px;
+  // background-color: goldenrod;
+  .container {
+    scrollbar-width: none; // for firefox
+    &::-webkit-scrollbar {
+      // for all the other broswers
+      display: none;
+    }
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: grid;
+    justify-content: center;
+    position: relative;
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      // background-image: linear-gradient(#184e77 0%, #25247a 100%);
+      h1 {
+        padding-top: 5px;
+        font-size: 50px;
+      }
+      ul {
+        margin: 10px;
+        padding: 0;
+        list-style: none;
+        // white-space: nowrap;
+        // align-items: center;
+      }
+      .seperator {
+        width: 90vw;
+        height: 10px;
         border-radius: 10px;
-        cursor: pointer;
+        border-bottom: 1px solid $accentColor;
       }
     }
-  }
-  .container {
-    width: 70%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    .item {
-      width: 220px;
-      height: 150px;
-      border-radius: 20px;
-      border: 1px solid lightgrey;
-      margin: 10px 20px;
+    .content {
       display: flex;
+      // flex-direction: column;
       justify-content: center;
-      color: white;
-      position: relative;
-      transition: all 0.5s ease;
-      cursor: pointer;
-      h3 {
-        position: absolute;
-        font-size: 20px;
-      }
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 1;
-      }
-      &:hover {
-        background-color: $mainColor;
-        img {
-          opacity: 0.2;
-          z-index: 0;
-        }
-      }
+      align-items: center;
+      flex-wrap: wrap;
+      overflow: auto;
+      // scrollbar-width: none; // for firefox
+      // &::-webkit-scrollbar {
+      //   // for all the other broswers
+      //   display: none;
+      // }
     }
   }
 }

@@ -7,6 +7,7 @@ import Projects from './components/projects/Projects';
 import Contact from './components/contact/Contact';
 import './app.scss';
 import Menu from './components/menu/Menu';
+import { isMobile } from 'react-device-detect';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,7 +15,7 @@ function App() {
     <div className="app">
       <Topbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-      <div className="sections">
+      <div className={'sections ' + (isMobile && 'mobile')}>
         <Intro />
         <Portfolio />
         <Projects />

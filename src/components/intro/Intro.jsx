@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import './intro.scss';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import { init } from 'ityped';
+import { isMobile } from 'react-device-detect';
 
 export default function Intro() {
   const textRef = useRef();
@@ -16,20 +17,34 @@ export default function Intro() {
   }, []);
   return (
     <div className="intro" id="intro">
-      <div className="left">
-        <div className="imgContainer">
-          <img src="assets/iliopoulos.png" alt="" />
+      {!isMobile && (
+        <div className="left">
+          <div className="imgContainer">
+            <img src="assets/1.png" alt="A picture of me" />
+          </div>
         </div>
-      </div>
-      <div className="right">
-        <div className="wrapper">
+      )}
+
+      <div className={'right ' + (isMobile && 'mobile')}>
+        <div className={'wrapper ' + (isMobile && 'mobile')}>
           <h2>Hi There, I'm</h2>
           <h1>Nikolas Iliopoulos</h1>
-          <h3>
-            Computer Scientist / <span ref={textRef}></span>
-          </h3>
+
+          {!isMobile && (
+            <h3>
+              Computer Scientist / <span ref={textRef}></span>
+            </h3>
+          )}
+          {isMobile && (
+            <>
+              <h3>Computer Scientist /</h3>
+              <h3>
+                <span ref={textRef}></span>
+              </h3>
+            </>
+          )}
         </div>
-        <a href="#portfolio">
+        <a class={'' + (!isMobile && 'mobile')} href="#portfolio">
           <KeyboardDoubleArrowDownIcon className="arrow" />
         </a>
       </div>

@@ -1,33 +1,42 @@
+@import '../../global.scss';
 .intro {
   background-color: white;
   display: flex;
+
   .left {
     flex: 0.5;
     overflow: hidden;
     .imgContainer {
       width: 120vh;
       height: 120vh;
-      background-color: crimson;
+      background-color: $accentColor;
       border-radius: 50%;
       display: flex;
       align-items: flex-end;
       justify-content: center;
       float: right;
       img {
-        height: 90%;
+        height: 100%;
+        right: 200px;
       }
     }
   }
   .right {
     flex: 0.5;
     position: relative;
+    &.mobile {
+      flex: 1;
+    }
     .wrapper {
       width: 100%;
-      height: 100%;
+      height: 85%;
       padding-left: 50px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      &.mobile {
+        height: 70%;
+      }
       h1 {
         font-size: 60px;
         margin: 10px 0;
@@ -39,7 +48,7 @@
         font-size: 30px;
         span {
           font-size: inherit;
-          color: crimson;
+          color: $accentColor;
         }
 
         .ityped-cursor {
@@ -61,7 +70,14 @@
     }
     a {
       position: absolute;
-      bottom: 10px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      &.desktop {
+        bottom: 10px;
+      }
       .arrow {
         color: black;
         font-size: 60px;

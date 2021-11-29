@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './portfolio.scss';
-import PortfolioList from './PortfolioList';
+import PortfolioItem from './PortfolioItem';
+import PortfolioList from './PortfolioMenu';
+import projects from './items.json';
+import menu from './menu.json';
+
 export default function Portfolio() {
-  const list = [
-    { id: 'ai/ml', title: 'Artificial Inteligence / Machine Learning' },
-    { id: 'os', title: 'Operating Systems' },
-    { id: 'web', title: 'Web Apps' },
-    { id: 'mobile', title: 'Mobile Apps' },
-  ];
+  const [selected, setSelected] = useState('os|dt');
+
   return (
     <div className="portfolio" id="portfolio">
-      <h1>Portfolio</h1>
-      <ul>
-        {list.map((item) => (
-          <PortfolioList id={item.id} title={item.title} />
-        ))}
-      </ul>
       <div className="container">
-        <div className="item">
-          <img src="" alt="" />
-          <h3>Pacman 1</h3>
+        <div className="header">
+          <h1>Portfolio</h1>
+          <ul>
+            {menu.map((item) => (
+              <PortfolioList
+                id={item.id}
+                title={item.title}
+                active={selected === item.id}
+                setSelected={setSelected}
+              />
+            ))}
+          </ul>
+          <div className="seperator"></div>
+        </div>
+        <div className="content">
+          {projects[selected].map((item) => (
+            <PortfolioItem item={item} />
+          ))}
         </div>
       </div>
     </div>

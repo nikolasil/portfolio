@@ -1,0 +1,20 @@
+@import '../../global.scss';
+
+.portfolioMenu {
+  font-size: 14px;
+  margin-right: 50px;
+  padding: 7px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.5s ease;
+  border: 0.5px solid $accentColor;
+  &:hover {
+    background-color: $mainColorFaded;
+  }
+  &.active {
+    background-color: $mainColor;
+    border: none;
+    color: white;
+  }
+}
