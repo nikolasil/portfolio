@@ -17,7 +17,7 @@ export default function PortfolioItem({ item }) {
 
       <div className="bottom">
         {item.used.map((i) => (
-          <img src={'assets/portfolio/' + i + '.svg'} alt={i} />
+          <img src={'assets/badges/' + i + '.svg'} alt={i} />
         ))}
       </div>
     </div>

@@ -1,18 +1,32 @@
 [
   {
-    "name": "Home",
-    "location": "#home"
+    "name": "Home Page",
+    "mobileName": "Home",
+    "location": "#intro"
   },
   {
-    "name": "Portfolio",
+    "name": "About Me",
+    "mobileName": "About Me",
+    "location": "#about"
+  },
+  {
+    "name": "Portfolio | Projects",
+    "mobileName": "Portfolio",
     "location": "#portfolio"
   },
   {
     "name": "Education",
+    "mobileName": "Education",
     "location": "#education"
   },
   {
-    "name": "Skills",
+    "name": "Skills | Abilities",
+    "mobileName": "Skills",
     "location": "#skills"
+  },
+  {
+    "name": "Contact",
+    "mobileName": "Contact",
+    "location": "#contact"
   }
 ]

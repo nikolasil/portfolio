@@ -12,7 +12,7 @@ export default function Intro() {
       cursorChar: '|',
       backDelay: 1500,
       backSpeed: 60,
-      strings: ['Developer', 'Designer'],
+      strings: ['Student', 'Developer', 'Designer'],
     });
   }, []);
   return (
@@ -20,7 +20,7 @@ export default function Intro() {
       {!isMobile && (
         <div className="left">
           <div className="imgContainer">
-            <img src="assets/1.png" alt="A picture of me" />
+            <img src="assets/iliopoulos.png" alt="A picture of me" />
           </div>
         </div>
       )}

@@ -5,8 +5,10 @@ import Intro from './components/intro/Intro';
 import Portfolio from './components/portfolio/Portfolio';
 import Education from './components/education/Education';
 import Skills from './components/skills/Skills';
-import './app.scss';
+import Contact from './components/contact/Contact';
+import About from './components/about/About';
 import Menu from './components/menu/Menu';
+import './app.scss';
 import { isMobile } from 'react-device-detect';
 
 function App() {
@@ -17,9 +19,11 @@ function App() {
       <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <div className={'sections ' + (isMobile && 'mobile')}>
         <Intro />
+        <About />
         <Portfolio />
         <Education />
         <Skills />
+        <Contact />
       </div>
     </div>
   );

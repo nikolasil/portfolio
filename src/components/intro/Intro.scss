@@ -1,6 +1,6 @@
 @import '../../global.scss';
 .intro {
-  background-color: white;
+  background-color: $mainColorFaded5;
   display: flex;
 
   .left {
@@ -38,17 +38,24 @@
         height: 70%;
       }
       h1 {
+        font-family: 'Playfair Display', serif;
         font-size: 60px;
         margin: 10px 0;
       }
       h2 {
         font-size: 35px;
       }
+      span {
+        font-size: inherit;
+        color: $accentColor;
+        font-family: 'Playfair Display', serif;
+      }
       h3 {
         font-size: 30px;
         span {
           font-size: inherit;
           color: $accentColor;
+          font-family: 'Playfair Display', serif;
         }
 
         .ityped-cursor {

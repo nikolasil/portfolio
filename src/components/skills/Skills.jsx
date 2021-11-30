@@ -3,7 +3,6 @@ import './skills.scss';
 import items from './items.json';
 
 export default function Skills() {
-    const k = true;
   return (
     <div className="skills" id="skills">
       <div className="container">
@@ -14,19 +13,19 @@ export default function Skills() {
           <h3>Languages</h3>
           <div>
             {items['languages'].map((i) => (
-              <img src={'assets/portfolio/' + i + '.svg'} alt={i} />
+              <img src={'assets/badges/' + i + '.svg'} alt={i} />
             ))}
           </div>
           <h3>Frameworks</h3>
           <div>
             {items['frameworks'].map((i) => (
-              <img src={'assets/portfolio/' + i + '.svg'} alt={i} />
+              <img src={'assets/badges/' + i + '.svg'} alt={i} />
             ))}
           </div>
           <h3>Others</h3>
           <div>
             {items['others'].map((i) => (
-              <img src={'assets/portfolio/' + i + '.svg'} alt={i} />
+              <img src={'assets/badges/' + i + '.svg'} alt={i} />
             ))}
           </div>
         </div>

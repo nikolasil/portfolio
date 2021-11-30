@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: $mainColorFaded5;
+  background-color: $mainColorFaded10;
   .container {
     scrollbar-width: none; // for firefox
     &::-webkit-scrollbar {
@@ -24,12 +24,12 @@
       align-items: center;
       // background-image: linear-gradient(#184e77 0%, #25247a 100%);
       h1 {
-        padding-top: 5px;
+        padding-top: 10px;
         font-size: 30px;
       }
       ul {
-        margin: 10px;
-        padding: 0;
+        margin-top: 10px;
+        // padding: 0;
         list-style: none;
         // white-space: nowrap;
         // align-items: center;

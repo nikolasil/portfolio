@@ -1,50 +1,91 @@
 @import '../../global.scss';
 
 .menu {
-  width: 40vh;
+  width: 100vw;
   height: 100vh;
-  background-color: white;
-  color: $mainColor;
-  position: fixed;
-  border-bottom: 1px solid lightgrey;
   top: 0;
-  left: -40vh;
+  position: fixed;
+  left: -100vw;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: all 1s ease;
+  transition: all 0.5s ease;
   &.active {
     left: 0;
-    background-color: $mainColor;
-    border-radius: 0 40% 40% 0;
   }
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    font-size: 30px;
-    font-weight: 300;
-    color: white;
-    width: 60%;
-    li {
-      margin-bottom: 20px;
-      a {
-        font-size: inherit;
-        color: $mainColor;
-        text-decoration: none;
-        // transition: color 1s ease;
-        &.active {
-          color: white;
-        }
+  .container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    // background-color: white;
+    // color: $mainColor;
+    // border-bottom: 1px solid lightgrey;
+    // top: 0;
+    // left: -100vw;
+    // z-index: 2;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: center;
+    // transition: all 0.5s ease;
+    // &.active {
+    //   left: 0;
+    //   background-color: $mainColor;
+    //   border-radius: 0 40% 40% 0;
+    // }
+    .spacer {
+      flex: 0.2;
+      background-color: $mainColor;
+    }
+    ul {
+      flex: 0.55;
+      margin: 0;
+      padding: 0;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      flex-direction: column;
+      list-style: none;
+      background-color: $mainColor;
+      top: 0;
+      font-size: 30px;
+      font-weight: 300;
+      color: white;
+      border-radius: 0 20% 20% 0;
+      &.desktop {
+        flex: 0.15;
+      }
+      li {
+        margin-bottom: 20px;
         &:hover {
           color: $accentColor;
+          transform: translate(10px);
+        }
+        .icon {
+          margin-right: 10px;
+          &:hover {
+            color: $accentColor;
+          }
+        }
+        a {
+          font-size: inherit;
+          color: $mainColor;
+          text-decoration: none;
+          // transition: color 1s ease;
+          &.active {
+            color: white;
+          }
+          &:hover {
+            color: $accentColor;
+          }
+        }
+        &:hover {
+          font-weight: 500;
         }
       }
-      &:hover {
-        font-weight: 500;
+    }
+    .closer {
+      flex: 0.4;
+      &.desktop {
+        flex: 0.8;
       }
     }
   }
