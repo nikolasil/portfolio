@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './portfolioMenu.scss';
 
 export default function PortfolioMenu({ id, title, active, setSelected }) {

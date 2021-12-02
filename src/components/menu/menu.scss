@@ -15,21 +15,7 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    // background-color: white;
-    // color: $mainColor;
-    // border-bottom: 1px solid lightgrey;
-    // top: 0;
-    // left: -100vw;
-    // z-index: 2;
-    // flex-direction: column;
-    // align-items: center;
-    // justify-content: center;
-    // transition: all 0.5s ease;
-    // &.active {
-    //   left: 0;
-    //   background-color: $mainColor;
-    //   border-radius: 0 40% 40% 0;
-    // }
+
     .spacer {
       flex: 0.2;
       background-color: $mainColor;
@@ -41,7 +27,7 @@
       z-index: 2;
       display: flex;
       justify-content: center;
-      align-items: start;
+      align-items: flex-start;
       flex-direction: column;
       list-style: none;
       background-color: $mainColor;

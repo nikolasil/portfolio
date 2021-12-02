@@ -1,7 +1,7 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
 import './educationItem.scss';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+
 export default function EducationItem({ item }) {
   return (
     <div className={'educationItem ' + (isMobile && 'mobile')} key={item.id}>
