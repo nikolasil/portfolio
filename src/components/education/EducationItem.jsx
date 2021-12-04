@@ -24,7 +24,6 @@ export default function EducationItem({ item }) {
           </div>
         </div>
       )}
-      {/* <ArrowDownwardIcon className="arrow" /> */}
     </div>
   );
 }

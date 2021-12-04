@@ -86,19 +86,19 @@
         bottom: 10px;
       }
       .arrow {
-        color: black;
+        color: $accentColor;
         font-size: 60px;
         animation: arrowBlink 2s infinite;
       }
       @keyframes arrowBlink {
         0% {
-          opacity: 0;
+          opacity: 0.5;
         }
         50% {
           opacity: 1;
         }
         100% {
-          opacity: 0;
+          opacity: 0.5;
         }
       }
     }

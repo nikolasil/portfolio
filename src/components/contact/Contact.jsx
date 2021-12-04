@@ -10,11 +10,15 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { isMobile } from 'react-device-detect';
 
 export default function Contact() {
+  const ts = '<';
+  const te = '>';
   return (
     <div className="contact" id="contact">
       <div className="container">
         <div className="header">
-          <h1>Contact</h1>
+          <h1 className="t">{ts}</h1>
+          <h1 className="main">Contact</h1>
+          <h1 className="t">{te}</h1>
         </div>
         <div className="box">
           <div className={'content ' + (!isMobile && 'desktop')}>

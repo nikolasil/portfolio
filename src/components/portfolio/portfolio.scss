@@ -20,6 +20,23 @@
     position: relative;
     .header {
       display: flex;
+      align-items: center;
+      justify-content: center;
+      .main {
+        padding-top: 10px;
+        // padding-bottom: 20px;
+        font-size: 30px;
+        color: $mainColor;
+      }
+      .t {
+        padding-top: 10px;
+        // padding-bottom: 20px;
+        font-size: 30px;
+        color: $accentColor;
+      }
+    }
+    .header2 {
+      display: flex;
       flex-direction: column;
       align-items: center;
       // background-image: linear-gradient(#184e77 0%, #25247a 100%);
