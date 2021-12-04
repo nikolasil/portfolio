@@ -18,12 +18,12 @@ function App() {
       <Topbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <div className={'sections ' + (isMobile && 'mobile')}>
-        <Intro />
-        <About />
-        <Portfolio />
-        <Education />
-        <Skills />
-        <Contact />
+        <Intro className="intro" />
+        <About className="about" />
+        <Portfolio className="portfolio" />
+        <Education className="education" />
+        <Skills className="skills" />
+        <Contact className="contact" />
       </div>
     </div>
   );

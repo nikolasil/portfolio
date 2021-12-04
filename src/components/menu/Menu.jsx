@@ -11,7 +11,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 export default function Menu({ menuOpen, setMenuOpen }) {
   return (
     <div className={'menu ' + (menuOpen && 'active')}>
-      <div className={'container ' + (!isMobile && 'desktop')}>
+      <div className="container">
         <div className="spacer"></div>
         <ul>
           {list.map((i) => (
@@ -42,7 +42,7 @@ export default function Menu({ menuOpen, setMenuOpen }) {
           ))}
         </ul>
         <div
-          className={'closer ' + (!isMobile && 'desktop')}
+          className="closer"
           onClick={() => {
             setMenuOpen(false);
           }}

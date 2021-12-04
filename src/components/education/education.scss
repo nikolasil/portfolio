@@ -31,22 +31,34 @@
     }
     .content {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      scrollbar-width: none; // for firefox
-      &::-webkit-scrollbar {
-        // for all the other broswers
-        display: none;
-      }
-      div {
+      justify-content: space-between;
+      .items {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         scrollbar-width: none; // for firefox
         &::-webkit-scrollbar {
           // for all the other broswers
           display: none;
         }
+        div {
+          scrollbar-width: none; // for firefox
+          &::-webkit-scrollbar {
+            // for all the other broswers
+            display: none;
+          }
+        }
+        span {
+          font-family: 'Playfair Display', serif;
+        }
       }
-      span {
-        font-family: 'Playfair Display', serif;
+      .iconContainer {
+        img {
+          padding-right: 10px;
+          // width: 30vw;
+          height: 70vh;
+        }
       }
     }
   }

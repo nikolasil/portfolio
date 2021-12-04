@@ -20,10 +20,16 @@
       .menuButton {
         font-size: 40px;
         cursor: pointer;
+        &:hover {
+          color: $accentColor;
+        }
       }
       .closeButton {
         font-size: 40px;
         cursor: pointer;
+        &:hover {
+          color: $accentColor;
+        }
       }
     }
     .middle {
@@ -34,6 +40,9 @@
         text-decoration: none;
         color: inherit;
         // margin-right: 40px;
+        &:hover {
+          color: $accentColor;
+        }
       }
     }
     .right {
@@ -43,6 +52,9 @@
       > * {
         font-size: 30px;
         cursor: pointer;
+        &:hover {
+          color: $accentColor;
+        }
       }
     }
   }

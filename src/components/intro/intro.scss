@@ -2,14 +2,14 @@
 .intro {
   background-color: $mainColorFaded5;
   display: flex;
-
+  height: calc(100vh - 70px);
   .left {
     flex: 0.5;
     overflow: hidden;
     .imgContainer {
       width: 120vh;
       height: 120vh;
-      background-color: $accentColor;
+      background-color: $mainColor;
       border-radius: 50%;
       display: flex;
       align-items: flex-end;

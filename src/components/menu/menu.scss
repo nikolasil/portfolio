@@ -17,11 +17,11 @@
     display: flex;
 
     .spacer {
-      flex: 0.2;
+      width: 50px;
       background-color: $mainColor;
     }
     ul {
-      flex: 0.55;
+      width: 450px;
       margin: 0;
       padding: 0;
       z-index: 2;
@@ -35,10 +35,8 @@
       font-size: 30px;
       font-weight: 300;
       color: white;
+      border-right: 1px solid $accentColor;
       border-radius: 0 20% 20% 0;
-      &.desktop {
-        flex: 0.15;
-      }
       li {
         margin-bottom: 20px;
         &:hover {
@@ -69,10 +67,7 @@
       }
     }
     .closer {
-      flex: 0.4;
-      &.desktop {
-        flex: 0.8;
-      }
+      width: 100%;
     }
   }
 }
