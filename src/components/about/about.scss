@@ -37,37 +37,49 @@
       }
     }
     .content {
-      width: 90vw;
+      width: 90%;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
-      &.desktop {
-        width: 300px;
-      }
-      .item {
+      .top {
+        margin: 10px;
         display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+      }
+      .quoteContainer {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding-top: 20px;
-        border-bottom: 1px solid $accentColor;
-        .title {
-          padding-right: 10px;
-          width: 70px;
+        background-color: $mainColorFaded10;
+        border-radius: 10px;
+        text-align: center;
+        width: 600px;
+        padding: 10px;
+        margin: 10px;
+        &.mobile {
+          width: 330px;
         }
-        .icon {
-          color: $mainColor;
-        }
-        .data {
-          color: black;
-          cursor: pointer;
-          text-decoration: none;
-          font-weight: bold;
-          padding: 5px;
-          &:hover {
-            color: blue;
+        h2 {
+          font-family: $quoteFont;
+          mark {
+            color: $accentColor;
+            background: none;
+            font-style: italic;
           }
         }
+      }
+      .bottom {
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
       }
     }
   }

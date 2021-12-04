@@ -38,7 +38,7 @@
         height: 70%;
       }
       h1 {
-        font-family: 'Playfair Display', serif;
+        font-family: $specialFont;
         font-size: 60px;
         margin: 10px 0;
       }
@@ -48,14 +48,14 @@
       span {
         font-size: inherit;
         color: $accentColor;
-        font-family: 'Playfair Display', serif;
+        font-family: $specialFont;
       }
       h3 {
         font-size: 30px;
         span {
           font-size: inherit;
           color: $accentColor;
-          font-family: 'Playfair Display', serif;
+          font-family: $specialFont;
         }
 
         .ityped-cursor {
