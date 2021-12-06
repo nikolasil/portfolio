@@ -54,7 +54,7 @@
       "redirect": "mobile",
       "title": "Altemco HVAC",
       "emoji": "⭐",
-      "dec": "An android application that assists users in finding air conditioning error codes and receiving helpful advice on how to resolve the issue.",
+      "dec": "An android application that assists users in finding air conditioning error codes and receiving helpful advice on how to resolve the issue. [Monthly Users ~2.500, Total Downloads ~5.000]",
       "url": "https://play.google.com/store/apps/details?id=appinventor.ai_nikolasil2000.hvac2",
       "used": ["Android", "AppInventor", "GooglePlay"]
     }
@@ -175,7 +175,7 @@
       "id": 14,
       "title": "Altemco HVAC",
       "emoji": "⭐",
-      "dec": "An android application that assists users in finding air conditioning error codes and receiving helpful advice on how to resolve the issue.",
+      "dec": "An android application that assists users in finding air conditioning error codes and receiving helpful advice on how to resolve the issue. [Monthly Users ~2.500, Total Downloads ~5.000]",
       "url": "https://play.google.com/store/apps/details?id=appinventor.ai_nikolasil2000.hvac2",
       "used": ["Android", "AppInventor", "GooglePlay"]
     }

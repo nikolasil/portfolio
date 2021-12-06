@@ -13,5 +13,6 @@
   "cnc": ["Mach3", "Camduct"],
   "databases": ["MySql", "MongoDB"],
   "programms": ["VSCode", "Matlab", "Photoshop", "Corel"],
-  "others": ["Html", "Css", "Sass", "Git", "Latex", "Markdown"]
+  "web": ["Html", "Css", "Sass"],
+  "others": ["Git", "Latex", "Markdown"]
 }

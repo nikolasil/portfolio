@@ -19,6 +19,9 @@ export default function Menu({ menuOpen, setMenuOpen }) {
               onClick={() => {
                 setMenuOpen(false);
               }}
+              onMouseEnter={(e) => {
+                window.location = i.location;
+              }}
             >
               {i.location === '#intro' ? (
                 <HomeIcon className="icon" />

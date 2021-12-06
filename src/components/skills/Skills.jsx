@@ -31,10 +31,10 @@ export default function Skills() {
             ))}
           </div>
           <div className="title">
-            <h3>3-Axis Plasma CNC</h3>
+            <h3>Web</h3>
           </div>
           <div className="items">
-            {items['cnc'].map((i) => (
+            {items['web'].map((i) => (
               <img src={'assets/badges/' + i + '.svg'} alt={i} />
             ))}
           </div>
@@ -46,6 +46,15 @@ export default function Skills() {
               <img src={'assets/badges/' + i + '.svg'} alt={i} />
             ))}
           </div>
+          <div className="title">
+            <h3>3-Axis Plasma CNC</h3>
+          </div>
+          <div className="items">
+            {items['cnc'].map((i) => (
+              <img src={'assets/badges/' + i + '.svg'} alt={i} />
+            ))}
+          </div>
+
           <div className="title">
             <h3>Programms</h3>
           </div>

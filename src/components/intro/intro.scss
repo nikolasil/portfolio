@@ -1,6 +1,7 @@
 @import '../../global.scss';
 .intro {
-  background-color: $mainColorFaded10;
+  // background-color: $mainColorFaded10;
+  background-color: white;
   display: flex;
   height: calc(100vh - 70px);
   .left {
