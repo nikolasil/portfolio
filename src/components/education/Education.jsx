@@ -41,6 +41,11 @@ export default function Education() {
             </div> */}
           </div>
         </div>
+        <div className="header">
+          <h1 className="t">{ts + '/'}</h1>
+          <h1 className="main">Education</h1>
+          <h1 className="t">{te}</h1>
+        </div>
       </div>
     </div>
   );

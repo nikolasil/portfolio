@@ -15,7 +15,7 @@ export default function Skills() {
         </div>
         <div className="content">
           <div className="title">
-            <h3>Languages</h3>
+            <h3>Programming Languages</h3>
           </div>
           <div className="items">
             {items['languages'].map((i) => (
@@ -31,6 +31,30 @@ export default function Skills() {
             ))}
           </div>
           <div className="title">
+            <h3>3-Axis Plasma CNC</h3>
+          </div>
+          <div className="items">
+            {items['cnc'].map((i) => (
+              <img src={'assets/badges/' + i + '.svg'} alt={i} />
+            ))}
+          </div>
+          <div className="title">
+            <h3>Databases</h3>
+          </div>
+          <div className="items">
+            {items['databases'].map((i) => (
+              <img src={'assets/badges/' + i + '.svg'} alt={i} />
+            ))}
+          </div>
+          <div className="title">
+            <h3>Programms</h3>
+          </div>
+          <div className="items">
+            {items['programms'].map((i) => (
+              <img src={'assets/badges/' + i + '.svg'} alt={i} />
+            ))}
+          </div>
+          <div className="title">
             <h3>Others</h3>
           </div>
           <div className="items">
@@ -38,6 +62,11 @@ export default function Skills() {
               <img src={'assets/badges/' + i + '.svg'} alt={i} />
             ))}
           </div>
+        </div>
+        <div className="header">
+          <h1 className="t">{ts + '/'}</h1>
+          <h1 className="main">Skills</h1>
+          <h1 className="t">{te}</h1>
         </div>
       </div>
     </div>

@@ -23,16 +23,22 @@
       align-items: center;
       justify-content: center;
       .main {
-        padding-top: 10px;
-        // padding-bottom: 20px;
+        padding-top: 20px;
+        padding-bottom: 10px;
         font-size: 30px;
         color: $mainColor;
+        &.bottom {
+          padding-bottom: 20px;
+        }
       }
       .t {
-        padding-top: 10px;
-        // padding-bottom: 20px;
+        padding-top: 20px;
+        padding-bottom: 10px;
         font-size: 30px;
         color: $accentColor;
+        &.bottom {
+          padding-bottom: 20px;
+        }
       }
     }
     .header2 {
@@ -45,7 +51,7 @@
         font-size: 30px;
       }
       ul {
-        margin-top: 10px;
+        padding-top: 10px;
         // padding: 0;
         list-style: none;
         // white-space: nowrap;
@@ -65,6 +71,7 @@
       align-items: center;
       flex-wrap: wrap;
       overflow: auto;
+      transition: all 0.5s ease;
       scrollbar-color: white $mainColor;
       // scrollbar-width: none; // for firefox
       // &::-webkit-scrollbar {

@@ -34,7 +34,7 @@ export default function Contact() {
                   );
                 }}
               >
-                Nea Makri, Attiki, Greece
+                Nea Makri, Attica, Greece
               </span>
             </div>
             <div className="item">
@@ -78,7 +78,7 @@ export default function Contact() {
                 nikolasil
               </span>
             </div>
-            <div className="item">
+            {/* <div className="item">
               <span className="title">Facebook:</span>
               <FacebookIcon className="icon" />
               <span
@@ -104,11 +104,16 @@ export default function Contact() {
               >
                 iliopoulos_nikolas
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="iconContainer">
             {!isMobile && <img src="assets/contact.svg" alt="" />}
           </div>
+        </div>
+        <div className="header">
+          <h1 className="t">{ts + '/'}</h1>
+          <h1 className="main">Contact</h1>
+          <h1 className="t">{te}</h1>
         </div>
       </div>
     </div>

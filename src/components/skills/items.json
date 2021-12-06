@@ -10,20 +10,8 @@
     "Assembly"
   ],
   "frameworks": ["React", "Redux", "Node", "Express", "Flutter"],
-  "others": [
-    "Html",
-    "Css",
-    "Sass",
-    "Git",
-    "Latex",
-    "Markdown",
-    "VSCode",
-    "MySql",
-    "MongoDB",
-    "Matlab",
-    "Photoshop",
-    "Corel",
-    "Mach3",
-    "Camduct"
-  ]
+  "cnc": ["Mach3", "Camduct"],
+  "databases": ["MySql", "MongoDB"],
+  "programms": ["VSCode", "Matlab", "Photoshop", "Corel"],
+  "others": ["Html", "Css", "Sass", "Git", "Latex", "Markdown"]
 }

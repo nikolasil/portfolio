@@ -24,20 +24,19 @@
       align-items: center;
       justify-content: center;
       .main {
-        padding-top: 10px;
+        padding-top: 20px;
         padding-bottom: 20px;
         font-size: 30px;
         color: $mainColor;
       }
       .t {
-        padding-top: 10px;
+        padding-top: 20px;
         padding-bottom: 20px;
         font-size: 30px;
         color: $accentColor;
       }
     }
     .content {
-      width: 90%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -46,8 +45,21 @@
         margin: 10px;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         justify-content: center;
+        span {
+          margin-top: 5px;
+          margin-bottom: 5px;
+          font-size: 18px;
+          font-weight: 600;
+          color: $mainColor;
+          text-align: center;
+          mark {
+            color: $accentColor;
+            background: none;
+            font-style: italic;
+          }
+        }
       }
       .quoteContainer {
         padding-top: 20px;
@@ -78,8 +90,21 @@
         margin: 10px;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         justify-content: center;
+        span {
+          text-align: center;
+          margin-top: 5px;
+          margin-bottom: 5px;
+          font-size: 18px;
+          font-weight: 600;
+          color: $mainColor;
+          mark {
+            color: $accentColor;
+            background: none;
+            font-style: italic;
+          }
+        }
       }
     }
   }

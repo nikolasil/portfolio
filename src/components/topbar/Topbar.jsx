@@ -50,7 +50,7 @@ export default function Topbar({ menuOpen, setMenuOpen }) {
               }}
             />
           )}
-          {!isMobile && (
+          {/* {!isMobile && (
             <FacebookIcon
               className="facebookIcon"
               onClick={() => {
@@ -68,7 +68,7 @@ export default function Topbar({ menuOpen, setMenuOpen }) {
                 );
               }}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>

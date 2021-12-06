@@ -1,4 +1,64 @@
 {
+  "featured": [
+    {
+      "id": 3,
+      "cat": "Artificial Inteligence | Machine Learning",
+      "redirect": "ai|ml",
+      "title": "Berkeley Pacman Project 2",
+      "emoji": "⭐",
+      "dec": "Implement multiagent minimax and expectimax algorithms, as well as designing evaluation functions.",
+      "url": "https://github.com/nikolasil/Berkeley-Pacman-Project-2",
+      "used": ["Python", "Git", "Github", "VSCode"]
+    },
+    {
+      "id": 9,
+      "cat": "Operating Systems | Data Structures",
+      "redirect": "os|dt",
+      "title": "Vaccine Monitor 3",
+      "emoji": "⭐",
+      "dec": "Extends the Vaccine Monitor 2 by making the sub Processes multi threading. The communication is also changed from named-pipes to web-sockets and signals.",
+      "url": "https://github.com/nikolasil/vaccineMonitor_3",
+      "used": ["C++", "Shell", "VSCode", "Github"]
+    },
+    {
+      "id": 12,
+      "cat": "Compilers",
+      "redirect": "comp",
+      "title": "Generating intermediate code (MiniJava -> LLVM)",
+      "emoji": "⭐",
+      "dec": "Impliments visitors who transform MiniJava code into the intermediate representation used by the LLVM compiler project.",
+      "url": "https://github.com/nikolasil/compilers3",
+      "used": ["Java", "VSCode", "llvm", "Github"]
+    },
+    {
+      "id": 13,
+      "cat": "Web Applications",
+      "redirect": "web",
+      "title": "My Website Portfolio",
+      "emoji": "⭐",
+      "dec": "To gain experience in web development, I developed this portfolio.",
+      "url": "https://github.com/nikolasil/portfolio",
+      "used": [
+        "React",
+        "Sass",
+        "Javascript",
+        "MaterialUI",
+        "Git",
+        "Github",
+        "VSCode"
+      ]
+    },
+    {
+      "id": 14,
+      "cat": "Mobile Applications",
+      "redirect": "mobile",
+      "title": "Altemco HVAC",
+      "emoji": "⭐",
+      "dec": "An android application that assists users in finding air conditioning error codes and receiving helpful advice on how to resolve the issue.",
+      "url": "https://play.google.com/store/apps/details?id=appinventor.ai_nikolasil2000.hvac2",
+      "used": ["Android", "AppInventor", "GooglePlay"]
+    }
+  ],
   "ai|ml": [
     {
       "id": 1,
@@ -17,6 +77,7 @@
     {
       "id": 3,
       "title": "Berkeley Pacman Project 2",
+      "emoji": "⭐",
       "dec": "Implement multiagent minimax and expectimax algorithms, as well as designing evaluation functions.",
       "url": "https://github.com/nikolasil/Berkeley-Pacman-Project-2",
       "used": ["Python", "Git", "Github", "VSCode"]
@@ -61,6 +122,7 @@
     {
       "id": 9,
       "title": "Vaccine Monitor 3",
+      "emoji": "⭐",
       "dec": "Extends the Vaccine Monitor 2 by making the sub Processes multi threading. The communication is also changed from named-pipes to web-sockets and signals.",
       "url": "https://github.com/nikolasil/vaccineMonitor_3",
       "used": ["C++", "Shell", "VSCode", "Github"]
@@ -84,6 +146,7 @@
     {
       "id": 12,
       "title": "Generating intermediate code (MiniJava -> LLVM)",
+      "emoji": "⭐",
       "dec": "Impliments visitors who transform MiniJava code into the intermediate representation used by the LLVM compiler project.",
       "url": "https://github.com/nikolasil/compilers3",
       "used": ["Java", "VSCode", "llvm", "Github"]
@@ -93,6 +156,7 @@
     {
       "id": 13,
       "title": "My Website Portfolio",
+      "emoji": "⭐",
       "dec": "To gain experience in web development, I developed this portfolio.",
       "url": "https://github.com/nikolasil/portfolio",
       "used": [
@@ -110,6 +174,7 @@
     {
       "id": 14,
       "title": "Altemco HVAC",
+      "emoji": "⭐",
       "dec": "An android application that assists users in finding air conditioning error codes and receiving helpful advice on how to resolve the issue.",
       "url": "https://play.google.com/store/apps/details?id=appinventor.ai_nikolasil2000.hvac2",
       "used": ["Android", "AppInventor", "GooglePlay"]

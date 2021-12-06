@@ -12,7 +12,7 @@ export default function Intro() {
       cursorChar: '|',
       backDelay: 1500,
       backSpeed: 60,
-      strings: ['Student', 'Developer', 'Designer'],
+      strings: ['Developer', 'Designer'],
     });
   }, []);
   return (
