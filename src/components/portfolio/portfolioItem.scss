@@ -23,7 +23,9 @@
     display: none;
   }
   &:hover {
+    // transform: translateX(5px);
     transform: scale(1.05);
+
     background-color: $mainColorFaded;
   }
 
@@ -44,7 +46,7 @@
         color: black;
         background: none;
         &:hover {
-          border-bottom: 1px solid $accentColor;
+          // border-bottom: 1px solid $accentColor;
           // font-weight: bold;
           color: $mainColor;
         }
