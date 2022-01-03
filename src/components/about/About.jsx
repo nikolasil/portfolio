@@ -20,7 +20,7 @@ export default function About() {
             </span>
             <span>
               I am currently enrolled in my fourth and <mark>last year </mark>
-              last year of University.
+              of University.
             </span>
             <span>Greece is where I was born and raised.</span>
             <span>Also, I have a driver's license and own a car.</span>
