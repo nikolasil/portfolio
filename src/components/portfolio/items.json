@@ -81,6 +81,13 @@
       "dec": "Implement multiagent minimax and expectimax algorithms, as well as designing evaluation functions.",
       "url": "https://github.com/nikolasil/Berkeley-Pacman-Project-2",
       "used": ["Python", "Git", "Github", "VSCode"]
+    },
+    {
+      "id": 4,
+      "title": "Classifier | Softmax Regression",
+      "dec": "A classifier to identify anti-vax | pro-vax tweets using softmax regression. I used the Scikit-Learn library alogn side with pandas and created a model using LogisticRegression.",
+      "url": "https://github.com/nikolasil/ai_2_exercise_1",
+      "used": ["Python", "Github", "VSCode"]
     }
   ],
   "os|dt": [
