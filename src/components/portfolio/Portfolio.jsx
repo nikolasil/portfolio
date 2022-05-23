@@ -4,7 +4,6 @@ import PortfolioItem from './PortfolioItem';
 import PortfolioMenu from './PortfolioMenu';
 import projects from './items.json';
 import menu from './menu.json';
-
 export default function Portfolio() {
   const [selected, setSelected] = useState('featured');
   const [flashing, setFlashing] = useState('');
@@ -37,13 +36,29 @@ export default function Portfolio() {
           <div className="seperator"></div>
         </div>
         <div className="content">
-          {projects[selected].map((item) => (
-            <PortfolioItem
-              item={item}
-              setSelected={setSelected}
-              setFlashing={setFlashing}
-            />
-          ))}
+          {selected !== 'featured' &&
+            projects[selected] &&
+            projects[selected].map((item) => (
+              <PortfolioItem
+                item={item}
+                setSelected={setSelected}
+                setFlashing={setFlashing}
+              />
+            ))}
+          {selected === 'featured' &&
+            Object.entries(projects).map((item) =>
+              item[1]
+                .filter((item) => item.emoji === '⭐')
+                .map((proj) => (
+                  <PortfolioItem
+                    item={proj}
+                    setSelected={setSelected}
+                    setFlashing={setFlashing}
+                    category={proj.cat}
+                    redirect={item[0]}
+                  />
+                ))
+            )}
         </div>
         <div className="header">
           <h1 className="t bottom">{ts + '/'}</h1>

@@ -1,8 +1,11 @@
 [
   { "id": "featured", "emoji": "⭐", "title": "Featured" },
-  { "id": "ai|ml", "title": "Artificial Inteligence | Machine Learning" },
+  { "id": "ai", "title": "Artificial Inteligence" },
+  { "id": "ml", "title": "Machine Learning" },
+  { "id": "dm", "title": "Data Mining" },
   { "id": "os|dt", "title": "Operating Systems | Data Structures" },
   { "id": "comp", "title": "Compilers" },
+  { "id": "sec", "title": "Security" },
   { "id": "web", "title": "Web Applications" },
   { "id": "mobile", "title": "Mobile Applications" }
 ]

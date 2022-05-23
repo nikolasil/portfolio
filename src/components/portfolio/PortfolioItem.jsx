@@ -2,7 +2,13 @@ import React from 'react';
 import './portfolioItem.scss';
 import { isMobile } from 'react-device-detect';
 
-export default function PortfolioItem({ item, setSelected, setFlashing }) {
+export default function PortfolioItem({
+  item,
+  setSelected,
+  setFlashing,
+  category,
+  redirect,
+}) {
   return (
     <div
       className={'portfolioItem ' + (isMobile && 'mobile')}
@@ -13,24 +19,24 @@ export default function PortfolioItem({ item, setSelected, setFlashing }) {
     >
       <div className="top">
         <span className="title">
-          {item.cat ? <span>[</span> : ''}
+          {category ? <span>[</span> : ''}
 
           <mark
             onClick={(e) => {
               e.stopPropagation();
-              setSelected(item.redirect);
+              setSelected(redirect);
               setFlashing('');
             }}
             onMouseEnter={(e) => {
-              setFlashing(item.redirect);
+              setFlashing(redirect);
             }}
             onMouseOut={(e) => {
               setFlashing('');
             }}
           >
-            {item.cat}
+            {category}
           </mark>
-          {item.cat ? <span>] </span> : ''}
+          {category ? <span>] </span> : ''}
           {item.title}
           <span>{item.emoji}</span>
         </span>
