@@ -1,0 +1,16 @@
+[
+  { "id": "languages", "title": "Programming Languages" },
+  { "id": "backend_frameworks", "title": "Back-End Frameworks" },
+  {
+    "id": "beckend_technologies",
+    "title": "Back-End Technologies | Libraries"
+  },
+  { "id": "databases", "title": "Databases" },
+  { "id": "ci|cd", "title": "CI | CD" },
+  { "id": "frontend_frameworks", "title": "Front-End Frameworks" },
+  {
+    "id": "frontend_technologies",
+    "title": "Front-End Technologies | Libraries"
+  },
+  { "id": "general", "title": "Generals" }
+]

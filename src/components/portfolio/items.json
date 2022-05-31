@@ -6,7 +6,7 @@
       "title": "Berkeley Pacman Project 0",
       "dec": "Short UNIX/Python tutorial in Python and the UNIX environment.",
       "url": "https://github.com/nikolasil/Berkeley-Pacman-Project-0",
-      "used": ["Python", "Git", "Github", "VSCode"]
+      "used": ["Python", "Git"]
     },
     {
       "cat": "Artificial Inteligence",
@@ -14,7 +14,7 @@
       "title": "Berkeley Pacman Project 1",
       "dec": "Implement depth-first, breadth-first, uniform cost, and A* search algorithms. These algorithms are used to solve navigation and traveling salesman problems in the Pacman world.",
       "url": "https://github.com/nikolasil/Berkeley-Pacman-Project-1",
-      "used": ["Python", "Git", "Github", "VSCode"]
+      "used": ["Python", "Git"]
     },
     {
       "cat": "Artificial Inteligence",
@@ -23,7 +23,7 @@
       "emoji": "⭐",
       "dec": "Implement multiagent minimax and expectimax algorithms, as well as designing evaluation functions.",
       "url": "https://github.com/nikolasil/Berkeley-Pacman-Project-2",
-      "used": ["Python", "Git", "Github", "VSCode"]
+      "used": ["Python", "Git"]
     }
   ],
   "ml": [
@@ -78,7 +78,7 @@
       "title": "Shared memory | Semaphores",
       "dec": "Two Processes sends each other mesages (server-client aproach) by a third process that simulates the channel. The messages are stored and passed from shared memory with the use of semaphores.",
       "url": "https://github.com/nikolasil/SharedMemory-Semaphores-MessagePassing",
-      "used": ["C", "VSCode", "Git", "Github"]
+      "used": ["C", "Git"]
     },
     {
       "cat": "Operating Systems | Data Structures",
@@ -86,7 +86,7 @@
       "title": "RAM Pagination",
       "dec": "This is a programm that simmulates 2 programms (bzip and gcc) with pages that are stored in ram using Hashed Paged Table and when the frames of the ram are full the page replacement happens with LRU or Second Change Algorithm.",
       "url": "https://github.com/nikolasil/HashedPagedTable-LRU-SecondChange",
-      "used": ["C", "VSCode", "Git", "Github"]
+      "used": ["C", "Git"]
     },
     {
       "cat": "Operating Systems | Data Structures",
@@ -94,7 +94,7 @@
       "title": "File Structure in Disk",
       "dec": "Implementation of Heap File Block, Hash File Block, Secondary Hash File Block.",
       "url": "https://github.com/nikolasil/FileStructure-BlockHeapHashFiles-SecondaryIndex",
-      "used": ["C", "VSCode", "Git", "Github"]
+      "used": ["C", "Git"]
     },
     {
       "cat": "Operating Systems | Data Structures",
@@ -102,7 +102,7 @@
       "title": "Vaccine Monitor 1",
       "dec": "This Application is a single Process that holds records of vaccinations. It has structures (Bloom Filter | Skip List) and answers commands based on the records given.",
       "url": "https://github.com/nikolasil/vaccineMonitor_1",
-      "used": ["C++", "Shell", "VSCode", "Git", "Github"]
+      "used": ["C++", "Shell", "Git"]
     },
     {
       "cat": "Operating Systems | Data Structures",
@@ -110,7 +110,7 @@
       "title": "Vaccine Monitor 2",
       "dec": "Extends the Vaccine Monitor 1 by making sub Processes(a sub Process takes some countries that it is responsible). The communication between the main Process and the sub Processes is made with named-pipes.",
       "url": "https://github.com/nikolasil/vaccineMonitor_2",
-      "used": ["C++", "Shell", "VSCode", "Git", "Github"]
+      "used": ["C++", "Shell", "Git"]
     },
     {
       "cat": "Operating Systems | Data Structures",
@@ -119,7 +119,7 @@
       "emoji": "⭐",
       "dec": "Extends the Vaccine Monitor 2 by making the sub Processes multi threading. The communication is also changed from named-pipes to web-sockets and signals.",
       "url": "https://github.com/nikolasil/vaccineMonitor_3",
-      "used": ["C++", "Shell", "VSCode", "Git", "Github"]
+      "used": ["C++", "Shell", "Git"]
     }
   ],
   "comp": [
@@ -129,7 +129,7 @@
       "title": "LL(1) Calculator Parser - Translator to Java",
       "dec": "Implements a simple calculator. It supports addition, subtraction, and exponentiation operators, as well as parentheses. Also implements a parser and translator for a language supporting string operations. It supports the concatenation, function definitions, function calls and conditionals.",
       "url": "https://github.com/nikolasil/compilers1",
-      "used": ["Java", "VSCode", "Git", "Github"]
+      "used": ["Java", "Git"]
     },
     {
       "cat": "Compilers",
@@ -137,7 +137,7 @@
       "title": "MiniJava Static Checking (Semantic Analysis)",
       "dec": "Impliments a compiler for MiniJava, a subset of Java. MiniJava is designed so that its programs can be compiled by a full Java compiler like javac.",
       "url": "https://github.com/nikolasil/compilers2",
-      "used": ["Java", "VSCode", "Git", "Github"]
+      "used": ["Java", "Git"]
     },
     {
       "cat": "Compilers",
@@ -146,7 +146,7 @@
       "emoji": "⭐",
       "dec": "Impliments visitors who transform MiniJava code into the intermediate representation used by the LLVM compiler project.",
       "url": "https://github.com/nikolasil/compilers3",
-      "used": ["Java", "VSCode", "llvm", "Git", "Github"]
+      "used": ["Java", "llvm", "Git"]
     }
   ],
   "sec": [
@@ -157,7 +157,7 @@
       "emoji": "⭐",
       "dec": "The purpose was to fix the vunerabilities of the Open Eclass 2.3 (XSS, SQL Injections, CSRF Token, RFI) & attack the others teams website's trying to deface them.",
       "url": "https://github.com/nikolasil/security-1-openeclass",
-      "used": ["PHP", "Docker", "Git", "VSCode"]
+      "used": ["PHP", "Docker", "Git"]
     }
   ],
   "web": [
@@ -168,15 +168,7 @@
       "emoji": "⭐",
       "dec": "To gain experience in web development, I developed this portfolio.",
       "url": "https://github.com/nikolasil/portfolio",
-      "used": [
-        "React",
-        "Sass",
-        "Javascript",
-        "MaterialUI",
-        "Git",
-        "Github",
-        "VSCode"
-      ]
+      "used": ["React", "Sass", "Javascript", "MaterialUI", "Git"]
     },
     {
       "cat": "Web Applications",
@@ -191,9 +183,7 @@
         "Javascript",
         "Redux",
         "MongoDB",
-        "Git",
-        "Github",
-        "VSCode"
+        "Git"
       ]
     }
   ],

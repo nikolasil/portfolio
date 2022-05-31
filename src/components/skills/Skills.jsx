@@ -1,6 +1,7 @@
 import React from 'react';
 import './skills.scss';
 import items from './items.json';
+import sections from './sections.json';
 
 export default function Skills() {
   const ts = '<';
@@ -14,63 +15,22 @@ export default function Skills() {
           <h1 className="t">{te}</h1>
         </div>
         <div className="content">
-          <div className="title">
-            <h3>Programming Languages</h3>
-          </div>
-          <div className="items">
-            {items['languages'].map((i) => (
-              <img src={'assets/badges/' + i + '.svg'} alt={i} />
-            ))}
-          </div>
-          <div className="title">
-            <h3>Frameworks</h3>
-          </div>
-          <div className="items">
-            {items['frameworks'].map((i) => (
-              <img src={'assets/badges/' + i + '.svg'} alt={i} />
-            ))}
-          </div>
-          <div className="title">
-            <h3>Web</h3>
-          </div>
-          <div className="items">
-            {items['web'].map((i) => (
-              <img src={'assets/badges/' + i + '.svg'} alt={i} />
-            ))}
-          </div>
-          <div className="title">
-            <h3>Databases</h3>
-          </div>
-          <div className="items">
-            {items['databases'].map((i) => (
-              <img src={'assets/badges/' + i + '.svg'} alt={i} />
-            ))}
-          </div>
-          <div className="title">
-            <h3>3-Axis Plasma CNC</h3>
-          </div>
-          <div className="items">
-            {items['cnc'].map((i) => (
-              <img src={'assets/badges/' + i + '.svg'} alt={i} />
-            ))}
-          </div>
-
-          <div className="title">
-            <h3>Programms</h3>
-          </div>
-          <div className="items">
-            {items['programms'].map((i) => (
-              <img src={'assets/badges/' + i + '.svg'} alt={i} />
-            ))}
-          </div>
-          <div className="title">
-            <h3>Others</h3>
-          </div>
-          <div className="items">
-            {items['others'].map((i) => (
-              <img src={'assets/badges/' + i + '.svg'} alt={i} />
-            ))}
-          </div>
+          {sections.map((section, index) => (
+            <>
+              <div className="title">
+                <h3>{section['title']}</h3>
+              </div>
+              <div className="items">
+                {items[section['id']] && items[section['id']].map((i) => (
+                  <img
+                    src={'assets/badges/' + i + '.svg'}
+                    alt={i}
+                    loading="lazy"
+                  />
+                ))}
+              </div>
+            </>
+          ))}
         </div>
         <div className="header">
           <h1 className="t">{ts + '/'}</h1>

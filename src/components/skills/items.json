@@ -9,10 +9,19 @@
     "Shell",
     "Assembly"
   ],
-  "frameworks": ["React", "Redux", "Node", "Express", "Flutter"],
-  "cnc": ["Mach3", "Camduct"],
-  "databases": ["MySql", "MongoDB"],
-  "programms": ["VSCode", "Matlab", "Photoshop", "Corel"],
-  "web": ["Html", "Css", "Sass"],
-  "others": ["Git", "Latex", "Markdown"]
+  "backend_frameworks": ["Spring", "Node"],
+  "beckend_technologies": ["Maven", "Express"],
+  "databases": ["MongoDB", "MySql", "postgres"],
+  "ci|cd": ["Docker", "Jenkins"],
+  "frontend_frameworks": ["React", "Flutter"],
+  "frontend_technologies": ["Html", "Css", "Sass", "Redux", "apache_echarts"],
+  "general": [
+    "Git",
+    "Latex",
+    "Markdown",
+    "Photoshop",
+    "figma",
+    "Corel",
+    "MatLab"
+  ]
 }
