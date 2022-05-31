@@ -4,6 +4,8 @@ import PortfolioItem from './PortfolioItem';
 import PortfolioMenu from './PortfolioMenu';
 import projects from './items.json';
 import menu from './menu.json';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { isMobile } from 'react-device-detect';
 export default function Portfolio() {
   const [selected, setSelected] = useState('featured');
   const [flashing, setFlashing] = useState('');
@@ -22,6 +24,11 @@ export default function Portfolio() {
         </div>
         <div className="header2">
           <ul>
+            {!isMobile && (
+              <li className="iconWrapper">
+                <FilterAltIcon className="icon" />
+              </li>
+            )}
             {menu.map((item) => (
               <PortfolioMenu
                 id={item.id}
