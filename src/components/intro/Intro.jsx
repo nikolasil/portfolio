@@ -20,7 +20,7 @@ export default function Intro() {
       {!isMobile && (
         <div className="left">
           <div className="imgContainer">
-            <img src="assets/iliopoulos.png" alt="Me" loading="lazy" />
+            <img src="assets/iliopoulos.png" alt="Me" />
           </div>
         </div>
       )}

@@ -17,9 +17,7 @@ export default function Education() {
         </div>
         <div className="content">
           <div className="iconContainer">
-            {!isMobile && (
-              <img src="assets/education.svg" alt="" loading="lazy" />
-            )}
+            {!isMobile && <img src="assets/education.svg" alt="" />}
           </div>
           <div className="items">
             {items.map((item) => (

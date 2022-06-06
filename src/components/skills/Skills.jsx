@@ -21,13 +21,10 @@ export default function Skills() {
                 <h3>{section['title']}</h3>
               </div>
               <div className="items">
-                {items[section['id']] && items[section['id']].map((i) => (
-                  <img
-                    src={'assets/badges/' + i + '.svg'}
-                    alt={i}
-                    loading="lazy"
-                  />
-                ))}
+                {items[section['id']] &&
+                  items[section['id']].map((i) => (
+                    <img src={'assets/badges/' + i + '.svg'} alt={i} />
+                  ))}
               </div>
             </>
           ))}

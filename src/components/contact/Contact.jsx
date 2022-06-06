@@ -107,9 +107,7 @@ export default function Contact() {
             </div> */}
           </div>
           <div className="iconContainer">
-            {!isMobile && (
-              <img src="assets/contact.svg" alt="" loading="lazy" />
-            )}
+            {!isMobile && <img src="assets/contact.svg" alt="" />}
           </div>
         </div>
         <div className="header">
