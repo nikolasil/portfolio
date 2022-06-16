@@ -5,6 +5,17 @@ import { isMobile } from 'react-device-detect';
 export default function About() {
   const ts = '<';
   const te = '>';
+  function getAge() {
+    var today = new Date();
+    var birthDate = new Date('2000-11-18');
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
   return (
     <div className="about" id="about">
       <div className="container">
@@ -16,7 +27,7 @@ export default function About() {
         <div className="content">
           <div className="top">
             <span>
-              I am a <mark>21-year-old</mark> college student.
+              I am a <mark>{getAge()}-year-old</mark> college student.
             </span>
             <span>
               I am currently enrolled in my fourth and <mark>last year </mark>
