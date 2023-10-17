@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Close } from '@material-ui/icons';
+import { Menu, Close } from '@mui/icons-material';
 import './topbar.scss';
 import { isMobile } from 'react-device-detect';
 // import FacebookIcon from '@mui/icons-material/Facebook';
