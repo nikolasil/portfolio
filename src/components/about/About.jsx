@@ -50,8 +50,8 @@ export default function About() {
               individual.
             </span>
             <span>
-              Programming is my <mark>passion </mark>, and I'm always seeking
-              for new challenges.
+              Programming is my <mark>passion </mark> and I'm always seeking for
+              new challenges.
             </span>
             <span>
               Space, travel, and technology are some of my other interests.
