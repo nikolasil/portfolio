@@ -1,3 +1,3 @@
 # portfolio
 My personal portfolio :)
-Visit it at: https://iliopoulosnikolas.eu/
+Visit it at: https://iliopoulos-nikolas.xyz/
