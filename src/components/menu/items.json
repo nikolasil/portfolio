@@ -10,14 +10,19 @@
     "location": "#about"
   },
   {
-    "name": "Portfolio | Projects",
-    "mobileName": "Portfolio",
-    "location": "#portfolio"
+    "name": "Experience",
+    "mobileName": "Experience",
+    "location": "#experience"
   },
   {
     "name": "Education",
     "mobileName": "Education",
     "location": "#education"
+  },
+  {
+    "name": "Portfolio | Projects",
+    "mobileName": "Portfolio",
+    "location": "#portfolio"
   },
   {
     "name": "Skills | Abilities",

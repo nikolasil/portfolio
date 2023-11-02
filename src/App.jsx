@@ -10,6 +10,7 @@ import About from './components/about/About';
 import Menu from './components/menu/Menu';
 import './app.scss';
 import { isMobile } from 'react-device-detect';
+import Experience from './components/experience/Experience';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,8 +21,9 @@ function App() {
       <div className={'sections ' + (isMobile && 'mobile')}>
         <Intro className="intro" />
         <About className="about" />
-        <Portfolio className="portfolio" />
+        <Experience className="experience" />
         <Education className="education" />
+        <Portfolio className="portfolio" />
         <Skills className="skills" />
         <Contact className="contact" />
       </div>

@@ -1,0 +1,81 @@
+@import '../../global.scss';
+
+.experienceItem {
+  //   cursor: pointer;
+  width: 40vw;
+  height: 100px;
+  min-height: 100px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  border-radius: 20px;
+  border: 1px solid $accentColor;
+  margin: 10px 20px;
+  transition: all 0.5s ease;
+  animation: 0.5s ease-out 0s 1 slideInFromLeft;
+  padding: 5px 10px;
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  margin-bottom: 2vh;
+  //   justify-content: space-between;
+  scrollbar-width: none; // for firefox
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.mobile {
+    width: 90vw;
+    height: auto;
+  }
+
+  .top {
+    flex: 0.3;
+    h3 {
+      font-size: 20px;
+      font-family: $specialFont;
+      border-bottom: 1px solid $accentColor;
+      border-radius: 5px;
+    }
+    span {
+      font-size: 15px;
+      scrollbar-width: none; // for firefox
+      &::-webkit-scrollbar {
+        // for all the other broswers
+        display: none;
+      }
+    }
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 0.7;
+    // align-items: center;
+    flex-wrap: wrap;
+    .school {
+      font-size: 15px;
+    }
+    .department {
+      font-size: 15px;
+    }
+    .date_grade {
+      font-size: 15px;
+    }
+    .lang {
+      font-size: 15px;
+    }
+  }
+  .arrow {
+  }
+}
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

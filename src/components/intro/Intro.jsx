@@ -12,7 +12,7 @@ export default function Intro() {
       cursorChar: '|',
       backDelay: 1500,
       backSpeed: 60,
-      strings: ['Developer', 'Designer'],
+      strings: ['Engineer', 'Developer', 'Designer'],
     });
   }, []);
   return (
@@ -28,11 +28,11 @@ export default function Intro() {
       <div className={'right ' + (isMobile && 'mobile')}>
         <div className={'wrapper ' + (isMobile && 'mobile')}>
           <h2>Hi There, I'm</h2>
-          <h1>Nikolas Iliopoulos</h1>
+          <h1>Nikolas Eliopoulos</h1>
 
           {!isMobile && (
             <h3>
-              Computer Scientist / <span ref={textRef}></span>
+              Computer Scientist, BSc / <span ref={textRef}></span>
             </h3>
           )}
           {isMobile && (

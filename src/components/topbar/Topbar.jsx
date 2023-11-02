@@ -27,7 +27,7 @@ export default function Topbar({ menuOpen, setMenuOpen }) {
         </div>
         <div className="middle">
           <a href="#intro" className="logo">
-            Iliopoulos Nikolas
+            Eliopoulos Nikolas
           </a>
         </div>
         <div className="right">

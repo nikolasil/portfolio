@@ -2,19 +2,34 @@ import React from 'react';
 import './about.scss';
 import { isMobile } from 'react-device-detect';
 
+function getWorkingExperience() {
+  var today = new Date();
+  var firstJobDate = new Date('2022-02-01');
+  var years = today.getFullYear() - firstJobDate.getFullYear();
+
+  if (today.getMonth() >= 9) {
+    years++;
+  }
+
+  return years;
+}
+
+function getAge() {
+  var today = new Date();
+  var birthDate = new Date('2000-11-18');
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    if (today.getMonth() < 6) {
+      age--;
+    }
+  }
+  return age;
+}
+
 export default function About() {
   const ts = '<';
   const te = '>';
-  function getAge() {
-    var today = new Date();
-    var birthDate = new Date('2000-11-18');
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
-  }
 
   return (
     <div className="about" id="about">
@@ -27,14 +42,13 @@ export default function About() {
         <div className="content">
           <div className="top">
             <span>
-              I am a <mark>{getAge()}-year-old</mark> college student.
+              I am a <mark>{getAge()}-year-old</mark> software engineer.
             </span>
             <span>
-              I am currently enrolled in my fourth and <mark>last year </mark>
-              of University.
+              I acquired my 4 years bachelor's degree at <mark>02/2023</mark>{' '}
+              and I have <mark>{getWorkingExperience()} years </mark> of work
+              experience
             </span>
-            <span>Greece is where I was born and raised.</span>
-            <span>Also, I have a driver's license and own a car.</span>
           </div>
           <div className={'quoteContainer ' + (isMobile && 'mobile')}>
             <h2>

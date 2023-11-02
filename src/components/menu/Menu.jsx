@@ -7,6 +7,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import ComputerIcon from '@mui/icons-material/Computer';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 export default function Menu({ menuOpen, setMenuOpen }) {
   return (
@@ -31,6 +32,8 @@ export default function Menu({ menuOpen, setMenuOpen }) {
                 <ComputerIcon className="icon" />
               ) : i.location === '#education' ? (
                 <SchoolIcon className="icon" />
+              ) : i.location === '#experience' ? (
+                <WorkHistoryIcon className="icon" />
               ) : i.location === '#skills' ? (
                 <FormatListBulletedIcon className="icon" />
               ) : i.location === '#contact' ? (

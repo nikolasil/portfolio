@@ -1,0 +1,25 @@
+[
+  {
+    "type": "Undergraduate Education",
+    "school": "National and Kapodistrian University of Athens",
+    "department": "Department of Informatics and Telecomunications (Computer Science)",
+    "dateStart": "10/2018",
+    "dateEnd": "02/2023",
+    "grade": "7.36/10"
+  },
+  {
+    "type": "Secondary Education",
+    "school": "1st General Highschool of Nea Makri, Attica, Greece,",
+    "department": "",
+    "dateStart": "2015",
+    "dateEnd": "2018",
+    "grade": "18.3/20"
+  },
+  {
+    "type": "Languages",
+    "languages": [
+      { "language": "English", "level": "Fluent (B2 Lower Michigan)" },
+      { "language": "Greek", "level": "Native" }
+    ]
+  }
+]
