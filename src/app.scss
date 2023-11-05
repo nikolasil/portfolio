@@ -6,8 +6,7 @@
     height: calc(100vh - 70px);
     position: relative;
     top: 70px;
-    scroll-behavior: smooth;
-    scroll-snap-type: y;
+ 
     scrollbar-width: none; // for firefox
     &::-webkit-scrollbar {
       // for all the other broswers
@@ -18,13 +17,7 @@
       border-bottom: 1px solid $accentColor;
       width: 100%;
       // height: calc(100vh - 70px);
-      scroll-snap-align: start;
-    }
 
-    &.mobile {
-      scroll-behavior: smooth;
-      scroll-snap-type: none;
-      scroll-snap-align: unset;
     }
   }
 }

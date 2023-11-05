@@ -16,7 +16,9 @@ export default function Experience() {
           <h1 className="t">{te}</h1>
         </div>
         <div className="content">
-          
+          {items.map((item) => (
+            <ExperienceItem key={item.id} item={item} />
+          ))}
         </div>
         <div className="header">
           <h1 className="t">{ts + '/'}</h1>

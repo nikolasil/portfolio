@@ -41,28 +41,23 @@
         margin-bottom: 20px;
         &:hover {
           color: $accentColor;
+          cursor: pointer;
           transform: translate(10px);
+          font-weight: 600;
+          > * {
+            cursor: pointer;
+            color: $accentColor;
+          }
         }
         .icon {
           margin-right: 10px;
-          &:hover {
-            color: $accentColor;
-          }
         }
         a {
           font-size: inherit;
           color: $mainColor;
           text-decoration: none;
           // transition: color 1s ease;
-          &.active {
-            color: white;
-          }
-          &:hover {
-            color: $accentColor;
-          }
-        }
-        &:hover {
-          font-weight: 500;
+          color: white;
         }
       }
     }

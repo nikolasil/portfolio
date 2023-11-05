@@ -41,7 +41,7 @@ export default function Menu({ menuOpen, setMenuOpen }) {
               ) : (
                 ''
               )}
-              <a href={i.location} class={'' + (menuOpen && 'active')}>
+              <a href={i.location}>
                 {!isMobile ? i.name : i.mobileName}
               </a>
             </li>

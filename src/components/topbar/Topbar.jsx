@@ -6,6 +6,7 @@ import { isMobile } from 'react-device-detect';
 // import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import DownloadIcon from '@mui/icons-material/Download';
 
 export default function Topbar({ menuOpen, setMenuOpen }) {
   return (
@@ -31,6 +32,33 @@ export default function Topbar({ menuOpen, setMenuOpen }) {
           </a>
         </div>
         <div className="right">
+          <div className="resume">
+            <span
+              onClick={() => {
+                const a = document.createElement('a');
+                const url = '/resume/Nikolas Iliopoulos.pdf';
+                a.href = url;
+                a.download = url.split('/').pop();
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+              }}
+            >
+              Resume
+            </span>
+            <DownloadIcon
+              className="downloadIcon"
+              onClick={() => {
+                const a = document.createElement('a');
+                const url = '/resume/Nikolas Iliopoulos.pdf';
+                a.href = url;
+                a.download = url.split('/').pop();
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+              }}
+            />
+          </div>
           {!isMobile && (
             <GitHubIcon
               className="gitHubIcon"

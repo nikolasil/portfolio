@@ -1,6 +1,7 @@
 import React from 'react';
 import './about.scss';
 import { isMobile } from 'react-device-detect';
+import DownloadIcon from '@mui/icons-material/Download';
 
 function getWorkingExperience() {
   var today = new Date();
@@ -74,6 +75,33 @@ export default function About() {
               I'm always looking for new opportunities to learn and grow my
               talents.
             </span>
+            <div className="resume">
+              <span
+                onClick={() => {
+                  const a = document.createElement('a');
+                  const url = '/resume/Nikolas Iliopoulos.pdf';
+                  a.href = url;
+                  a.download = url.split('/').pop();
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                }}
+              >
+                Checkout my up to date resume
+              </span>
+              <DownloadIcon
+                className="downloadIcon"
+                onClick={() => {
+                  const a = document.createElement('a');
+                  const url = '/resume/Nikolas Iliopoulos.pdf';
+                  a.href = url;
+                  a.download = url.split('/').pop();
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className="header">
