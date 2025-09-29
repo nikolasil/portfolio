@@ -63,7 +63,7 @@ const EducationSection = () => {
           sx={{
             position: 'relative',
             zIndex: 1,
-            py: 2,
+            py: 4,
             px: { xs: 2, sm: 4, md: 8 },
           }}
         >

@@ -2,7 +2,7 @@
 
 import EducationSection from "@/components/sections/education/EducationSection";
 
-export default function Home() {
+export default function EducationPage() {
   return (
     <>
       <EducationSection />

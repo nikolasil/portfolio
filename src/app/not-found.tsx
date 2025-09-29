@@ -42,7 +42,7 @@ const NotFoundSection = () => {
           component={Link}
           href="/contact"
         >
-          Contact Us
+          Contact Me
         </Button>
       </Stack>
     </Box>

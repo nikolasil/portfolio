@@ -12,7 +12,7 @@ import {
   Paper,
   Grow,
 } from '@mui/material';
-import { Email, Send } from '@mui/icons-material';
+import { Send } from '@mui/icons-material';
 import SectionWrapper from '@/components/SectionWrapper';
 import StarDotsBackground from '@/components/StarDotsBackground';
 
@@ -34,7 +34,16 @@ const ContactSection = () => {
   };
 
   return (
-    <SectionWrapper id="contact">
+    <SectionWrapper
+      id="contact"
+      backgroundElement={
+        <StarDotsBackground
+          starCount={isMobile ? 200 : 800}
+          maxSpeed={0.8}
+          twinkle={true}
+        />
+      }
+    >
       <Box
         sx={{
           position: 'relative',
@@ -42,23 +51,6 @@ const ContactSection = () => {
           overflowY: isMobile ? 'auto' : 'visible',
         }}
       >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            height: '100%',
-            width: '100%',
-            zIndex: 0,
-          }}
-        >
-          <StarDotsBackground
-            starCount={isMobile ? 200 : 800}
-            maxSpeed={0.8}
-            twinkle
-          />
-        </Box>
-
         <Box
           sx={{
             position: 'relative',
@@ -82,7 +74,7 @@ const ContactSection = () => {
             textAlign="center"
             mb={4}
           >
-            Feel free to reach out with questions, ideas, or collaboration
+            Feel free to reach me out with questions, ideas, or collaboration
             opportunities.
           </Typography>
 
@@ -154,13 +146,13 @@ const ContactSection = () => {
             Or email me directly at{' '}
             <Box
               component="a"
-              href="mailto:nicolas@example.com"
+              href="mailto:iliopoulos.info@gmail.com"
               sx={{
                 textDecoration: 'underline',
                 color: 'primary.main',
               }}
             >
-              nicolas@example.com
+              iliopoulos.info@gmail.com
             </Box>
           </Typography>
         </Box>
