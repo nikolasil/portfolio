@@ -1,20 +1,23 @@
 'use client';
 
-import React from 'react';
+
+import React, { useState, useMemo } from 'react';
 import {
   Box,
-  Typography,
-  Stack,
-  Paper,
-  Chip,
   Button,
-  useTheme,
+  Chip,
   Grow,
+  Collapse,
+  Paper,
+  Stack,
+  Typography,
   useMediaQuery,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import LaunchIcon from '@mui/icons-material/Launch';
 import SectionWrapper from '@/components/SectionWrapper';
 import StarDotsBackground from '@/components/StarDotsBackground';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 const projectsData = {
   "ai": [
@@ -218,10 +221,42 @@ const projectsData = {
   ]
 };
 
-
 const PortfolioSection = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const [filtersVisible, setFiltersVisible] = useState(false);
+  const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
+
+  // Collect all unique technologies across projects
+  const allTechs = useMemo(() => {
+    const techSet = new Set<string>();
+    Object.values(projectsData).forEach((projects: any) => {
+      projects.forEach((proj: any) => {
+        proj.used.forEach((t: string) => techSet.add(t));
+      });
+    });
+    return Array.from(techSet).sort();
+  }, []);
+
+  // Filter projects by selected techs
+  const filteredProjectsData = useMemo(() => {
+    if (selectedTechs.length === 0) return projectsData;
+    const filtered: any = {};
+    Object.entries(projectsData).forEach(([key, projects]) => {
+      const matches = (projects as any).filter((proj: any) =>
+        selectedTechs.every((t) => proj.used.includes(t))
+      );
+      if (matches.length > 0) filtered[key] = matches;
+    });
+    return filtered;
+  }, [projectsData, selectedTechs]);
+
+  const toggleTech = (tech: string) => {
+    setSelectedTechs((prev) =>
+      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech]
+    );
+  };
 
   return (
     <SectionWrapper
@@ -258,7 +293,41 @@ const PortfolioSection = () => {
             💼 Portfolio
           </Typography>
 
-          {Object.entries(projectsData).map(([key, projects], idx) => (
+          {/* Toggle Filters Button */}
+          <Box textAlign="center" mb={2}>
+            <Button
+              variant="outlined"
+              startIcon={<FilterAltIcon />}
+              onClick={() => setFiltersVisible((v) => !v)}
+            >
+              {filtersVisible ? 'Hide Filters' : 'Show Filters'}
+            </Button>
+          </Box>
+
+          {/* Filters Section */}
+          <Collapse in={filtersVisible}>
+            <Stack
+              direction="row"
+              flexWrap="wrap"
+              spacing={1}
+              justifyContent="center"
+              mb={4}
+            >
+              {allTechs.map((tech) => (
+                <Chip
+                  key={tech}
+                  label={tech}
+                  clickable
+                  color={selectedTechs.includes(tech) ? 'primary' : 'default'}
+                  onClick={() => toggleTech(tech)}
+                  sx={{ mb: 1 }}
+                />
+              ))}
+            </Stack>
+          </Collapse>
+
+          {/* Projects */}
+          {Object.entries(filteredProjectsData).map(([key, projects]) => (
             <Box key={key} sx={{ mb: 6 }}>
               <Typography
                 variant="h5"
