@@ -15,49 +15,64 @@ import StarDotsBackground from '@/components/StarDotsBackground';
 
 const skillsData = [
   {
-    category: 'Backend Development',
+    category: 'Distributed Systems & Microservices',
     items: [
       'Spring Boot',
-      'Maven & Gradle',
-      'Spring Data JPA',
-      'Spring Security',
       'Apache Kafka',
-      'Apache Tika',
-      'Apache POI',
-      'Node.js & Express.js',
-      'FastAPI',
-    ],
-  },
-  {
-    category: 'Databases & Storage',
-    items: [
-      'SQL',
-      'NoSQL (MongoDB, PostgreSQL, Db2, MySQL, Oracle)',
       'Redis',
-      'Elasticsearch',
+      'Concurrency & Multithreading',
+      'System Design Patterns',
     ],
   },
   {
-    category: 'Frontend Development',
+    category: 'Backend Engineering',
+    items: [
+      'Java',
+      'Python (FastAPI)',
+      'Node.js (Express)',
+      'RESTful API Design',
+      'ETL & data pipelines',
+    ],
+  },
+  {
+    category: 'Frontend Engineering',
     items: ['React.js', 'Next.js', 'JavaScript', 'TypeScript'],
   },
   {
-    category: 'Programming Languages',
-    items: ['Java', 'JavaScript', 'TypeScript', 'Python'],
+    category: 'DevOps & Cloud',
+    items: [
+      'Docker',
+      'CI/CD',
+      'Observability (Grafana, Prometheus)',
+      'AWS (EC2, S3)',
+    ],
   },
   {
-    category: 'DevOps & Monitoring',
+    category: 'Data & Storage',
+    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Elasticsearch', 'AWS S3'],
+  },
+  {
+    category: 'Architectural & System Design',
     items: [
-      'Docker & Docker Compose',
-      'Kubernetes',
-      'Grafana',
-      'Prometheus',
-      'CI/CD Pipelines',
+      'High Availability Systems',
+      'Fault-tolerance',
+      'Caching Strategies',
+      'Load Balancing',
+      'Modular Service Architecture',
+      'Deisgn Patterns',
+      'Short Circuiting',
     ],
   },
   {
     category: 'Testing',
-    items: ['Spock (Unit & Integration Testing)'],
+    items: [
+      'Spock',
+      'Automation frmeworks',
+      'Unit Testing',
+      'Integration Testing',
+      'End-to-End Testing',
+      'Test-Driven Development (TDD)',
+    ],
   },
 ];
 
@@ -97,7 +112,7 @@ const SkillsSection = () => {
             gutterBottom
             textAlign="center"
           >
-            🛠 Skills
+            🎯 Skills
           </Typography>
 
           <Stack spacing={6} mt={4}>

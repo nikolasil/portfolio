@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Box,
   Typography,
@@ -19,18 +19,94 @@ import StarDotsBackground from '@/components/StarDotsBackground';
 const ContactSection = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState({ name: '', email: '', message: '' });
+  const [loading, setLoading] = useState(false);
+  const lastSentRef = useRef(0); // client-side rate limit
+
+  const validate = () => {
+    let valid = true;
+    const newErrors: any = { name: '', email: '', message: '' };
+
+    // Name
+    if (form.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters.';
+      valid = false;
+    }
+
+    if (form.name.length > 60) {
+      newErrors.name = 'Name is too long.';
+      valid = false;
+    }
+
+    // Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      newErrors.email = 'Invalid email format.';
+      valid = false;
+    }
+
+    if (form.email.length > 120) {
+      newErrors.email = 'Email is too long.';
+      valid = false;
+    }
+
+    // Message
+    if (form.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters.';
+      valid = false;
+    }
+
+    if (form.message.length > 2000) {
+      newErrors.message = 'Message is too long.';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: '' }); // clear error for that field
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // You can integrate an email service like EmailJS or Formspree here
-    console.log('Form submitted:', form);
+
+    // Rate limit: 1 message every 20 seconds
+    const now = Date.now();
+    if (now - lastSentRef.current < 20000) {
+      alert('Please wait a moment before sending another message.');
+      return;
+    }
+
+    if (!validate()) return;
+
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+      alert(data.message);
+
+      lastSentRef.current = Date.now(); // update rate limit
+
+      setForm({ name: '', email: '', message: '' });
+    } catch (err) {
+      console.error(err);
+      alert('Failed to send email.');
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -98,6 +174,8 @@ const ContactSection = () => {
                     name="name"
                     value={form.name}
                     onChange={handleChange}
+                    error={!!errors.name}
+                    helperText={errors.name}
                     fullWidth
                     required
                   />
@@ -108,6 +186,8 @@ const ContactSection = () => {
                     type="email"
                     value={form.email}
                     onChange={handleChange}
+                    error={!!errors.email}
+                    helperText={errors.email}
                     fullWidth
                     required
                   />
@@ -119,9 +199,12 @@ const ContactSection = () => {
                     rows={5}
                     value={form.message}
                     onChange={handleChange}
+                    error={!!errors.message}
+                    helperText={errors.message}
                     fullWidth
                     required
                   />
+
                   <Button
                     type="submit"
                     variant="contained"
@@ -129,8 +212,9 @@ const ContactSection = () => {
                     endIcon={<Send />}
                     size="large"
                     fullWidth
+                    disabled={loading}
                   >
-                    Send Message
+                    {loading ? 'Sending...' : 'Send Message'}
                   </Button>
                 </Stack>
               </form>

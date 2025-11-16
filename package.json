@@ -19,6 +19,7 @@
     "framer-motion": "^12.17.0",
     "ityped": "^1.0.3",
     "next": "15.3.3",
+    "nodemailer": "^7.0.10",
     "react": "^19.0.0",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.0.0",

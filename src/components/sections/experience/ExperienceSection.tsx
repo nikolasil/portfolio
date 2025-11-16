@@ -15,42 +15,53 @@ import StarDotsBackground from '@/components/StarDotsBackground';
 
 const experienceData = [
   {
-    title: 'Senior Software Engineer',
-    subtitle: 'TÜV AUSTRIA | Athens, Greece',
-    date: '08/2024 – Present',
-    details: [
-      'Collaborating in an agile team to develop and enhance a client portal, enabling users to securely access and manage their data.',
-      'Drove the platform’s evolution by integrating various tools and functionalities, transforming it into a comprehensive multifunctional solution that consolidates multiple services within a unified interface.',
-      'Actively contributed in feature discussions and architectural decisions.',
-      'Providing technical expertise to both frontend and backend services, ensuring seamless integration and performance across the entire stack using JavaScript and Java Spring Boot.',
-      'Addressing complex technical challenges, optimizing system performance, and implementing iterative improvements based on user feedback and evolving needs.',
-      'Created ETL workflows using Python with FastAPI to extract, transform, and load data to the database.',
+    company: 'TÜV AUSTRIA',
+    location: 'Athens, Greece',
+    dateRange: '08/2024 – 10/2025',
+    roles: [
+      {
+        title: 'Senior Software Engineer',
+        date: '08/2024 – 10/2025',
+        details: [
+          'Collaborate in an agile engineering team to design and build a scalable client portal, enabling users to securely access and manage their data in a distributed environment.',
+          'Accelerated platform evolution by integrating multiple tools and services into a unified ecosystem, applying system design principles such as modularization, API standardization and clear service boundaries.',
+          'Drive architectural discussions and feature planning, ensuring solutions follow distributed system best practices, support horizontal scalability and use effective design patterns.',
+          'Deliver end-to-end technical ownership across frontend and backend systems using Javascript and Java Spring Boot, leveraging caching layers (Redis/in-memeory caches) to reduce latency and improve system responsiveness.',
+          'Address complex tenchnical challenges through performance tuning, dependency refactoring and iterative improvements.',
+          'Deploy services using Docker to ensure consistent and portable runtime environments.',
+          'Developed robust ETL pipelines using Python and FastAPI, optimizing distributed data extraction, tranformation and loading workflows to improve throughput, data cosnistency and reliability across systems.',
+        ],
+      },
     ],
   },
   {
-    title: 'Medior Software Engineer',
-    subtitle: 'Agile Actors | Athens, Greece',
-    date: '07/2022 – 08/2024',
-    details: [
-      'Took ownership of key projects, demonstrating strong problem-solving skills and delivering high-quality results.',
-      'Led the transformation of a monolithic system into a web services-oriented architecture, improving scalability and maintainability.',
-      'Developed a web crawler service to enrich the database, integrated via event-driven architecture using Apache Kafka.',
-      'Built and deployed a company-wide CI/CD pipeline, utilizing Jenkins and Docker, ensuring efficient, reliable, and scalable deployments.',
-      'Introduced unit tests with Spock, improving backend component reliability and reducing bugs.',
-      'Played a key role in architectural decisions and implemented solutions using Java (versions 6–21) and Spring Boot.',
-    ],
-  },
-  {
-    title: 'Junior Software Engineer',
-    subtitle: 'Agile Actors | Athens, Greece',
-    date: '02/2022 – 07/2022 | Internship (6 Months)',
-    details: [
-      'Contributed to backend and frontend development tasks under senior guidance.',
-      'Supported CI/CD pipeline development and deployment processes.',
-      'Gained practical experience with Java, Spring Boot, and modern development practices.',
+    company: 'Agile Actors',
+    location: 'Athens, Greece',
+    dateRange: '02/2022 – 08/2024',
+    roles: [
+      {
+        group: [
+          {
+            title: 'Medior Software Engineer',
+            date: '12/2022 – 08/2024',
+          },
+          {
+            title: 'Junior Software Engineer',
+            date: '02/2022 – 12/2022',
+          },
+        ],
+        details: [
+          'Led the migration from a monolithic system to a distributed microservice architecture, improving scalability, reliability and maintainability significantly.',
+          'Designed and implemented system design components, including caching strategies with Redis and fault-tolerant services.',
+          'Built a distributed web-crawler service for large-scale data enrichment, integrated into an event-driven architecture using Kafka.',
+          'Optimized Spring Boot services with multithreading and custom thread pools to increase throughput and performance.',
+          'Developed CI/CD pipelines using Jenkins and Docker and strengthened backend quality through unit testing with Spock.',
+        ],
+      },
     ],
   },
 ];
+
 
 const ExperienceSection = () => {
   const theme = useTheme();
@@ -92,50 +103,209 @@ const ExperienceSection = () => {
           </Typography>
 
           <Stack spacing={6} mt={4}>
-            {experienceData.map((exp, idx) => (
-              <Grow
-                in
-                key={idx}
-                style={{ transformOrigin: '0 0 0' }}
-                timeout={500 + idx * 200}
-              >
-                <Paper
-                  elevation={4}
-                  sx={{
-                    p: 4,
-                    borderRadius: 3,
-                    backgroundColor: theme.palette.background.paper,
-                    boxShadow: theme.shadows[3],
-                  }}
-                >
-                  <Typography variant="h6" fontWeight="bold">
-                    {exp.title}
-                  </Typography>
-                  <Typography variant="subtitle1" color="text.secondary">
-                    {exp.subtitle}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" mb={2}>
-                    {exp.date}
-                  </Typography>
+            {experienceData.map((exp, idx) => {
+              const isSingle = exp.roles.length === 1;
+              const isGroup = Boolean(exp.roles[0]?.group);
 
-                  {exp.details.length > 1 ? (
-                    <ul style={{ paddingLeft: theme.spacing(3), margin: 0 }}>
-                      {exp.details.map((item, i) => (
-                        <li key={i}>
-                          <Typography variant="body2" color="text.primary">
-                            {item}
-                          </Typography>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <Typography variant="body2" color="text.primary">
-                      {exp.details[0]}
-                    </Typography>
-                  )}
-                </Paper>
-              </Grow>
-            ))}
+              return (
+                <Grow
+                  in
+                  key={idx}
+                  style={{ transformOrigin: '0 0 0' }}
+                  timeout={500 + idx * 200}
+                >
+                  <Paper
+                    elevation={4}
+                    sx={{
+                      p: 4,
+                      borderRadius: 3,
+                      backgroundColor: theme.palette.background.paper,
+                      boxShadow: theme.shadows[3],
+                    }}
+                  >
+                    {/* 1️⃣ Single role, not grouped */}
+                    {isSingle && !isGroup && (
+                      <>
+                        <Typography variant="h6" fontWeight="bold">
+                          {exp.roles[0].title}
+                        </Typography>
+                        <Typography variant="subtitle1" color="text.secondary">
+                          {exp.company} | {exp.location}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          mb={2}
+                        >
+                          {exp.roles[0].date}
+                        </Typography>
+                        <ul
+                          style={{ paddingLeft: theme.spacing(3), margin: 0 }}
+                        >
+                          {exp.roles[0].details.map((item, i) => (
+                            <li key={i}>
+                              <Typography variant="body2" color="text.primary">
+                                {item}
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+
+                    {/* 2️⃣ Single role object that contains a group (rare edge case) */}
+                    {isSingle && isGroup && (
+                      <>
+                        <Typography variant="h6" fontWeight="bold">
+                          {exp.company}
+                        </Typography>
+                        <Typography variant="subtitle1" color="text.secondary">
+                          {exp.location}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          mb={2}
+                        >
+                          {exp.dateRange}
+                        </Typography>
+                        <Box mt={2} mb={2}>
+                          {exp.roles[0].group.map((role, rIdx) => (
+                            <Typography
+                              key={rIdx}
+                              variant="body1"
+                              fontWeight="bold"
+                              sx={{ display: 'block' }}
+                            >
+                              {role.title}{' '}
+                              <span
+                                style={{
+                                  fontWeight: 400,
+                                  color: theme.palette.text.secondary,
+                                }}
+                              >
+                                — {role.date}
+                              </span>
+                            </Typography>
+                          ))}
+                        </Box>
+                        <ul
+                          style={{ paddingLeft: theme.spacing(3), margin: 0 }}
+                        >
+                          {exp.roles[0].details.map((item, i) => (
+                            <li key={i}>
+                              <Typography variant="body2" color="text.primary">
+                                {item}
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+
+                    {/* 3️⃣ Multiple roles grouped under one object */}
+                    {!isSingle && isGroup && (
+                      <>
+                        <Typography variant="h6" fontWeight="bold">
+                          {exp.company}
+                        </Typography>
+                        <Typography variant="subtitle1" color="text.secondary">
+                          {exp.location}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          mb={3}
+                        >
+                          {exp.dateRange}
+                        </Typography>
+                        <Box mt={2} mb={3}>
+                          {exp.roles[0].group.map((role, rIdx) => (
+                            <Typography
+                              key={rIdx}
+                              variant="body1"
+                              fontWeight="bold"
+                              sx={{ display: 'block' }}
+                            >
+                              {role.title}{' '}
+                              <span
+                                style={{
+                                  fontWeight: 400,
+                                  color: theme.palette.text.secondary,
+                                }}
+                              >
+                                — {role.date}
+                              </span>
+                            </Typography>
+                          ))}
+                        </Box>
+                        <ul
+                          style={{ paddingLeft: theme.spacing(3), margin: 0 }}
+                        >
+                          {exp.roles[0].details.map((item, i) => (
+                            <li key={i}>
+                              <Typography variant="body2" color="text.primary">
+                                {item}
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+
+                    {/* 4️⃣ Multiple roles, not grouped */}
+                    {!isSingle && !isGroup && (
+                      <>
+                        <Typography variant="h6" fontWeight="bold">
+                          {exp.company}
+                        </Typography>
+                        <Typography variant="subtitle1" color="text.secondary">
+                          {exp.location}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          mb={3}
+                        >
+                          {exp.dateRange}
+                        </Typography>
+                        {exp.roles.map((role, rIdx) => (
+                          <Box key={rIdx} mb={3}>
+                            <Typography variant="subtitle1" fontWeight="bold">
+                              {role.title}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="text.secondary"
+                              mb={1}
+                            >
+                              {role.date}
+                            </Typography>
+                            <ul
+                              style={{
+                                paddingLeft: theme.spacing(3),
+                                margin: 0,
+                              }}
+                            >
+                              {role.details.map((item, i) => (
+                                <li key={i}>
+                                  <Typography
+                                    variant="body2"
+                                    color="text.primary"
+                                  >
+                                    {item}
+                                  </Typography>
+                                </li>
+                              ))}
+                            </ul>
+                          </Box>
+                        ))}
+                      </>
+                    )}
+                  </Paper>
+                </Grow>
+              );
+            })}
           </Stack>
         </Box>
       </Box>

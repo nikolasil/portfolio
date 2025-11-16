@@ -16,7 +16,6 @@ import ThemeToggle from '../ThemeToggle';
 
 export const pages = [
   {text: 'Home', navLink: '/'},
-  { text: 'About', navLink: '/about' },
   { text: 'Education', navLink: '/education' },
   { text: 'Experience', navLink: '/experience' },
   { text: 'Skills', navLink: '/skills' },

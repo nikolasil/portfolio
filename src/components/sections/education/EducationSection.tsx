@@ -16,7 +16,7 @@ import StarDotsBackground from '@/components/StarDotsBackground';
 const educationData = [
   {
     title: 'National and Kapodistrian University of Athens',
-    subtitle: 'BSc in Computer Science',
+    subtitle: 'BSc in Computer Science, Department of Informatics and Telecommunications',
     date: '09/2018 – 02/2023',
     details: [
       'Grade: 7.36/10 (~3.0 GPA)',
