@@ -1,5 +1,12 @@
 import Navbar from '@/components/navbar/NavBar';
 import { ThemeRegistry } from '@/lib/ThemeProvider';
+import { Fira_Code } from 'next/font/google';
+
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  weight: ['500'], // or any weights you're using
+  variable: '--font-fira-code',
+});
 
 export const metadata = {
   title: 'My Resume',
@@ -12,13 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={firaCode.variable}>
       <body>
         <ThemeRegistry>
           <Navbar />

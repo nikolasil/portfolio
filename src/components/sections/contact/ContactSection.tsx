@@ -16,6 +16,12 @@ import { Send } from '@mui/icons-material';
 import SectionWrapper from '@/components/SectionWrapper';
 import StarDotsBackground from '@/components/StarDotsBackground';
 
+type ContactErrors = {
+  name: string;
+  email: string;
+  message: string;
+};
+
 const ContactSection = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -27,7 +33,7 @@ const ContactSection = () => {
 
   const validate = () => {
     let valid = true;
-    const newErrors: any = { name: '', email: '', message: '' };
+    const newErrors: ContactErrors = { name: '', email: '', message: '' };
 
     // Name
     if (form.name.trim().length < 2) {

@@ -13,7 +13,29 @@ import {
 import SectionWrapper from '@/components/SectionWrapper';
 import StarDotsBackground from '@/components/StarDotsBackground';
 
-const experienceData = [
+
+export type Role = {
+  title: string;
+  date: string;
+};
+
+export type RoleGroup = {
+  group?: Role[]; // optional, used if there are multiple roles in a company
+  title?: string; // optional, for single roles
+  date?: string; // optional, for single roles
+  details: string[];
+};
+
+export type ExperienceEntry = {
+  company: string;
+  location: string;
+  dateRange: string;
+  roles: RoleGroup[];
+};
+
+export type ExperienceData = ExperienceEntry[];
+
+const experienceData: ExperienceData = [
   {
     company: 'TÜV AUSTRIA',
     location: 'Athens, Greece',
@@ -170,7 +192,7 @@ const ExperienceSection = () => {
                           {exp.dateRange}
                         </Typography>
                         <Box mt={2} mb={2}>
-                          {exp.roles[0].group.map((role, rIdx) => (
+                          {exp.roles[0].group?.map((role, rIdx) => (
                             <Typography
                               key={rIdx}
                               variant="body1"
@@ -220,7 +242,7 @@ const ExperienceSection = () => {
                           {exp.dateRange}
                         </Typography>
                         <Box mt={2} mb={3}>
-                          {exp.roles[0].group.map((role, rIdx) => (
+                          {exp.roles[0].group?.map((role, rIdx) => (
                             <Typography
                               key={rIdx}
                               variant="body1"
