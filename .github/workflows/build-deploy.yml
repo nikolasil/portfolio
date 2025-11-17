@@ -1,37 +1,102 @@
-name: Push to Docker Hub
+name: Deploy Pipeline
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+
+env:
+  IMAGE_NAME: nikolasil/portfolio
+  CONTAINER_NAME: portfolio
+  NEXTAUTH_URL: https://iliopoulos.work
+  NEXT_PUBLIC_SITE_URL: https://iliopoulos.work
+  SHORT_SHA: ${{ github.sha }}
 
 jobs:
-  build-deploy:
-    runs-on: ubuntu-latest
+  build-and-push:
+    name: 🏗️ Build and Push Docker Image
+    runs-on: ubuntu-22.04
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build the Docker image
-        run: docker buildx build --platform linux/arm64/v8 . --load --file Dockerfile --tag nikolasil/portfolio:latest
-      - name: Push Docker image to Docker Hub
-        run: docker push nikolasil/portfolio:latest
-      - name: Connect to ec2 instance and deploy
+
+      - name: Build and push Docker image
+        run: |
+          docker buildx build \
+            --platform linux/arm64/v8 \
+            --file Dockerfile \
+            --tag $IMAGE_NAME:latest \
+            --tag $IMAGE_NAME:${SHORT_SHA::7} \
+            --push .
+
+  deploy:
+    name: ⚙️ Deploy to EC2
+    runs-on: ubuntu-22.04
+    needs: build-and-push
+
+    steps:
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: 44.200.151.12
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            sudo docker stop portfolio || true
-            sudo docker rm portfolio || true
-            sudo docker pull nikolasil/portfolio || true
-            sudo docker run -d --name portfolio -p 8080:80 nikolasil/portfolio:latest
+            set -eo pipefail
+
+            IMAGE_NAME=${{ env.IMAGE_NAME }}
+            CONTAINER_NAME=${{ env.CONTAINER_NAME }}
+            NEXTAUTH_URL=${{ env.NEXTAUTH_URL }}
+            NEXT_PUBLIC_SITE_URL=${{ env.NEXT_PUBLIC_SITE_URL }}
+            IMAGE_TAG=$(echo "${{ github.sha }}" | cut -c1-7)
+
+            echo "Getting previous image tag..."
+            PREV_IMAGE_TAG=$(sudo docker inspect $CONTAINER_NAME --format='{{ index .Config.Image }}' 2>/dev/null | awk -F: '{print $2}')
+            echo "Previous image tag: $PREV_IMAGE_TAG"
+
+            echo "Pulling new image: $IMAGE_TAG"
+            sudo docker pull $IMAGE_NAME:$IMAGE_TAG
+
+            echo "Stopping and removing old container..."
+            sudo docker rm -f $CONTAINER_NAME || true
+
+            echo "Starting new container..."
+            if ! sudo docker run -d \
+              --name $CONTAINER_NAME \
+              -e NEXTAUTH_URL=$NEXTAUTH_URL \
+              -e NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
+              -e GMAIL_USER=${{ secrets.GMAIL_USER }} \
+              -e GMAIL_APP_PASSWORD=${{ secrets.GMAIL_APP_PASSWORD }} \
+              -p 8080:3000 \
+              $IMAGE_NAME:$IMAGE_TAG; then
+
+              echo "❌ Failed to start new container. Rolling back to previous image: $PREV_IMAGE_TAG"
+              
+              if [ -n "$PREV_IMAGE_TAG" ]; then
+                sudo docker pull $IMAGE_NAME:$PREV_IMAGE_TAG || true
+                sudo docker rm -f $CONTAINER_NAME || true
+                sudo docker run -d \
+                  --name $CONTAINER_NAME \
+                  -e NEXTAUTH_URL=$NEXTAUTH_URL \
+                  -e NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
+                  -e GMAIL_USER=${{ secrets.GMAIL_USER }} \
+                  -e GMAIL_APP_PASSWORD=${{ secrets.GMAIL_APP_PASSWORD }} \
+                  -p 8080:3000 \
+                  $IMAGE_NAME:$PREV_IMAGE_TAG
+              else
+                echo "❌ No previous image found to roll back to."
+                exit 1
+              fi
+            fi
+
+            echo "🧹 Cleaning up unused Docker resources..."
+            sudo docker system prune -af
