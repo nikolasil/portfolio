@@ -39,6 +39,14 @@ const projectsData: ProjectsData = {
     {
       cat: 'Artificial Inteligence',
       id: 0,
+      title: 'AI-Powered Property Management Email Assistant',
+      dec: 'Python-based AI system to automate property management emails, parsing tenant requests, generating LLM-powered replies, classifying intents (maintenance, lockout, rent), and creating workflow action tickets with fully asynchronous IMAP/SMTP handling.',
+      url: 'https://github.com/nikolasil/property-management-assistant-ai',
+      used: ['Python', 'Git'],
+    },
+    {
+      cat: 'Artificial Inteligence',
+      id: 1,
       title: 'Berkeley Pacman Project 0',
       dec: 'Short UNIX/Python tutorial in Python and the UNIX environment.',
       url: 'https://github.com/nikolasil/Berkeley-Pacman-Project-0',
@@ -46,7 +54,7 @@ const projectsData: ProjectsData = {
     },
     {
       cat: 'Artificial Inteligence',
-      id: 1,
+      id: 2,
       title: 'Berkeley Pacman Project 1',
       dec: 'Implement depth-first, breadth-first, uniform cost, and A* search algorithms. These algorithms are used to solve navigation and traveling salesman problems in the Pacman world.',
       url: 'https://github.com/nikolasil/Berkeley-Pacman-Project-1',
@@ -54,7 +62,7 @@ const projectsData: ProjectsData = {
     },
     {
       cat: 'Artificial Inteligence',
-      id: 2,
+      id: 3,
       title: 'Berkeley Pacman Project 2',
       emoji: '⭐',
       dec: 'Implement multiagent minimax and expectimax algorithms, as well as designing evaluation functions.',
