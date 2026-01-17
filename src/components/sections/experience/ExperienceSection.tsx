@@ -39,11 +39,11 @@ const experienceData: ExperienceData = [
   {
     company: 'TÜV AUSTRIA',
     location: 'Athens, Greece',
-    dateRange: '08/2024 – 10/2025',
+    dateRange: '06/2024 – 11/2025',
     roles: [
       {
         title: 'Senior Software Engineer',
-        date: '08/2024 – 10/2025',
+        date: '06/2024 – 11/2025',
         details: [
           'Collaborate in an agile engineering team to design and build a scalable client portal, enabling users to securely access and manage their data in a distributed environment.',
           'Accelerated platform evolution by integrating multiple tools and services into a unified ecosystem, applying system design principles such as modularization, API standardization and clear service boundaries.',
@@ -59,13 +59,13 @@ const experienceData: ExperienceData = [
   {
     company: 'Agile Actors',
     location: 'Athens, Greece',
-    dateRange: '02/2022 – 08/2024',
+    dateRange: '02/2022 – 06/2024',
     roles: [
       {
         group: [
           {
             title: 'Medior Software Engineer',
-            date: '12/2022 – 08/2024',
+            date: '12/2022 – 06/2024',
           },
           {
             title: 'Junior Software Engineer',
