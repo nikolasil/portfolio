@@ -9,7 +9,7 @@ const firaCode = Fira_Code({
 });
 
 export const metadata = {
-  title: 'My Resume',
+  title: 'Iliopoulos Nikolas - Resume',
   description: 'A modern resume built with Next.js 15 and MUI',
 };
 
