@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -7,54 +8,86 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
+  Typography,
+  Container,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState } from 'react';
 import DesktopMenu from './DesktopMenu';
 import MobileDrawer from './MobileDrawer';
 import ThemeToggle from '../ThemeToggle';
 
-export const pages = [
-  {text: 'Home', navLink: '/'},
+// Exported as a constant for reuse in other components
+export const NAV_ITEMS = [
+  { text: 'Home', navLink: '/' },
   { text: 'Education', navLink: '/education' },
   { text: 'Experience', navLink: '/experience' },
   { text: 'Skills', navLink: '/skills' },
   { text: 'Portfolio', navLink: '/portfolio' },
   { text: 'Contact', navLink: '/contact' },
-];
+] as const;
 
 const Navbar = () => {
   const theme = useTheme();
+  // Using 'sm' or 'md' depending on how many nav items you have
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const toggleDrawer = (open: boolean) => () => setDrawerOpen(open);
+  const handleDrawerToggle = () => {
+    setIsDrawerOpen((prev) => !prev);
+  };
 
   return (
-    <AppBar position="sticky" color="default" elevation={1}>
-      <Toolbar
-        sx={{
-          justifyContent: 'space-between',
-          px: 2,
-          flexWrap: 'wrap',
-        }}
-      >
-        {!isMobile && <DesktopMenu />}
+    <AppBar
+      position="sticky"
+      color="inherit"
+      elevation={0}
+      sx={{
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        bgcolor: 'background.paper',
+      }}
+    >
+      <Container maxWidth="xl">
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+          {/* Logo / Brand Name */}
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ fontWeight: 700, cursor: 'pointer' }}
+          >
+            &lt;Nikolas /&gt;
+          </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {!isMobile && <ThemeToggle />}
-
-          {isMobile && (
-            <IconButton color="inherit" onClick={toggleDrawer(true)}>
-              <MenuIcon />
-            </IconButton>
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <DesktopMenu items={NAV_ITEMS} />
+              <ThemeToggle />
+            </Box>
           )}
-        </Box>
-      </Toolbar>
 
-      {isMobile && (
-        <MobileDrawer open={drawerOpen} onClose={toggleDrawer(false)} />
-      )}
+          {/* Mobile Actions */}
+          {isMobile && (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="end"
+                onClick={handleDrawerToggle}
+                sx={{ ml: 1 }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+          )}
+        </Toolbar>
+      </Container>
+
+      {/* Drawer rendered outside Toolbar for cleaner DOM structure */}
+      <MobileDrawer
+        open={isDrawerOpen}
+        onClose={handleDrawerToggle}
+        items={NAV_ITEMS}
+      />
     </AppBar>
   );
 };

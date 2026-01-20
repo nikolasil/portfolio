@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation'; // Add this
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -13,6 +13,7 @@ import {
   Divider,
   Box,
   Fade,
+  Button,
 } from '@mui/material';
 
 // --- Icons ---
@@ -163,7 +164,6 @@ interface Star {
   vy: number;
   phase: number;
 }
-
 interface ShootingStar {
   x: number;
   y: number;
@@ -191,8 +191,8 @@ const StarDotsBackground = React.memo(
   }: StarDotsBackgroundProps) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-    const pathname = usePathname(); // Get current path
-    const isHomePage = pathname === '/'; // Check if on root
+    const pathname = usePathname();
+    const isHomePage = pathname === '/';
     const finalConnectDist = isMobile ? connectDistance / 2 : connectDistance;
     const finalMaxSpeed = isMobile ? maxSpeed / 2 : maxSpeed;
 
@@ -203,6 +203,7 @@ const StarDotsBackground = React.memo(
       isMobile ? Math.floor(starCount / 2) : starCount,
     );
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
 
     const modeRef = useRef(mode);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -215,13 +216,26 @@ const StarDotsBackground = React.memo(
       modeRef.current = mode;
     }, [mode]);
 
+    // Show popup notification on mount if not seen before
+    useEffect(() => {
+      const hasSeenPopup = localStorage.getItem('star-controls-notified');
+      if (!hasSeenPopup && isHomePage && !isMobile) {
+        const timer = setTimeout(() => setShowPopup(true), 200);
+        return () => clearTimeout(timer);
+      }
+    }, [isHomePage, isMobile]);
+
+    const handleClosePopup = () => {
+      setShowPopup(false);
+      localStorage.setItem('star-controls-notified', 'true');
+    };
+
     const handleAdjustStars = useCallback(
       (amount: number) => {
         const currentLen = starsRef.current.length;
         let newLen = currentLen + amount;
         if (newLen < MIN_STARS) newLen = MIN_STARS;
         if (newLen > MAX_STARS) newLen = MAX_STARS;
-
         if (newLen === currentLen) return;
 
         if (newLen > currentLen) {
@@ -251,7 +265,6 @@ const StarDotsBackground = React.memo(
         : isDark
           ? '200, 220, 255'
           : '60, 60, 80';
-
       shootingStarsRef.current.push({
         x: Math.random() * (dimsRef.current.w || window.innerWidth),
         y: -50,
@@ -319,20 +332,17 @@ const StarDotsBackground = React.memo(
       initStars();
 
       let frameId: number;
-
       const render = (time: number) => {
         const { w, h } = dimsRef.current;
         const stars = starsRef.current;
         const currentMode = modeRef.current;
-
         ctx.fillStyle = finalBg;
         ctx.fillRect(0, 0, w, h);
 
-        // --- Improved Shooting Stars & Interaction ---
         if (Math.random() < shootingStarFrequency) {
           shootingStarsRef.current.push({
             x: Math.random() * w,
-            y: 0, // Start from top
+            y: 0,
             len: Math.random() * 100 + 50,
             speed: Math.random() * 12 + 10,
             size: Math.random() * 1.5 + 0.5,
@@ -342,10 +352,8 @@ const StarDotsBackground = React.memo(
 
         for (let i = shootingStarsRef.current.length - 1; i >= 0; i--) {
           const s = shootingStarsRef.current[i];
-          s.x += s.speed; // Moving diagonally
+          s.x += s.speed;
           s.y += s.speed;
-
-          // Interaction: Push nearby stars
           for (let j = 0; j < stars.length; j++) {
             const star = stars[j];
             const dx = star.x - s.x;
@@ -355,13 +363,10 @@ const StarDotsBackground = React.memo(
             if (distSq < influenceRadius * influenceRadius) {
               const dist = Math.sqrt(distSq);
               const force = (influenceRadius - dist) / influenceRadius;
-              // Push stars away from the meteor head with a slight velocity kick
               star.vx += (dx / dist) * force * 3;
               star.vy += (dy / dist) * force * 3;
             }
           }
-
-          // Visuals: Gradient trail
           const trailGrad = ctx.createLinearGradient(
             s.x,
             s.y,
@@ -370,7 +375,6 @@ const StarDotsBackground = React.memo(
           );
           trailGrad.addColorStop(0, `rgba(${s.color}, 0.8)`);
           trailGrad.addColorStop(1, `rgba(${s.color}, 0)`);
-
           ctx.beginPath();
           ctx.strokeStyle = trailGrad;
           ctx.lineWidth = s.size;
@@ -378,18 +382,14 @@ const StarDotsBackground = React.memo(
           ctx.moveTo(s.x, s.y);
           ctx.lineTo(s.x - s.len, s.y - s.len);
           ctx.stroke();
-
-          // Visuals: Bright Head
           ctx.beginPath();
           ctx.fillStyle = `rgba(${s.color}, 1)`;
           ctx.arc(s.x, s.y, s.size * 1.2, 0, Math.PI * 2);
           ctx.fill();
-
           if (s.x > w + 200 || s.y > h + 200)
             shootingStarsRef.current.splice(i, 1);
         }
 
-        // --- Grid & Standard Interactions ---
         const gridSize = finalConnectDist || 100;
         const cols = Math.ceil(w / gridSize);
         const rows = Math.ceil(h / gridSize);
@@ -398,7 +398,6 @@ const StarDotsBackground = React.memo(
 
         for (let i = 0; i < stars.length; i++) {
           const s = stars[i];
-
           if (!isMobile && currentMode !== 'none') {
             const dx = mouseRef.current.x - s.x;
             const dy = mouseRef.current.y - s.y;
@@ -411,7 +410,6 @@ const StarDotsBackground = React.memo(
               s.vy -= (dy / dist) * force * 0.5 * direction;
             }
           }
-
           if (!isMobile && mouseRef.current.clickBurst) {
             const dx = mouseRef.current.x - s.x;
             const dy = mouseRef.current.y - s.y;
@@ -423,23 +421,19 @@ const StarDotsBackground = React.memo(
               s.vy -= (dy / dist) * force * 10;
             }
           }
-
           s.x += s.vx;
           s.y += s.vy;
           s.vx *= 0.98;
           s.vy *= 0.98;
-
           if (s.x < 0) s.x = w;
           else if (s.x > w) s.x = 0;
           if (s.y < 0) s.y = h;
           else if (s.y > h) s.y = 0;
-
           if (Math.abs(s.vx) < 0.1 && Math.abs(s.vy) < 0.1) {
             const angle = Math.random() * Math.PI * 2;
             s.vx += Math.cos(angle) * 0.05;
             s.vy += Math.sin(angle) * 0.05;
           }
-
           const cx = Math.floor(s.x / gridSize);
           const cy = Math.floor(s.y / gridSize);
           if (cx >= 0 && cx < cols && cy >= 0 && cy < rows) {
@@ -450,7 +444,6 @@ const StarDotsBackground = React.memo(
         }
         mouseRef.current.clickBurst = false;
 
-        // Lines & Nova logic
         const avgStarsPerCell = stars.length / (cols * rows || 1);
         const cleverThreshold = Math.max(6, Math.ceil(avgStarsPerCell * 3));
         const neighborOffsets = [0, 1, cols - 1, cols, cols + 1];
@@ -459,19 +452,14 @@ const StarDotsBackground = React.memo(
         for (let i = 0; i < grid.length; i++) {
           const cellStars = grid[i];
           if (!cellStars) continue;
-
           if (cellStars.length > cleverThreshold) {
             const centerX = (i % cols) * gridSize + gridSize / 2;
             const centerY = Math.floor(i / cols) * gridSize + gridSize / 2;
-
-            // --- Improved Nova Visuals ---
-            // Scale intensity and size based on how many stars over the threshold
             const intensity = Math.min(
               2,
               (cellStars.length - cleverThreshold) / 5,
             );
             const novaSize = gridSize * (1.2 + intensity * 0.5);
-
             const novaGrad = ctx.createRadialGradient(
               centerX,
               centerY,
@@ -480,31 +468,25 @@ const StarDotsBackground = React.memo(
               centerY,
               novaSize,
             );
-
-            // Multi-stop gradient for a "hot" center and soft energy dissipation
             novaGrad.addColorStop(0, `rgba(255, 255, 255, ${0.7 * intensity})`);
             novaGrad.addColorStop(0.2, `rgba(${finalRgb}, ${0.4 * intensity})`);
             novaGrad.addColorStop(0.6, `rgba(${finalRgb}, ${0.1 * intensity})`);
             novaGrad.addColorStop(1, `rgba(${finalRgb}, 0)`);
-
             ctx.fillStyle = novaGrad;
             ctx.beginPath();
             ctx.arc(centerX, centerY, novaSize, 0, Math.PI * 2);
             ctx.fill();
-
             for (const idx of cellStars) {
               const s = stars[idx];
               const dx = s.x - centerX;
               const dy = s.y - centerY;
               const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-              // Dynamic explosion force
               const explosionForce = 3.5 + intensity * 2;
               s.vx += (dx / dist) * explosionForce;
               s.vy += (dy / dist) * explosionForce;
-              s.phase += 0.3; // Distort twinkle on explosion
+              s.phase += 0.3;
             }
           }
-
           for (const idx1 of cellStars) {
             const s1 = stars[idx1];
             for (const offset of neighborOffsets) {
@@ -530,7 +512,6 @@ const StarDotsBackground = React.memo(
             }
           }
         }
-
         for (const s of stars) {
           ctx.globalAlpha = twinkle
             ? 0.3 + Math.abs(Math.sin(time * 0.001 + s.phase)) * 0.7
@@ -549,7 +530,6 @@ const StarDotsBackground = React.memo(
       };
 
       frameId = requestAnimationFrame(render);
-
       const onMouseMove = (e: MouseEvent) => {
         if (isMobile) return;
         mouseRef.current.x = e.clientX;
@@ -559,13 +539,11 @@ const StarDotsBackground = React.memo(
         if (isMobile) return;
         mouseRef.current.clickBurst = true;
       };
-
       window.addEventListener('resize', handleResize);
       if (!isMobile) {
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('mousedown', onMouseDown);
       }
-
       return () => {
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('mousemove', onMouseMove);
@@ -581,7 +559,7 @@ const StarDotsBackground = React.memo(
       starColor,
       bgColor,
       isMobile,
-      starCount
+      starCount,
     ]);
 
     return (
@@ -606,12 +584,67 @@ const StarDotsBackground = React.memo(
 
         {!isMobile && showControls && isHomePage && (
           <>
+            {/* New Feature Popup Notification */}
+            <Fade in={showPopup && !isMenuOpen} timeout={600}>
+              <Paper
+                elevation={12}
+                sx={{
+                  position: 'fixed',
+                  bottom: 90,
+                  right: 24,
+                  zIndex: 22,
+                  padding: '16px 20px',
+                  borderRadius: '16px',
+                  maxWidth: 220,
+                  backgroundColor: theme.palette.background.paper,
+                  border: `1px solid ${theme.palette.primary.main}44`,
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: -8,
+                    right: 20,
+                    width: 16,
+                    height: 16,
+                    bgcolor: 'inherit',
+                    transform: 'rotate(45deg)',
+                    borderRight: `1px solid ${theme.palette.primary.main}44`,
+                    borderBottom: `1px solid ${theme.palette.primary.main}44`,
+                  },
+                }}
+              >
+                <Typography variant="subtitle2" fontWeight={700} gutterBottom>
+                  Interactive Stars! ✨
+                </Typography>
+                <Typography
+                  variant="caption"
+                  display="block"
+                  sx={{ mb: 2, opacity: 0.8 }}
+                >
+                  Click here to change star density, gravity modes, or spawn
+                  meteors.
+                </Typography>
+                <Button
+                  size="small"
+                  fullWidth
+                  variant="contained"
+                  disableElevation
+                  onClick={handleClosePopup}
+                  sx={{ borderRadius: '8px', fontSize: '0.7rem' }}
+                >
+                  Got it
+                </Button>
+              </Paper>
+            </Fade>
+
             <Tooltip
               title={isMenuOpen ? 'Close Controls' : 'Configure Stars'}
               placement="left"
             >
               <IconButton
-                onClick={() => setIsMenuOpen((prev) => !prev)}
+                onClick={() => {
+                  setIsMenuOpen((prev) => !prev);
+                  if (showPopup) handleClosePopup();
+                }}
                 sx={{
                   position: 'fixed',
                   bottom: 24,

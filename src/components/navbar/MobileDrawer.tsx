@@ -5,20 +5,29 @@ import {
   Drawer,
   List,
   ListItem,
+  ListItemButton,
+  ListItemText,
   Divider,
-  Link as MuiLink,
+  Typography,
+  IconButton,
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ThemeToggle from '../ThemeToggle';
-import { pages } from './NavBar';
 
-interface Props {
-  open: boolean;
-  onClose: () => void;
+interface NavItem {
+  text: string;
+  navLink: string;
 }
 
-const MobileDrawer = ({ open, onClose }: Props) => {
+interface MobileDrawerProps {
+  open: boolean;
+  onClose: () => void;
+  items: readonly NavItem[];
+}
+
+const MobileDrawer = ({ open, onClose, items }: MobileDrawerProps) => {
   const pathname = usePathname();
 
   return (
@@ -26,52 +35,94 @@ const MobileDrawer = ({ open, onClose }: Props) => {
       anchor="right"
       open={open}
       onClose={onClose}
+      // Ensure the drawer stays on top of other elements
       PaperProps={{
         sx: {
-          width: 260,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
+          width: 280,
+          bgcolor: 'background.default',
+          backgroundImage: 'none', // Removes default MUI overlay tint in dark mode
         },
       }}
     >
-      <Box>
-        <List>
-          {pages.map((page) => {
-            const isActive = pathname === page.navLink;
-
-            return (
-              <ListItem key={page.text} disableGutters onClick={onClose}>
-                <MuiLink
-                  component={Link}
-                  href={page.navLink}
-                  underline="none"
-                  sx={{
-                    px: 2,
-                    py: 1.5,
-                    fontWeight: isActive ? 700 : 500,
-                    fontSize: '1rem',
-                    width: '100%',
-                    color: isActive ? 'primary.main' : 'text.primary',
-                    backgroundColor: isActive ? 'action.hover' : 'transparent',
-                    borderLeft: isActive
-                      ? '4px solid'
-                      : '4px solid transparent',
-                    borderColor: isActive ? 'primary.main' : 'transparent',
-                    transition: 'all 0.2s',
-                  }}
-                >
-                  {page.text}
-                </MuiLink>
-              </ListItem>
-            );
-          })}
-        </List>
+      {/* Drawer Header */}
+      <Box
+        sx={{
+          p: 2,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Typography variant="h6" fontWeight={700}>
+          Menu
+        </Typography>
+        <IconButton onClick={onClose} edge="end" aria-label="close">
+          <CloseIcon />
+        </IconButton>
       </Box>
 
-      <Box sx={{ p: 2 }}>
-        <Divider sx={{ mb: 2 }} />
-        <ThemeToggle />
+      <Divider />
+
+      {/* Navigation List */}
+      <List sx={{ flexGrow: 1, pt: 1 }}>
+        {items.map((page) => {
+          const isActive = pathname === page.navLink;
+
+          return (
+            <ListItem key={page.text} disablePadding>
+              <ListItemButton
+                component={Link}
+                href={page.navLink}
+                onClick={onClose}
+                selected={isActive}
+                sx={{
+                  py: 1.5,
+                  px: 3,
+                  borderLeft: '4px solid',
+                  borderColor: isActive ? 'primary.main' : 'transparent',
+                  // Styling for the active/selected state
+                  '&.Mui-selected': {
+                    bgcolor: 'primary.lighter', // Use custom theme color or alpha(primary.main, 0.08)
+                    color: 'primary.main',
+                    '&:hover': {
+                      bgcolor: 'primary.lighter',
+                    },
+                  },
+                }}
+              >
+                <ListItemText
+                  primary={page.text}
+                  primaryTypographyProps={{
+                    fontWeight: isActive ? 700 : 500,
+                    fontSize: '1.1rem',
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+      </List>
+
+      {/* Footer / Bottom Actions */}
+      <Box sx={{ p: 3, bgcolor: 'action.hover' }}>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          display="block"
+          gutterBottom
+        >
+          Appearance
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography variant="body2">Theme Mode</Typography>
+          <ThemeToggle />
+        </Box>
       </Box>
     </Drawer>
   );
