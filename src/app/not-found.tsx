@@ -15,8 +15,6 @@ const NotFoundSection = () => {
         alignItems: 'center',
         px: 3,
         textAlign: 'center',
-        backgroundColor: 'background.default',
-        color: 'text.primary',
       }}
     >
       <Typography

@@ -10,8 +10,6 @@ import {
   Grow,
   useMediaQuery,
 } from '@mui/material';
-import SectionWrapper from '@/components/SectionWrapper';
-import StarDotsBackground from '@/components/StarDotsBackground';
 
 export type Role = {
   title: string;

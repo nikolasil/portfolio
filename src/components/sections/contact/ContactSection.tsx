@@ -14,8 +14,6 @@ import {
   IconButton,
 } from '@mui/material';
 import { Send, LinkedIn, GitHub } from '@mui/icons-material';
-import SectionWrapper from '@/components/SectionWrapper';
-import StarDotsBackground from '@/components/StarDotsBackground';
 
 type ContactErrors = {
   name: string;

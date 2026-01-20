@@ -581,6 +581,7 @@ const StarDotsBackground = React.memo(
       starColor,
       bgColor,
       isMobile,
+      starCount
     ]);
 
     return (
