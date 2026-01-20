@@ -16,7 +16,8 @@ import StarDotsBackground from '@/components/StarDotsBackground';
 const educationData = [
   {
     title: 'National and Kapodistrian University of Athens',
-    subtitle: 'BSc in Computer Science, Department of Informatics and Telecommunications',
+    subtitle:
+      'BSc in Computer Science, Department of Informatics and Telecommunications',
     date: '09/2018 – 02/2023',
     details: [
       'Grade: 7.36/10 (~3.0 GPA)',
@@ -42,89 +43,78 @@ const EducationSection = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <SectionWrapper
-      id="education"
-      backgroundElement={
-        <StarDotsBackground
-          starCount={isMobile ? 200 : 800}
-          maxSpeed={0.8}
-          twinkle={true}
-        />
-      }
+    <Box
+      sx={{
+        position: 'relative',
+        minHeight: 'calc(100dvh - 64px)', // subtract navbar height
+        overflowY: isMobile ? 'auto' : 'visible',
+      }}
     >
       <Box
         sx={{
           position: 'relative',
-          minHeight: 'calc(100dvh - 64px)', // subtract navbar height
-          overflowY: isMobile ? 'auto' : 'visible',
+          zIndex: 1,
+          py: 4,
+          px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        <Box
-          sx={{
-            position: 'relative',
-            zIndex: 1,
-            py: 4,
-            px: { xs: 2, sm: 4, md: 8 },
-          }}
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          gutterBottom
+          textAlign="center"
         >
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            gutterBottom
-            textAlign="center"
-          >
-            🎓 Education
-          </Typography>
+          🎓 Education
+        </Typography>
 
-          <Stack spacing={6} mt={4}>
-            {educationData.map((edu, idx) => (
-              <Grow
-                in
-                key={idx}
-                style={{ transformOrigin: '0 0 0' }}
-                timeout={500 + idx * 200}
+        <Stack spacing={6} mt={4}>
+          {educationData.map((edu, idx) => (
+            <Grow
+              in
+              key={idx}
+              style={{ transformOrigin: '0 0 0' }}
+              timeout={500 + idx * 200}
+            >
+              <Paper
+                elevation={4}
+                sx={{
+                  p: 4,
+                  borderRadius: 3,
+                  backgroundColor: theme.palette.background.paper,
+                  boxShadow: theme.shadows[3],
+                }}
               >
-                <Paper
-                  elevation={4}
-                  sx={{
-                    p: 4,
-                    borderRadius: 3,
-                    backgroundColor: theme.palette.background.paper,
-                    boxShadow: theme.shadows[3],
-                  }}
-                >
-                  <Typography variant="h6" fontWeight="bold">
-                    {edu.title}
-                  </Typography>
-                  <Typography variant="subtitle1" color="text.secondary">
-                    {edu.subtitle}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" mb={2}>
-                    {edu.date}
-                  </Typography>
+                <Typography variant="h6" fontWeight="bold">
+                  {edu.title}
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary">
+                  {edu.subtitle}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" mb={2}>
+                  {edu.date}
+                </Typography>
 
-                  {edu.details.length > 1 ? (
-                    <ul style={{ paddingLeft: theme.spacing(3), margin: 0 }}>
-                      {edu.details.map((item, i) => (
-                        <li key={i}>
-                          <Typography variant="body2" color="text.primary">
-                            {item}
-                          </Typography>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <Typography variant="body2" color="text.primary">
-                      {edu.details[0]}
-                    </Typography>
-                  )}
-                </Paper>
-              </Grow>
-            ))}
-          </Stack>
-        </Box>
+                {edu.details.length > 1 ? (
+                  <ul style={{ paddingLeft: theme.spacing(3), margin: 0 }}>
+                    {edu.details.map((item, i) => (
+                      <li key={i}>
+                        <Typography variant="body2" color="text.primary">
+                          {item}
+                        </Typography>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <Typography variant="body2" color="text.primary">
+                    {edu.details[0]}
+                  </Typography>
+                )}
+              </Paper>
+            </Grow>
+          ))}
+        </Stack>
       </Box>
-    </SectionWrapper>
+    </Box>
   );
 };
 

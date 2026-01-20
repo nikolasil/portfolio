@@ -75,7 +75,7 @@ const ContactSection = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: '' }); // clear error for that field
@@ -117,166 +117,151 @@ const ContactSection = () => {
   };
 
   return (
-    <SectionWrapper
-      id="contact"
-      backgroundElement={
-        <StarDotsBackground
-          starCount={isMobile ? 200 : 800}
-          maxSpeed={0.8}
-          twinkle={true}
-        />
-      }
+    <Box
+      sx={{
+        position: 'relative',
+        minHeight: 'calc(100dvh - 64px)',
+        overflowY: isMobile ? 'auto' : 'visible',
+      }}
     >
       <Box
         sx={{
           position: 'relative',
-          minHeight: 'calc(100dvh - 64px)',
-          overflowY: isMobile ? 'auto' : 'visible',
+          zIndex: 1,
+          py: 4,
+          px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        <Box
-          sx={{
-            position: 'relative',
-            zIndex: 1,
-            py: 4,
-            px: { xs: 2, sm: 4, md: 8 },
-          }}
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          textAlign="center"
+          gutterBottom
         >
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            textAlign="center"
-            gutterBottom
-          >
-            📬 Contact Me
-          </Typography>
+          📬 Contact Me
+        </Typography>
 
-          <Typography
-            variant="body1"
-            color="text.secondary"
-            textAlign="center"
-            mb={4}
-          >
-            Feel free to reach me out with questions, ideas, or collaboration
-            opportunities.
-          </Typography>
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          textAlign="center"
+          mb={4}
+        >
+          Feel free to reach me out with questions, ideas, or collaboration
+          opportunities.
+        </Typography>
 
-          <Grow in timeout={800}>
-            <Paper
-              elevation={4}
+        <Grow in timeout={800}>
+          <Paper
+            elevation={4}
+            sx={{
+              p: 4,
+              maxWidth: 600,
+              margin: '0 auto',
+              borderRadius: 3,
+              backgroundColor: theme.palette.background.paper,
+              boxShadow: theme.shadows[3],
+            }}
+          >
+            <form onSubmit={handleSubmit}>
+              <Stack spacing={3}>
+                <TextField
+                  label="Name"
+                  variant="outlined"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  error={!!errors.name}
+                  helperText={errors.name}
+                  fullWidth
+                  required
+                />
+                <TextField
+                  label="Email"
+                  variant="outlined"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  error={!!errors.email}
+                  helperText={errors.email}
+                  fullWidth
+                  required
+                />
+                <TextField
+                  label="Message"
+                  variant="outlined"
+                  name="message"
+                  multiline
+                  rows={5}
+                  value={form.message}
+                  onChange={handleChange}
+                  error={!!errors.message}
+                  helperText={errors.message}
+                  fullWidth
+                  required
+                />
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  endIcon={<Send />}
+                  size="large"
+                  fullWidth
+                  disabled={loading}
+                >
+                  {loading ? 'Sending...' : 'Send Message'}
+                </Button>
+              </Stack>
+            </form>
+          </Paper>
+        </Grow>
+
+        <Stack direction="column" alignItems="center" spacing={1} mt={4}>
+          <Typography variant="body2" textAlign="center" color="text.secondary">
+            Or email me directly at{' '}
+            <Box
+              component="a"
+              href="mailto:iliopoulos.info@gmail.com"
               sx={{
-                p: 4,
-                maxWidth: 600,
-                margin: '0 auto',
-                borderRadius: 3,
-                backgroundColor: theme.palette.background.paper,
-                boxShadow: theme.shadows[3],
+                textDecoration: 'underline',
+                color: 'primary.main',
               }}
             >
-              <form onSubmit={handleSubmit}>
-                <Stack spacing={3}>
-                  <TextField
-                    label="Name"
-                    variant="outlined"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    error={!!errors.name}
-                    helperText={errors.name}
-                    fullWidth
-                    required
-                  />
-                  <TextField
-                    label="Email"
-                    variant="outlined"
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    error={!!errors.email}
-                    helperText={errors.email}
-                    fullWidth
-                    required
-                  />
-                  <TextField
-                    label="Message"
-                    variant="outlined"
-                    name="message"
-                    multiline
-                    rows={5}
-                    value={form.message}
-                    onChange={handleChange}
-                    error={!!errors.message}
-                    helperText={errors.message}
-                    fullWidth
-                    required
-                  />
+              iliopoulos.info@gmail.com
+            </Box>
+          </Typography>
 
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    endIcon={<Send />}
-                    size="large"
-                    fullWidth
-                    disabled={loading}
-                  >
-                    {loading ? 'Sending...' : 'Send Message'}
-                  </Button>
-                </Stack>
-              </form>
-            </Paper>
-          </Grow>
-
-          <Stack direction="column" alignItems="center" spacing={1} mt={4}>
-            <Typography
-              variant="body2"
-              textAlign="center"
-              color="text.secondary"
+          <Stack direction="row" spacing={2} mt={1}>
+            <IconButton
+              component="a"
+              href="https://www.linkedin.com/in/nikolasiliopoulos/"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="primary"
+              sx={{
+                '&:hover': { color: theme.palette.primary.dark },
+              }}
             >
-              Or email me directly at{' '}
-              <Box
-                component="a"
-                href="mailto:iliopoulos.info@gmail.com"
-                sx={{
-                  textDecoration: 'underline',
-                  color: 'primary.main',
-                }}
-              >
-                iliopoulos.info@gmail.com
-              </Box>
-            </Typography>
-
-            <Stack direction="row" spacing={2} mt={1}>
-              <IconButton
-                component="a"
-                href="https://www.linkedin.com/in/nikolasiliopoulos/"
-                target="_blank"
-                rel="noopener noreferrer"
-                color="primary"
-                sx={{
-                  '&:hover': { color: theme.palette.primary.dark },
-                }}
-              >
-                <LinkedIn fontSize="large" />
-              </IconButton>
-              <IconButton
-                component="a"
-                href="https://github.com/nikolasil"
-                target="_blank"
-                rel="noopener noreferrer"
-                color="inherit"
-                sx={{
-                  '&:hover': { color: theme.palette.text.primary },
-                }}
-              >
-                <GitHub fontSize="large" />
-              </IconButton>
-            </Stack>
+              <LinkedIn fontSize="large" />
+            </IconButton>
+            <IconButton
+              component="a"
+              href="https://github.com/nikolasil"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="inherit"
+              sx={{
+                '&:hover': { color: theme.palette.text.primary },
+              }}
+            >
+              <GitHub fontSize="large" />
+            </IconButton>
           </Stack>
-        </Box>
+        </Stack>
       </Box>
-    </SectionWrapper>
+    </Box>
   );
 };
 

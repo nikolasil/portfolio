@@ -1,4 +1,5 @@
 import Navbar from '@/components/navbar/NavBar';
+import StarDotsBackground from '@/components/StarDotsBackground';
 import { ThemeRegistry } from '@/lib/ThemeProvider';
 import { Fira_Code } from 'next/font/google';
 
@@ -17,12 +18,13 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+  }) {
   return (
     <html lang="en" className={firaCode.variable}>
       <body>
         <ThemeRegistry>
           <Navbar />
+          <StarDotsBackground/>
           {children}
         </ThemeRegistry>
       </body>

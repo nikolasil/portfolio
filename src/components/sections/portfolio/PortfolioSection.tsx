@@ -1,7 +1,6 @@
 'use client';
 
-
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -12,12 +11,18 @@ import {
   Stack,
   Typography,
   useMediaQuery,
+  Badge,
+  IconButton,
+  Tooltip,
+  Fab,
+  Zoom,
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, alpha } from '@mui/material/styles';
 import LaunchIcon from '@mui/icons-material/Launch';
-import SectionWrapper from '@/components/SectionWrapper';
-import StarDotsBackground from '@/components/StarDotsBackground';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export type Project = {
   cat: string;
@@ -32,7 +37,6 @@ export type Project = {
 export type ProjectsData = {
   [category: string]: Project[];
 };
-
 
 const projectsData: ProjectsData = {
   ai: [
@@ -251,8 +255,21 @@ const PortfolioSection = () => {
 
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Collect all unique technologies across projects
+  // Handle showing the scroll to top button
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const allTechs = useMemo(() => {
     const techSet = new Set<string>();
     Object.values(projectsData).forEach((projects) => {
@@ -263,13 +280,12 @@ const PortfolioSection = () => {
     return Array.from(techSet).sort();
   }, []);
 
-  // Filter projects by selected techs
   const filteredProjectsData = useMemo(() => {
     if (selectedTechs.length === 0) return projectsData;
     const filtered: ProjectsData = {};
     Object.entries(projectsData).forEach(([key, projects]) => {
       const matches = projects.filter((proj) =>
-        selectedTechs.every((t) => proj.used.includes(t))
+        selectedTechs.every((t) => proj.used.includes(t)),
       );
 
       if (matches.length > 0) filtered[key] = matches;
@@ -278,160 +294,267 @@ const PortfolioSection = () => {
     return filtered;
   }, [selectedTechs]);
 
+  // Clever Logic: Calculate which techs would result in 0 projects if clicked
+  const availableTechs = useMemo(() => {
+    const available = new Set<string>();
+    const allProjects = Object.values(projectsData).flat();
+
+    allTechs.forEach((tech) => {
+      // If already selected, it's "available" (to deselect)
+      if (selectedTechs.includes(tech)) {
+        available.add(tech);
+        return;
+      }
+
+      // Check if adding this tech to the current selection returns any results
+      const potentialSelection = [...selectedTechs, tech];
+      const hasResults = allProjects.some((proj) =>
+        potentialSelection.every((t) => proj.used.includes(t)),
+      );
+
+      if (hasResults) {
+        available.add(tech);
+      }
+    });
+    return available;
+  }, [allTechs, selectedTechs]);
+
   const toggleTech = (tech: string) => {
+    // Prevent selection if it's not available and not already selected
+    if (!availableTechs.has(tech) && !selectedTechs.includes(tech)) return;
+
     setSelectedTechs((prev) =>
-      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech]
+      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech],
     );
   };
 
+  const clearFilters = () => setSelectedTechs([]);
+
   return (
-    <SectionWrapper
-      id="portfolio"
-      backgroundElement={
-        <StarDotsBackground
-          starCount={isMobile ? 200 : 800}
-          maxSpeed={0.8}
-          twinkle={true}
-        />
-      }
+    <Box
+      sx={{
+        position: 'relative',
+        minHeight: 'calc(100dvh - 64px)',
+        overflowY: isMobile ? 'auto' : 'visible',
+      }}
     >
       <Box
         sx={{
           position: 'relative',
-          minHeight: 'calc(100dvh - 64px)',
-          overflowY: isMobile ? 'auto' : 'visible',
+          zIndex: 1,
+          py: 4,
+          px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        <Box
-          sx={{
-            position: 'relative',
-            zIndex: 1,
-            py: 4,
-            px: { xs: 2, sm: 4, md: 8 },
-          }}
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          textAlign="center"
+          gutterBottom
         >
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            textAlign="center"
-            gutterBottom
-          >
-            💼 Portfolio
-          </Typography>
+          💼 Portfolio
+        </Typography>
 
-          {/* Toggle Filters Button */}
-          <Box textAlign="center" mb={2}>
+        {/* Toggle Filters Button */}
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+          mb={3}
+        >
+          <Badge
+            badgeContent={selectedTechs.length}
+            color="primary"
+            sx={{ '& .MuiBadge-badge': { right: 5, top: 5 } }}
+          >
             <Button
-              variant="outlined"
+              variant={filtersVisible ? 'contained' : 'outlined'}
               startIcon={<FilterAltIcon />}
               onClick={() => setFiltersVisible((v) => !v)}
+              sx={{
+                borderRadius: 4,
+                px: 3,
+                transition: 'all 0.3s ease',
+                boxShadow: filtersVisible ? theme.shadows[4] : 'none',
+              }}
             >
-              {filtersVisible ? 'Hide Filters' : 'Show Filters'}
+              {filtersVisible ? 'Hide Filters' : 'Filter by Tech'}
             </Button>
-          </Box>
+          </Badge>
 
-          {/* Filters Section */}
-          <Collapse in={filtersVisible}>
+          {selectedTechs.length > 0 && (
+            <Tooltip title="Clear All Filters">
+              <IconButton onClick={clearFilters} color="error" size="small">
+                <ClearAllIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Stack>
+
+        {/* Filters Section */}
+        <Collapse in={filtersVisible}>
+          <Paper
+            elevation={0}
+            sx={{
+              p: 3,
+              mb: 5,
+              borderRadius: 4,
+              backgroundColor: alpha(theme.palette.background.paper, 0.6),
+              backdropFilter: 'blur(10px)',
+              border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+              maxWidth: '900px',
+              mx: 'auto',
+            }}
+          >
             <Stack
               direction="row"
               flexWrap="wrap"
               spacing={1}
+              useFlexGap
               justifyContent="center"
-              mb={4}
             >
-              {allTechs.map((tech) => (
-                <Chip
-                  key={tech}
-                  label={tech}
-                  clickable
-                  color={selectedTechs.includes(tech) ? 'primary' : 'default'}
-                  onClick={() => toggleTech(tech)}
-                  sx={{ mb: 1 }}
-                />
+              {allTechs.map((tech) => {
+                const isSelected = selectedTechs.includes(tech);
+                const isDisabled = !availableTechs.has(tech);
+
+                return (
+                  <Chip
+                    key={tech}
+                    label={tech}
+                    clickable={!isDisabled}
+                    disabled={isDisabled}
+                    icon={
+                      isSelected ? (
+                        <CheckCircleIcon style={{ fontSize: '1.2rem' }} />
+                      ) : undefined
+                    }
+                    variant={isSelected ? 'filled' : 'outlined'}
+                    color={isSelected ? 'primary' : 'default'}
+                    onClick={() => toggleTech(tech)}
+                    sx={{
+                      py: 2,
+                      px: 1,
+                      borderRadius: 2,
+                      fontWeight: isSelected ? 'bold' : 'normal',
+                      transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                      opacity: isDisabled ? 0.4 : 1,
+                      '&:hover': {
+                        transform: isDisabled ? 'none' : 'translateY(-2px)',
+                        boxShadow: isDisabled ? 'none' : theme.shadows[2],
+                        backgroundColor: isSelected
+                          ? theme.palette.primary.dark
+                          : isDisabled
+                            ? 'transparent'
+                            : alpha(theme.palette.primary.main, 0.1),
+                      },
+                      '&:active': {
+                        transform: isDisabled ? 'none' : 'scale(0.95)',
+                      },
+                    }}
+                  />
+                );
+              })}
+            </Stack>
+          </Paper>
+        </Collapse>
+
+        {/* Projects */}
+        {Object.entries(filteredProjectsData).map(([key, projects]) => (
+          <Box key={key} sx={{ mb: 6 }}>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              gutterBottom
+              sx={{ mt: 4, mb: 2 }}
+            >
+              {projects[0]?.cat || key}
+            </Typography>
+
+            <Stack spacing={4}>
+              {projects.map((proj, pIdx: number) => (
+                <Grow
+                  in
+                  key={proj.id}
+                  style={{ transformOrigin: '0 0 0' }}
+                  timeout={500 + pIdx * 150}
+                >
+                  <Paper
+                    elevation={4}
+                    sx={{
+                      p: 3,
+                      borderRadius: 3,
+                      backgroundColor: theme.palette.background.paper,
+                      boxShadow: theme.shadows[3],
+                    }}
+                  >
+                    <Typography variant="h6" fontWeight="bold">
+                      {proj.emoji ? `${proj.emoji} ${proj.title}` : proj.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ mt: 1, mb: 2 }}
+                    >
+                      {proj.dec}
+                    </Typography>
+
+                    {/* Tech stack chips */}
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      flexWrap="wrap"
+                      sx={{ mb: 2 }}
+                    >
+                      {proj.used.map((tech: string, tIdx: number) => (
+                        <Chip
+                          key={tIdx}
+                          label={tech}
+                          size="small"
+                          sx={{ mb: 1 }}
+                        />
+                      ))}
+                    </Stack>
+
+                    {/* GitHub / Demo link */}
+                    {proj.url && (
+                      <Button
+                        href={proj.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="outlined"
+                        endIcon={<LaunchIcon />}
+                      >
+                        View Project
+                      </Button>
+                    )}
+                  </Paper>
+                </Grow>
               ))}
             </Stack>
-          </Collapse>
-
-          {/* Projects */}
-          {Object.entries(filteredProjectsData).map(([key, projects]) => (
-            <Box key={key} sx={{ mb: 6 }}>
-              <Typography
-                variant="h5"
-                fontWeight="bold"
-                gutterBottom
-                sx={{ mt: 4, mb: 2 }}
-              >
-                {(projects)[0]?.cat || key}
-              </Typography>
-
-              <Stack spacing={4}>
-                {(projects).map((proj, pIdx: number) => (
-                  <Grow
-                    in
-                    key={proj.id}
-                    style={{ transformOrigin: '0 0 0' }}
-                    timeout={500 + pIdx * 150}
-                  >
-                    <Paper
-                      elevation={4}
-                      sx={{
-                        p: 3,
-                        borderRadius: 3,
-                        backgroundColor: theme.palette.background.paper,
-                        boxShadow: theme.shadows[3],
-                      }}
-                    >
-                      <Typography variant="h6" fontWeight="bold">
-                        {proj.emoji
-                          ? `${proj.emoji} ${proj.title}`
-                          : proj.title}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ mt: 1, mb: 2 }}
-                      >
-                        {proj.dec}
-                      </Typography>
-
-                      {/* Tech stack chips */}
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        flexWrap="wrap"
-                        sx={{ mb: 2 }}
-                      >
-                        {proj.used.map((tech: string, tIdx: number) => (
-                          <Chip
-                            key={tIdx}
-                            label={tech}
-                            size="small"
-                            sx={{ mb: 1 }}
-                          />
-                        ))}
-                      </Stack>
-
-                      {/* GitHub / Demo link */}
-                      {proj.url && (
-                        <Button
-                          href={proj.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          variant="outlined"
-                          endIcon={<LaunchIcon />}
-                        >
-                          View Project
-                        </Button>
-                      )}
-                    </Paper>
-                  </Grow>
-                ))}
-              </Stack>
-            </Box>
-          ))}
-        </Box>
+          </Box>
+        ))}
       </Box>
-    </SectionWrapper>
+
+      {/* Back to Top Button */}
+      <Zoom in={showScrollTop}>
+        <Fab
+          onClick={scrollToTop}
+          color="primary"
+          size="medium"
+          aria-label="scroll back to top"
+          sx={{
+            position: 'fixed',
+            bottom: 32,
+            right: 32,
+            zIndex: 10,
+            boxShadow: theme.shadows[10],
+          }}
+        >
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </Zoom>
+    </Box>
   );
 };
 
