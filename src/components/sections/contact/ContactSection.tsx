@@ -11,8 +11,9 @@ import {
   useMediaQuery,
   Paper,
   Grow,
+  IconButton,
 } from '@mui/material';
-import { Send } from '@mui/icons-material';
+import { Send, LinkedIn, GitHub } from '@mui/icons-material';
 import SectionWrapper from '@/components/SectionWrapper';
 import StarDotsBackground from '@/components/StarDotsBackground';
 
@@ -227,24 +228,52 @@ const ContactSection = () => {
             </Paper>
           </Grow>
 
-          <Typography
-            variant="body2"
-            textAlign="center"
-            mt={4}
-            color="text.secondary"
-          >
-            Or email me directly at{' '}
-            <Box
-              component="a"
-              href="mailto:iliopoulos.info@gmail.com"
-              sx={{
-                textDecoration: 'underline',
-                color: 'primary.main',
-              }}
+          <Stack direction="column" alignItems="center" spacing={1} mt={4}>
+            <Typography
+              variant="body2"
+              textAlign="center"
+              color="text.secondary"
             >
-              iliopoulos.info@gmail.com
-            </Box>
-          </Typography>
+              Or email me directly at{' '}
+              <Box
+                component="a"
+                href="mailto:iliopoulos.info@gmail.com"
+                sx={{
+                  textDecoration: 'underline',
+                  color: 'primary.main',
+                }}
+              >
+                iliopoulos.info@gmail.com
+              </Box>
+            </Typography>
+
+            <Stack direction="row" spacing={2} mt={1}>
+              <IconButton
+                component="a"
+                href="https://www.linkedin.com/in/nikolasiliopoulos/"
+                target="_blank"
+                rel="noopener noreferrer"
+                color="primary"
+                sx={{
+                  '&:hover': { color: theme.palette.primary.dark },
+                }}
+              >
+                <LinkedIn fontSize="large" />
+              </IconButton>
+              <IconButton
+                component="a"
+                href="https://github.com/nikolasil"
+                target="_blank"
+                rel="noopener noreferrer"
+                color="inherit"
+                sx={{
+                  '&:hover': { color: theme.palette.text.primary },
+                }}
+              >
+                <GitHub fontSize="large" />
+              </IconButton>
+            </Stack>
+          </Stack>
         </Box>
       </Box>
     </SectionWrapper>
