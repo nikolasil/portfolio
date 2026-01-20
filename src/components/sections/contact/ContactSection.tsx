@@ -8,12 +8,15 @@ import {
   Button,
   Stack,
   useTheme,
-  useMediaQuery,
   Paper,
   Grow,
   IconButton,
+  alpha,
+  Snackbar,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
-import { Send, LinkedIn, GitHub } from '@mui/icons-material';
+import { Send, LinkedIn, GitHub, Email, LocationOn } from '@mui/icons-material';
 
 type ContactErrors = {
   name: string;
@@ -23,48 +26,33 @@ type ContactErrors = {
 
 const ContactSection = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({ name: '', email: '', message: '' });
   const [loading, setLoading] = useState(false);
-  const lastSentRef = useRef(0); // client-side rate limit
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'success' as 'success' | 'error',
+  });
+
+  const lastSentRef = useRef(0);
 
   const validate = () => {
     let valid = true;
     const newErrors: ContactErrors = { name: '', email: '', message: '' };
-
-    // Name
-    if (form.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters.';
-      valid = false;
-    }
-
-    if (form.name.length > 60) {
-      newErrors.name = 'Name is too long.';
-      valid = false;
-    }
-
-    // Email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (form.name.trim().length < 2) {
+      newErrors.name = 'Name is too short';
+      valid = false;
+    }
     if (!emailRegex.test(form.email)) {
-      newErrors.email = 'Invalid email format.';
+      newErrors.email = 'Invalid email address';
       valid = false;
     }
-
-    if (form.email.length > 120) {
-      newErrors.email = 'Email is too long.';
-      valid = false;
-    }
-
-    // Message
     if (form.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters.';
-      valid = false;
-    }
-
-    if (form.message.length > 2000) {
-      newErrors.message = 'Message is too long.';
+      newErrors.message = 'Please write a bit more (min 10 chars)';
       valid = false;
     }
 
@@ -76,21 +64,25 @@ const ContactSection = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' }); // clear error for that field
+    if (errors[e.target.name as keyof ContactErrors]) {
+      setErrors({ ...errors, [e.target.name]: '' });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Rate limit: 1 message every 20 seconds
     const now = Date.now();
+
     if (now - lastSentRef.current < 20000) {
-      alert('Please wait a moment before sending another message.');
+      setSnackbar({
+        open: true,
+        message: 'Slow down! Please wait 20s.',
+        severity: 'error',
+      });
       return;
     }
 
     if (!validate()) return;
-
     setLoading(true);
 
     try {
@@ -100,165 +92,220 @@ const ContactSection = () => {
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
-      alert(data.message);
+      if (!res.ok) throw new Error();
 
-      lastSentRef.current = Date.now(); // update rate limit
-
+      setSnackbar({
+        open: true,
+        message: 'Message sent successfully! 🚀',
+        severity: 'success',
+      });
+      lastSentRef.current = Date.now();
       setForm({ name: '', email: '', message: '' });
     } catch (err) {
-      console.error(err);
-      alert('Failed to send email.');
+      console.log(err);
+      setSnackbar({
+        open: true,
+        message: 'Failed to send message. Try again later.',
+        severity: 'error',
+      });
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
     <Box
       sx={{
-        position: 'relative',
-        minHeight: 'calc(100dvh - 64px)',
-        overflowY: isMobile ? 'auto' : 'visible',
+        py: 5,
+        px: { xs: 2, md: 8 },
+        maxWidth: '1200px',
+        margin: '0 auto',
       }}
     >
-      <Box
-        sx={{
-          position: 'relative',
-          zIndex: 1,
-          py: 4,
-          px: { xs: 2, sm: 4, md: 8 },
-        }}
-      >
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          textAlign="center"
-          gutterBottom
-        >
-          📬 Contact Me
-        </Typography>
-
-        <Typography
-          variant="body1"
-          color="text.secondary"
-          textAlign="center"
-          mb={4}
-        >
-          Feel free to reach me out with questions, ideas, or collaboration
-          opportunities.
-        </Typography>
-
-        <Grow in timeout={800}>
-          <Paper
-            elevation={4}
-            sx={{
-              p: 4,
-              maxWidth: 600,
-              margin: '0 auto',
-              borderRadius: 3,
-              backgroundColor: theme.palette.background.paper,
-              boxShadow: theme.shadows[3],
-            }}
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={8}>
+        {/* Left Side: Contact Info */}
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h3" fontWeight="900" gutterBottom>
+            Let&apos;s{' '}
+            <span style={{ color: theme.palette.primary.main }}>Connect</span>.
+          </Typography>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ mb: 4, fontSize: '1.1rem' }}
           >
-            <form onSubmit={handleSubmit}>
-              <Stack spacing={3}>
-                <TextField
-                  label="Name"
-                  variant="outlined"
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  fullWidth
-                  required
-                />
-                <TextField
-                  label="Email"
-                  variant="outlined"
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  error={!!errors.email}
-                  helperText={errors.email}
-                  fullWidth
-                  required
-                />
-                <TextField
-                  label="Message"
-                  variant="outlined"
-                  name="message"
-                  multiline
-                  rows={5}
-                  value={form.message}
-                  onChange={handleChange}
-                  error={!!errors.message}
-                  helperText={errors.message}
-                  fullWidth
-                  required
-                />
-
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  endIcon={<Send />}
-                  size="large"
-                  fullWidth
-                  disabled={loading}
-                >
-                  {loading ? 'Sending...' : 'Send Message'}
-                </Button>
-              </Stack>
-            </form>
-          </Paper>
-        </Grow>
-
-        <Stack direction="column" alignItems="center" spacing={1} mt={4}>
-          <Typography variant="body2" textAlign="center" color="text.secondary">
-            Or email me directly at{' '}
-            <Box
-              component="a"
-              href="mailto:iliopoulos.info@gmail.com"
-              sx={{
-                textDecoration: 'underline',
-                color: 'primary.main',
-              }}
-            >
-              iliopoulos.info@gmail.com
-            </Box>
+            I&apos;m currently open to new opportunities and collaborations. Whether
+            you have a question or just want to say hi, I&apos;ll try my best to get
+            back to you!
           </Typography>
 
-          <Stack direction="row" spacing={2} mt={1}>
+          <Stack spacing={3} mb={6}>
+            <Stack direction="row" spacing={2} alignItems="center">
+              <IconButton
+                sx={{
+                  bgcolor: alpha(theme.palette.primary.main, 0.1),
+                  color: 'primary.main',
+                }}
+              >
+                <Email />
+              </IconButton>
+              <Box>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  display="block"
+                >
+                  Email Me
+                </Typography>
+                <Typography
+                  variant="body1"
+                  fontWeight="bold"
+                  component="a"
+                  href="mailto:iliopoulos.info@gmail.com"
+                  sx={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  iliopoulos.info@gmail.com
+                </Typography>
+              </Box>
+            </Stack>
+
+            <Stack direction="row" spacing={2} alignItems="center">
+              <IconButton
+                sx={{
+                  bgcolor: alpha(theme.palette.secondary.main, 0.1),
+                  color: 'secondary.main',
+                }}
+              >
+                <LocationOn />
+              </IconButton>
+              <Box>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  display="block"
+                >
+                  Location
+                </Typography>
+                <Typography variant="body1" fontWeight="bold">
+                  New York, United States
+                </Typography>
+              </Box>
+            </Stack>
+          </Stack>
+
+          <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+            FOLLOW ME
+          </Typography>
+          <Stack direction="row" spacing={1}>
             <IconButton
               component="a"
-              href="https://www.linkedin.com/in/nikolasiliopoulos/"
+              href="https://linkedin.com/..."
               target="_blank"
-              rel="noopener noreferrer"
               color="primary"
-              sx={{
-                '&:hover': { color: theme.palette.primary.dark },
-              }}
             >
               <LinkedIn fontSize="large" />
             </IconButton>
             <IconButton
               component="a"
-              href="https://github.com/nikolasil"
+              href="https://github.com/..."
               target="_blank"
-              rel="noopener noreferrer"
-              color="inherit"
-              sx={{
-                '&:hover': { color: theme.palette.text.primary },
-              }}
             >
               <GitHub fontSize="large" />
             </IconButton>
           </Stack>
-        </Stack>
-      </Box>
+        </Box>
+
+        {/* Right Side: Contact Form */}
+        <Box sx={{ flex: 1.2 }}>
+          <Grow in timeout={1000}>
+            <Paper
+              elevation={0}
+              sx={{
+                p: { xs: 3, md: 5 },
+                borderRadius: 4,
+                border: `1px solid ${theme.palette.divider}`,
+                bgcolor: alpha(theme.palette.background.paper, 0.8),
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              <form onSubmit={handleSubmit}>
+                <Stack spacing={3}>
+                  <TextField
+                    fullWidth
+                    label="Full Name"
+                    name="name"
+                    variant="filled"
+                    value={form.name}
+                    onChange={handleChange}
+                    error={!!errors.name}
+                    helperText={errors.name}
+                    hiddenLabel
+                  />
+                  <TextField
+                    fullWidth
+                    label="Email Address"
+                    name="email"
+                    type="email"
+                    variant="filled"
+                    value={form.email}
+                    onChange={handleChange}
+                    error={!!errors.email}
+                    helperText={errors.email}
+                  />
+                  <TextField
+                    fullWidth
+                    label="Your Message"
+                    name="message"
+                    multiline
+                    rows={4}
+                    variant="filled"
+                    value={form.message}
+                    onChange={handleChange}
+                    error={!!errors.message}
+                    helperText={errors.message}
+                  />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    disabled={loading}
+                    endIcon={
+                      loading ? (
+                        <CircularProgress size={20} color="inherit" />
+                      ) : (
+                        <Send />
+                      )
+                    }
+                    sx={{
+                      py: 1.5,
+                      borderRadius: 2,
+                      fontWeight: 'bold',
+                      boxShadow: `0 8px 16px ${alpha(theme.palette.primary.main, 0.3)}`,
+                    }}
+                  >
+                    {loading ? 'Sending...' : 'Send Message'}
+                  </Button>
+                </Stack>
+              </form>
+            </Paper>
+          </Grow>
+        </Box>
+      </Stack>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={5000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: '100%', borderRadius: 2 }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

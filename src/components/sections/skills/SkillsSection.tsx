@@ -4,172 +4,171 @@ import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
-  Stack,
+  Grid,
   Paper,
   useTheme,
   Grow,
-  useMediaQuery,
+  Chip,
   Fab,
   Zoom,
+  Stack,
+  alpha,
 } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import TerminalIcon from '@mui/icons-material/Terminal';
+import StorageIcon from '@mui/icons-material/Storage';
+import CloudQueueIcon from '@mui/icons-material/CloudQueue';
+import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
+import WebIcon from '@mui/icons-material/Web';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 
 const skillsData = [
   {
-    category: 'Distributed Systems & Microservices',
+    category: 'Distributed Systems',
+    icon: <SettingsSuggestIcon />,
     items: [
       'Spring Boot',
       'Apache Kafka',
       'Redis',
-      'Concurrency & Multithreading',
-      'System Design Patterns',
+      'Concurrency',
+      'System Design',
     ],
   },
   {
     category: 'Backend Engineering',
+    icon: <TerminalIcon />,
     items: [
       'Java',
       'Python (FastAPI)',
-      'Node.js (Express)',
-      'RESTful API Design',
-      'ETL & data pipelines',
+      'Node.js',
+      'RESTful API',
+      'ETL Pipelines',
     ],
   },
   {
     category: 'Frontend Engineering',
-    items: ['React.js', 'Next.js', 'JavaScript', 'TypeScript'],
+    icon: <WebIcon />,
+    items: ['React.js', 'Next.js', 'JavaScript', 'TypeScript', 'MUI'],
   },
   {
     category: 'DevOps & Cloud',
-    items: [
-      'Docker',
-      'CI/CD',
-      'Observability (Grafana, Prometheus)',
-      'AWS (EC2, S3)',
-    ],
+    icon: <CloudQueueIcon />,
+    items: ['Docker', 'CI/CD', 'Grafana', 'Prometheus', 'AWS (EC2, S3)'],
   },
   {
     category: 'Data & Storage',
-    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Elasticsearch', 'AWS S3'],
+    icon: <StorageIcon />,
+    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Elasticsearch'],
   },
   {
-    category: 'Architectural & System Design',
+    category: 'Architecture',
+    icon: <IntegrationInstructionsIcon />,
     items: [
-      'High Availability Systems',
+      'High Availability',
       'Fault-tolerance',
-      'Caching Strategies',
+      'Caching',
       'Load Balancing',
-      'Modular Service Architecture',
-      'Deisgn Patterns',
-      'Short Circuiting',
+      'Microservices',
     ],
   },
   {
     category: 'Testing',
+    icon: <ConstructionIcon />,
     items: [
       'Spock',
-      'Automation frmeworks',
       'Unit Testing',
       'Integration Testing',
-      'End-to-End Testing',
-      'Test-Driven Development (TDD)',
+      'TDD',
+      'Automation',
     ],
   },
 ];
 
 const SkillsSection = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Handle showing the scroll to top button
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
+    const handleScroll = () => setShowScrollTop(window.scrollY > 400);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        minHeight: 'calc(100dvh - 64px)',
-        overflowY: isMobile ? 'auto' : 'visible',
-      }}
-    >
-      <Box
-        sx={{
-          position: 'relative',
-          zIndex: 1,
-          py: 4,
-          px: { xs: 2, sm: 4, md: 8 },
-        }}
+    <Box sx={{ py: 8, px: { xs: 2, sm: 4, md: 10 }, minHeight: '100vh' }}>
+      <Typography
+        variant="h4"
+        fontWeight="900"
+        textAlign="center"
+        gutterBottom
+        sx={{ mb: 6, letterSpacing: -1 }}
       >
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          gutterBottom
-          textAlign="center"
-        >
-          🎯 Skills
-        </Typography>
+        🎯 Skills
+      </Typography>
 
-        <Stack spacing={6} mt={4}>
-          {skillsData.map((skillGroup, idx) => (
-            <Grow
-              in
-              key={idx}
-              style={{ transformOrigin: '0 0 0' }}
-              timeout={500 + idx * 200}
-            >
+      <Grid container spacing={3}>
+        {skillsData.map((skillGroup, idx) => (
+          /* Remove 'item' and wrap breakpoints in 'size' */
+          <Grid key={idx} size={{ xs: 12, sm: 6, lg: 4 }}>
+            <Grow in timeout={500 + idx * 100}>
               <Paper
-                elevation={4}
+                elevation={0}
                 sx={{
-                  p: 4,
-                  borderRadius: 3,
-                  backgroundColor: theme.palette.background.paper,
-                  boxShadow: theme.shadows[3],
+                  p: 3,
+                  height: '100%',
+                  borderRadius: 4,
+                  border: `1px solid ${theme.palette.divider}`,
+                  backgroundColor: alpha(theme.palette.background.paper, 0.8),
+                  transition: 'all 0.3s ease-in-out',
+                  // '&:hover': {
+                  //   borderColor: theme.palette.primary.main,
+                  //   transform: 'translateY(-5px)',
+                  //   boxShadow: `0 12px 24px ${alpha(theme.palette.common.black, 0.1)}`,
+                  // },
                 }}
               >
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  {skillGroup.category}
-                </Typography>
+                <Stack direction="row" spacing={1.5} alignItems="center" mb={2}>
+                  <Box sx={{ color: 'primary.main', display: 'flex' }}>
+                    {skillGroup.icon}
+                  </Box>
+                  <Typography variant="h6" fontWeight="bold">
+                    {skillGroup.category}
+                  </Typography>
+                </Stack>
 
-                <ul style={{ paddingLeft: theme.spacing(3), margin: 0 }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                   {skillGroup.items.map((item, i) => (
-                    <li key={i}>
-                      <Typography variant="body2" color="text.primary">
-                        {item}
-                      </Typography>
-                    </li>
+                    <Chip
+                      key={i}
+                      label={item}
+                      size="small"
+                      sx={{
+                        fontWeight: 500,
+                        bgcolor: alpha(theme.palette.primary.main, 0.05),
+                        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                        // '&:hover': {
+                        //   bgcolor: 'primary.main',
+                        //   color: 'white',
+                        // },
+                      }}
+                    />
                   ))}
-                </ul>
+                </Box>
               </Paper>
             </Grow>
-          ))}
-        </Stack>
-      </Box>
+          </Grid>
+        ))}
+      </Grid>
 
-      {/* Back to Top Button */}
       <Zoom in={showScrollTop}>
         <Fab
           onClick={scrollToTop}
           color="primary"
           size="medium"
-          aria-label="scroll back to top"
-          sx={{
-            position: 'fixed',
-            bottom: 32,
-            right: 32,
-            zIndex: 10,
-            boxShadow: theme.shadows[10],
-          }}
+          sx={{ position: 'fixed', bottom: 32, right: 32, zIndex: 10 }}
         >
           <KeyboardArrowUpIcon />
         </Fab>

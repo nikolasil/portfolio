@@ -35,7 +35,7 @@ const IntroContent = () => (
         variant="h3"
         fontWeight={600}
         gutterBottom
-        sx={{ textShadow: '0 0 8px rgba(0,0,0,0.7)' }}
+        sx={{ textShadow: '0 0 8px rgba(0,0,0,0.4)' }}
       >
         I&apos;m Nicolas Eliopoulos
       </Typography>
