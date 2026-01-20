@@ -19,6 +19,7 @@ import ThemeToggle from '../ThemeToggle';
 // Exported as a constant for reuse in other components
 export const NAV_ITEMS = [
   { text: 'Home', navLink: '/' },
+  { text: 'About', navLink: '/about' },
   { text: 'Education', navLink: '/education' },
   { text: 'Experience', navLink: '/experience' },
   { text: 'Skills', navLink: '/skills' },

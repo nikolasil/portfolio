@@ -16,7 +16,14 @@ import {
   Alert,
   CircularProgress,
 } from '@mui/material';
-import { Send, LinkedIn, GitHub, Email, LocationOn } from '@mui/icons-material';
+import {
+  Send,
+  LinkedIn,
+  GitHub,
+  Email,
+  LocationOn,
+  Phone,
+} from '@mui/icons-material';
 
 type ContactErrors = {
   name: string;
@@ -134,9 +141,9 @@ const ContactSection = () => {
             color="text.secondary"
             sx={{ mb: 4, fontSize: '1.1rem' }}
           >
-            I&apos;m currently open to new opportunities and collaborations. Whether
-            you have a question or just want to say hi, I&apos;ll try my best to get
-            back to you!
+            I&apos;m currently open to new opportunities and collaborations.
+            Whether you have a question or just want to say hi, I&apos;ll try my
+            best to get back to you!
           </Typography>
 
           <Stack spacing={3} mb={6}>
@@ -165,6 +172,36 @@ const ContactSection = () => {
                   sx={{ textDecoration: 'none', color: 'inherit' }}
                 >
                   iliopoulos.info@gmail.com
+                </Typography>
+              </Box>
+            </Stack>
+
+            {/* Added US Phone Number */}
+            <Stack direction="row" spacing={2} alignItems="center">
+              <IconButton
+                sx={{
+                  bgcolor: alpha(theme.palette.success.main, 0.1),
+                  color: 'success.main',
+                }}
+              >
+                <Phone />
+              </IconButton>
+              <Box>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  display="block"
+                >
+                  Call Me
+                </Typography>
+                <Typography
+                  variant="body1"
+                  fontWeight="bold"
+                  component="a"
+                  href="tel:+15162635151"
+                  sx={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  +1 (516) 263 5151
                 </Typography>
               </Box>
             </Stack>
@@ -245,7 +282,6 @@ const ContactSection = () => {
                     fullWidth
                     label="Email Address"
                     name="email"
-                    type="email"
                     variant="filled"
                     value={form.email}
                     onChange={handleChange}

@@ -23,18 +23,12 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 export type Project = {
   cat: string;
-
-  id: number;
-
+  id: string; // Changed from number to string for descriptive slugs
   title: string;
-
   dec: string;
-
   url: string;
-
   used: string[];
-
-  emoji?: string; // optional
+  emoji?: string;
 };
 
 export type ProjectsData = {
@@ -44,353 +38,208 @@ export type ProjectsData = {
 const projectsData: ProjectsData = {
   ai: [
     {
-      cat: 'Artificial Inteligence',
-
-      id: 0,
-
+      cat: 'Artificial Intelligence',
+      id: 'ai-email-assistant',
       title: 'AI-Powered Property Management Email Assistant',
-
-      dec: 'Python-based AI system to automate property management emails, parsing tenant requests, generating LLM-powered replies, classifying intents (maintenance, lockout, rent), and creating workflow action tickets with fully asynchronous IMAP/SMTP handling.',
-
+      dec: 'Python-based AI system to automate property management emails, parsing tenant requests, generating LLM-powered replies, and creating workflow tickets with asynchronous IMAP/SMTP handling.',
       url: 'https://github.com/nikolasil/property-management-assistant-ai',
-
       used: ['Python', 'Git'],
     },
-
     {
-      cat: 'Artificial Inteligence',
-
-      id: 1,
-
+      cat: 'Artificial Intelligence',
+      id: 'pacman-0',
       title: 'Berkeley Pacman Project 0',
-
-      dec: 'Short UNIX/Python tutorial in Python and the UNIX environment.',
-
+      dec: 'Short UNIX/Python tutorial covering the Python environment and basic UNIX commands.',
       url: 'https://github.com/nikolasil/Berkeley-Pacman-Project-0',
-
       used: ['Python', 'Git'],
     },
-
     {
-      cat: 'Artificial Inteligence',
-
-      id: 2,
-
+      cat: 'Artificial Intelligence',
+      id: 'pacman-1',
       title: 'Berkeley Pacman Project 1',
-
-      dec: 'Implement depth-first, breadth-first, uniform cost, and A* search algorithms. These algorithms are used to solve navigation and traveling salesman problems in the Pacman world.',
-
+      dec: 'Implemented depth-first, breadth-first, uniform cost, and A* search algorithms to solve navigation and traveling salesman problems in Pacman.',
       url: 'https://github.com/nikolasil/Berkeley-Pacman-Project-1',
-
       used: ['Python', 'Git'],
     },
-
     {
-      cat: 'Artificial Inteligence',
-
-      id: 3,
-
-      title: 'Berkeley Pacman Project 2',
-
+      cat: 'Artificial Intelligence',
+      id: 'pacman-2',
       emoji: '⭐',
-
-      dec: 'Implement multiagent minimax and expectimax algorithms, as well as designing evaluation functions.',
-
+      title: 'Berkeley Pacman Project 2',
+      dec: 'Implementation of multiagent minimax and expectimax algorithms, along with custom evaluation functions for game state analysis.',
       url: 'https://github.com/nikolasil/Berkeley-Pacman-Project-2',
-
       used: ['Python', 'Git'],
     },
   ],
-
   ml: [
     {
       cat: 'Machine Learning',
-
-      id: 100,
-
-      title: 'Vaccination Clasifier with Logistic Regression',
-
-      dec: 'A classifier to identify anti-vax | pro-vax tweets using Logistic Regression. Experimented with different hyperparameters, vectorizers and pre processing. Evaluated with F1 score, precision and recall.',
-
+      id: 'ml-logistic-regression',
+      title: 'Vaccination Classifier with Logistic Regression',
+      dec: 'A classifier to identify sentiment in vaccination tweets using Logistic Regression. Experimented with hyperparameters, vectorizers, and preprocessing evaluated with F1 score.',
       url: 'https://github.com/nikolasil/ai_2_exercise_1',
-
       used: ['Python', 'PyTorch', 'scikit-learn', 'pandas', 'numpy'],
     },
-
     {
       cat: 'Machine Learning',
-
-      id: 101,
-
-      title: 'Vaccination Clasifier with FeedForward Neural Network',
-
-      dec: 'A classifier to identify anti-vax | pro-vax tweets using FeedForward Neural Network. Experimented with pre-trained word embedding vector (GloVe), optimizers, number of hidden layers and the number of their units. Also experimented with different loss functions and metrics.',
-
+      id: 'ml-ffnn',
+      title: 'Vaccination Classifier with FeedForward NN',
+      dec: 'A classifier using FeedForward Neural Networks and pre-trained GloVe embeddings. Optimized hidden layers, units, and loss functions for performance.',
       url: 'https://github.com/nikolasil/ai_2_exercise_2',
-
       used: ['Python', 'PyTorch', 'scikit-learn', 'pandas', 'numpy'],
     },
-
     {
       cat: 'Machine Learning',
-
-      id: 102,
-
-      title:
-        'Vaccination Clasifier with Bidirectional Stacked RNN (LSTM & GRU Cells)',
-
-      dec: 'A classifier to identify anti-vax | pro-vax tweets using Bidirectional Stacked RNN (LSTM & GRU Cells). Experimented with Vanillia RNN and then compared it with RNN using GRU and LSTM Cells. Also experimented with dropout propability, GloVe sizes and different number of layers and the number of hidden size.',
-
+      id: 'ml-rnn-lstm',
+      title: 'Vaccination Classifier with Stacked RNN',
+      dec: 'Bidirectional Stacked RNN (LSTM & GRU) for tweet classification. Compared Vanilla RNN against GRU/LSTM cells and analyzed the impact of dropout.',
       url: 'https://github.com/nikolasil/ai_2_exercise_3',
-
       used: ['Python', 'PyTorch', 'scikit-learn', 'pandas', 'numpy'],
     },
-
     {
       cat: 'Machine Learning',
-
-      id: 103,
-
-      title: 'Question Answering with Transformers on SQUAD2 & TriviaQA',
-
+      id: 'ml-transformers',
       emoji: '⭐',
-
-      dec: 'Question Answering using Transformers. Fine-tuning a BERT-base model and expirimented with number of epochs, batch sizes, sequence length, gradient clipping, learning rate, and different optimizers.',
-
+      title: 'Question Answering with Transformers',
+      dec: 'Fine-tuned BERT-base models on SQUAD2 & TriviaQA. Experimented with sequence length, gradient clipping, and various optimizers.',
       url: 'https://github.com/nikolasil/ai_2_exercise_4',
-
       used: ['Python', 'PyTorch', 'scikit-learn', 'pandas', 'numpy'],
     },
   ],
-
   dm: [
     {
       cat: 'Data Mining',
-
-      id: 200,
-
+      id: 'dm-sentiment-lda',
       title: 'Data Mining 1',
-
-      dec: 'Sentiment Analysis on vaccination tweets. Created vectorizers Bag-of-words, Tf-idf, Word Embeddings. Tested the vectorizers with SVM, Random Forest, KNN. Used the LDA (Latent Dirichlet Allocation) algorithm to split the data into topics.',
-
+      dec: 'Sentiment Analysis using Bag-of-words and TF-IDF with SVM and Random Forest. Utilized LDA for topic modeling on large-scale vaccination datasets.',
       url: 'https://github.com/nikolasil/data-mining-1',
-
       used: ['Python', 'scikit-learn', 'pandas', 'numpy'],
     },
   ],
-
   'os|dt': [
     {
       cat: 'Operating Systems | Data Structures',
-
-      id: 300,
-
-      title: 'Shared memory | Semaphores',
-
-      dec: 'Two Processes sends each other mesages (server-client aproach) by a third process that simulates the channel. The messages are stored and passed from shared memory with the use of semaphores.',
-
+      id: 'os-shared-mem',
+      title: 'Shared Memory | Semaphores',
+      dec: 'Process communication via a shared memory channel using semaphores to ensure synchronization in a server-client architecture.',
       url: 'https://github.com/nikolasil/SharedMemory-Semaphores-MessagePassing',
-
       used: ['C', 'Git'],
     },
-
     {
       cat: 'Operating Systems | Data Structures',
-
-      id: 301,
-
-      title: 'RAM Pagination',
-
-      dec: 'This is a programm that simmulates 2 programms (bzip and gcc) with pages that are stored in ram using Hashed Paged Table and when the frames of the ram are full the page replacement happens with LRU or Second Change Algorithm.',
-
+      id: 'os-ram-pagination',
+      title: 'RAM Pagination Simulator',
+      dec: 'Simulates memory management using Hashed Page Tables and page replacement algorithms like LRU and Second Chance.',
       url: 'https://github.com/nikolasil/HashedPagedTable-LRU-SecondChange',
-
       used: ['C', 'Git'],
     },
-
     {
       cat: 'Operating Systems | Data Structures',
-
-      id: 302,
-
+      id: 'os-file-structure',
       title: 'File Structure in Disk',
-
-      dec: 'Implementation of Heap File Block, Hash File Block, Secondary Hash File Block.',
-
+      dec: 'Low-level implementation of Heap File Blocks, Hash File Blocks, and Secondary Hash File structures.',
       url: 'https://github.com/nikolasil/FileStructure-BlockHeapHashFiles-SecondaryIndex',
-
       used: ['C', 'Git'],
     },
-
     {
       cat: 'Operating Systems | Data Structures',
-
-      id: 303,
-
+      id: 'os-vaccine-1',
       title: 'Vaccine Monitor 1',
-
-      dec: 'This Application is a single Process that holds records of vaccinations. It has structures (Bloom Filter | Skip List) and answers commands based on the records given.',
-
+      dec: 'A single-process application utilizing Bloom Filters and Skip Lists to manage and query vaccination records efficiently.',
       url: 'https://github.com/nikolasil/vaccineMonitor_1',
-
       used: ['C++', 'Shell', 'Git'],
     },
-
     {
       cat: 'Operating Systems | Data Structures',
-
-      id: 304,
-
+      id: 'os-vaccine-2',
       title: 'Vaccine Monitor 2',
-
-      dec: 'Extends the Vaccine Monitor 1 by making sub Processes(a sub Process takes some countries that it is responsible). The communication between the main Process and the sub Processes is made with named-pipes.',
-
+      dec: 'Extended the monitor into a multi-process system using named pipes for communication between master and worker processes.',
       url: 'https://github.com/nikolasil/vaccineMonitor_2',
-
       used: ['C++', 'Shell', 'Git'],
     },
-
     {
       cat: 'Operating Systems | Data Structures',
-
-      id: 305,
-
-      title: 'Vaccine Monitor 3',
-
+      id: 'os-vaccine-3',
       emoji: '⭐',
-
-      dec: 'Extends the Vaccine Monitor 2 by making the sub Processes multi threading. The communication is also changed from named-pipes to web-sockets and signals.',
-
+      title: 'Vaccine Monitor 3',
+      dec: 'Advanced version featuring multi-threading and network communication using web-sockets and signals.',
       url: 'https://github.com/nikolasil/vaccineMonitor_3',
-
       used: ['C++', 'Shell', 'Git'],
     },
   ],
-
   comp: [
     {
       cat: 'Compilers',
-
-      id: 400,
-
-      title: 'LL(1) Calculator Parser - Translator to Java',
-
-      dec: 'Implements a simple calculator. It supports addition, subtraction, and exponentiation operators, as well as parentheses. Also implements a parser and translator for a language supporting string operations. It supports the concatenation, function definitions, function calls and conditionals.',
-
+      id: 'comp-calc-parser',
+      title: 'LL(1) Calculator Parser',
+      dec: 'A translator that converts custom language string operations and arithmetic into Java code using LL(1) parsing.',
       url: 'https://github.com/nikolasil/compilers1',
-
       used: ['Java', 'Git'],
     },
-
     {
       cat: 'Compilers',
-
-      id: 401,
-
-      title: 'MiniJava Static Checking (Semantic Analysis)',
-
-      dec: 'Impliments a compiler for MiniJava, a subset of Java. MiniJava is designed so that its programs can be compiled by a full Java compiler like javac.',
-
+      id: 'comp-minijava-check',
+      title: 'MiniJava Semantic Analysis',
+      dec: 'Implemented a static checker for the MiniJava language, ensuring semantic correctness before compilation.',
       url: 'https://github.com/nikolasil/compilers2',
-
       used: ['Java', 'Git'],
     },
-
     {
       cat: 'Compilers',
-
-      id: 402,
-
-      title: 'Generating intermediate code (MiniJava -> LLVM)',
-
+      id: 'comp-llvm-gen',
       emoji: '⭐',
-
-      dec: 'Impliments visitors who transform MiniJava code into the intermediate representation used by the LLVM compiler project.',
-
+      title: 'MiniJava -> LLVM IR Generator',
+      dec: 'Visitor-based implementation to transform MiniJava source code into LLVM intermediate representation.',
       url: 'https://github.com/nikolasil/compilers3',
-
       used: ['Java', 'llvm', 'Git'],
     },
   ],
-
   sec: [
     {
       cat: 'Security',
-
-      id: 500,
-
-      title: 'Seuruty (Open Eclass) Defence & Attack',
-
+      id: 'sec-eclass-attack',
       emoji: '⭐',
-
-      dec: "The purpose was to fix the vunerabilities of the Open Eclass 2.3 (XSS, SQL Injections, CSRF Token, RFI) & attack the others teams website's trying to deface them.",
-
+      title: 'Security Defence & Attack',
+      dec: 'Fixed vulnerabilities (XSS, SQLi, CSRF) in Open Eclass 2.3 and performed penetration testing on competing environments.',
       url: 'https://github.com/nikolasil/security-1-openeclass',
-
       used: ['PHP', 'Docker', 'Git'],
     },
   ],
-
   web: [
     {
       cat: 'Web Applications',
-
-      id: 600,
-
-      title: 'My Website Portfolio',
-
+      id: 'web-portfolio',
       emoji: '⭐',
-
-      dec: 'To gain experience in web development, I developed this portfolio.',
-
+      title: 'Personal Portfolio',
+      dec: 'A modern, responsive portfolio built with React and MUI to showcase my software engineering journey.',
       url: 'https://github.com/nikolasil/portfolio',
-
       used: ['React', 'Sass', 'Javascript', 'MaterialUI', 'Git'],
     },
-
     {
       cat: 'Web Applications',
-
-      id: 601,
-
+      id: 'web-doatap',
       title: 'Doatap Reformation',
-
-      dec: 'Recreated Doatap https://www.doatap.gr/ website. The concept was to fix the faults, make it more user friendly and in the same time more usable.',
-
+      dec: 'A complete UX/UI overhaul of the Doatap website using the MERN stack for better usability and modern performance.',
       url: 'https://github.com/nikolasil/doatap-reformation',
-
       used: [
         'React',
-
         'Node',
-
         'Express',
-
         'Javascript',
-
         'Redux',
-
         'MongoDB',
-
         'Git',
       ],
     },
   ],
-
   mobile: [
     {
       cat: 'Mobile Applications',
-
-      id: 700,
-
-      title: 'Altemco HVAC',
-
+      id: 'mob-hvac-app',
       emoji: '⭐',
-
-      dec: 'An android application that assists users in finding air conditioning error codes and receiving helpful advice on how to resolve the issue. [Monthly Users ~2.500, Total Downloads ~5.000]',
-
+      title: 'Altemco HVAC',
+      dec: 'Android application for HVAC error codes. Reached 5,000+ downloads and ~2,500 monthly active users.',
       url: 'https://play.google.com/store/apps/details?id=appinventor.ai_nikolasil2000.hvac2',
-
       used: ['Android', 'AppInventor', 'GooglePlay'],
     },
   ],
@@ -412,11 +261,11 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
           border: `1px solid ${theme.palette.divider}`,
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           background: `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${alpha(theme.palette.primary.main, 0.02)} 100%)`,
-          // '&:hover': {
-          //   borderColor: theme.palette.primary.main,
-          //   transform: 'translateY(-6px)',
-          //   boxShadow: `0 12px 24px ${alpha(theme.palette.common.black, 0.1)}`,
-          // },
+          '&:hover': {
+            borderColor: theme.palette.primary.main,
+            transform: 'translateY(-4px)',
+            boxShadow: `0 8px 20px ${alpha(theme.palette.common.black, 0.05)}`,
+          },
         }}
       >
         <Stack
@@ -454,7 +303,7 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
             useFlexGap
             sx={{ mb: 2 }}
           >
-            {proj.used.map((tech: string) => (
+            {proj.used.map((tech) => (
               <Chip
                 key={tech}
                 label={tech}
@@ -494,69 +343,44 @@ const PortfolioSection = () => {
 
   const allTechs = useMemo(() => {
     const techSet = new Set<string>();
-
     Object.values(projectsData).forEach((projects) => {
-      projects.forEach((proj) => {
-        proj.used.forEach((t: string) => techSet.add(t));
-      });
+      projects.forEach((proj) => proj.used.forEach((t) => techSet.add(t)));
     });
-
     return Array.from(techSet).sort();
   }, []);
 
   const filteredProjectsData = useMemo(() => {
     if (selectedTechs.length === 0) return projectsData;
-
     const filtered: ProjectsData = {};
-
     Object.entries(projectsData).forEach(([key, projects]) => {
       const matches = projects.filter((proj) =>
         selectedTechs.every((t) => proj.used.includes(t)),
       );
-
       if (matches.length > 0) filtered[key] = matches;
     });
-
     return filtered;
   }, [selectedTechs]);
 
-  // Clever Logic: Calculate which techs would result in 0 projects if clicked
-
   const availableTechs = useMemo(() => {
     const available = new Set<string>();
-
     const allProjects = Object.values(projectsData).flat();
 
     allTechs.forEach((tech) => {
-      // If already selected, it's "available" (to deselect)
-
       if (selectedTechs.includes(tech)) {
         available.add(tech);
-
         return;
       }
-
-      // Check if adding this tech to the current selection returns any results
-
       const potentialSelection = [...selectedTechs, tech];
-
       const hasResults = allProjects.some((proj) =>
         potentialSelection.every((t) => proj.used.includes(t)),
       );
-
-      if (hasResults) {
-        available.add(tech);
-      }
+      if (hasResults) available.add(tech);
     });
-
     return available;
   }, [allTechs, selectedTechs]);
 
   const toggleTech = (tech: string) => {
-    // Prevent selection if it's not available and not already selected
-
     if (!availableTechs.has(tech) && !selectedTechs.includes(tech)) return;
-
     setSelectedTechs((prev) =>
       prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech],
     );
@@ -586,7 +410,6 @@ const PortfolioSection = () => {
         </Typography>
       </Stack>
 
-      {/* Toolbar */}
       <Stack direction="row" justifyContent="center" spacing={2} mb={4}>
         <Badge badgeContent={selectedTechs.length} color="primary">
           <Button
@@ -639,7 +462,6 @@ const PortfolioSection = () => {
         </Paper>
       </Collapse>
 
-      {/* Grid Rendering */}
       {Object.entries(filteredProjectsData).map(([key, projects]) => (
         <Box key={key} sx={{ mb: 10 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
@@ -657,7 +479,6 @@ const PortfolioSection = () => {
 
           <Grid container spacing={3}>
             {projects.map((proj, pIdx) => (
-              /* Remove 'item' and use the 'size' prop instead */
               <Grid key={proj.id} size={{ xs: 12, sm: 6, lg: 4 }}>
                 <ProjectCard proj={proj} index={pIdx} />
               </Grid>
@@ -665,10 +486,8 @@ const PortfolioSection = () => {
           </Grid>
         </Box>
       ))}
-
-      {/* Scroll to top component here... */}
     </Box>
   );
-};;
+};
 
 export default PortfolioSection;
