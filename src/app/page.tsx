@@ -1,7 +1,7 @@
 'use client';
 
 import IntroSection from '@/components/sections/intro/IntroSection';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Snackbar,
   Alert,
@@ -14,20 +14,10 @@ export default function IntroPage() {
   const theme = useTheme();
   // Detects if the screen is NOT mobile (md and up)
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    // Check if it's the first visit
-    const hasSeenNotice = localStorage.getItem('has-seen-mobile-notice');
-
-    if (!hasSeenNotice && isMobile) {
-      setOpen(true);
-    }
-  }, [isMobile]); // Re-run if screen size changes
+  
+  const [open, setOpen] = useState(isMobile);
 
   const handleClose = () => {
-    localStorage.setItem('has-seen-mobile-notice', 'true');
     setOpen(false);
   };
 
