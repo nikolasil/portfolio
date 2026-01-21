@@ -1,5 +1,5 @@
 # Use --platform=$BUILDPLATFORM to run the build natively on the GitHub Runner (x86)
-FROM --platform=$BUILDPLATFORM node:20-alpine AS builder
+FROM --platform=$BUILDPLATFORM node:24-alpine AS builder
 
 WORKDIR /app
 
@@ -22,7 +22,7 @@ RUN npm run build
 
 # --- Stage 2: Production (The final image will be ARM64) ---
 # We don't use $BUILDPLATFORM here so it targets the platform specified in your YAML
-FROM node:20-alpine AS runner
+FROM node:24-alpine AS runner
 
 WORKDIR /app
 ENV NODE_ENV=production
