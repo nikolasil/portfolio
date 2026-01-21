@@ -590,7 +590,7 @@ const PortfolioSection = () => {
                   </Typography>
                 }
               />
-              {(selectedTags.length > 0 || searchQuery) && (
+              {(selectedTags.length > 0 || searchQuery || showImportantOnly) && (
                 <IconButton
                   size="small"
                   onClick={() => {
