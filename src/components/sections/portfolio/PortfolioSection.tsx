@@ -17,6 +17,13 @@ import {
   useTheme,
   Switch,
   FormControlLabel,
+  TextField,
+  InputAdornment,
+  Tabs,
+  Tab,
+  Fab,
+  Zoom,
+  useScrollTrigger,
 } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -24,6 +31,8 @@ import ClearAllIcon from '@mui/icons-material/ClearAll';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import StarIcon from '@mui/icons-material/Star';
 import SchoolIcon from '@mui/icons-material/School';
+import SearchIcon from '@mui/icons-material/Search';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export type Project = {
   cat: string;
@@ -86,7 +95,7 @@ const projectsData: ProjectsData = {
       id: 'web-portfolio',
       important: true,
       title: 'Engineering Portfolio',
-      dec: 'A modern, responsive portfolio built with Next.js and MUI to showcase complex software engineering projects.',
+      dec: 'A modern, responsive web portfolio built with Next.js and MUI to showcase complex software engineering projects.',
       url: 'https://github.com/nikolasil/portfolio',
       tags: [
         'Web',
@@ -102,7 +111,7 @@ const projectsData: ProjectsData = {
       cat: 'Web Applications',
       id: 'iliopoulosrent',
       title: 'Luxury Vacation Rental Platform',
-      dec: 'High-performance Next.js platform with SSR and advanced image optimization. Focused on SEO and conversion to reduce third-party booking dependency.',
+      dec: 'High-performance Next.js web platform with SSR and advanced image optimization. Focused on SEO and conversion to reduce third-party booking dependency.',
       url: 'https://github.com/nikolasil/iliopoulosrent',
       tags: [
         'Web',
@@ -218,6 +227,31 @@ const projectsData: ProjectsData = {
     },
   ],
 };
+// Scroll-to-top component
+function ScrollTop() {
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 100,
+  });
+
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <Zoom in={trigger}>
+      <Box
+        onClick={handleClick}
+        role="presentation"
+        sx={{ position: 'fixed', bottom: 32, right: 32, zIndex: 1000 }}
+      >
+        <Fab color="primary" size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </Box>
+    </Zoom>
+  );
+}
 
 const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
   const theme = useTheme();
@@ -227,7 +261,7 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2.5, sm: 3 },
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
@@ -239,17 +273,12 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
             : `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${alpha(theme.palette.primary.main, 0.02)} 100%)`,
           '&:hover': {
             borderColor: theme.palette.primary.main,
-            transform: 'translateY(-4px)',
+            transform: { md: 'translateY(-4px)', xs: 'none' },
             boxShadow: `0 8px 20px ${alpha(theme.palette.common.black, 0.05)}`,
           },
         }}
       >
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="flex-start"
-          mb={2}
-        >
+        <Stack direction="row" justifyContent="space-between" alignItems="flex-start" mb={2}>
           <Box>
             <Stack direction="row" spacing={1} mb={1}>
               {proj.important && (
@@ -258,12 +287,7 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
                   label="Featured"
                   size="small"
                   color="primary"
-                  sx={{
-                    height: 18,
-                    fontSize: '0.65rem',
-                    fontWeight: 700,
-                    px: 0.5,
-                  }}
+                  sx={{ height: 18, fontSize: '0.65rem', fontWeight: 700, px: 0.5 }}
                 />
               )}
               {proj.context && (
@@ -272,24 +296,15 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
                   label="University"
                   size="small"
                   variant="outlined"
-                  sx={{
-                    height: 18,
-                    fontSize: '0.65rem',
-                    fontWeight: 700,
-                    px: 0.5,
-                  }}
+                  sx={{ height: 18, fontSize: '0.65rem', fontWeight: 700, px: 0.5 }}
                 />
               )}
             </Stack>
-            <Typography variant="h6" fontWeight="800" lineHeight={1.3}>
+            <Typography variant="h6" fontWeight="800" lineHeight={1.3} sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}>
               {proj.title}
             </Typography>
             {proj.context && (
-              <Typography
-                variant="caption"
-                color="text.disabled"
-                sx={{ display: 'block', mt: 0.5, fontWeight: 600 }}
-              >
+              <Typography variant="caption" color="text.disabled" sx={{ display: 'block', mt: 0.5, fontWeight: 600 }}>
                 {proj.context}
               </Typography>
             )}
@@ -299,22 +314,12 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
           )}
         </Stack>
 
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ mb: 'auto', minHeight: '60px' }}
-        >
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 'auto', minHeight: '60px' }}>
           {proj.dec}
         </Typography>
 
         <Box sx={{ mt: 3 }}>
-          <Stack
-            direction="row"
-            spacing={1}
-            flexWrap="wrap"
-            useFlexGap
-            sx={{ mb: 2 }}
-          >
+          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
             {proj.tags.map((tag) => (
               <Chip
                 key={tag}
@@ -322,7 +327,7 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
                 size="small"
                 variant="outlined"
                 sx={{
-                  fontSize: '0.7rem',
+                  fontSize: '0.65rem',
                   height: 20,
                   borderColor: alpha(theme.palette.primary.main, 0.2),
                   bgcolor: alpha(theme.palette.primary.main, 0.03),
@@ -338,7 +343,7 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
             variant="contained"
             disableElevation
             endIcon={<LaunchIcon sx={{ fontSize: 16 }} />}
-            sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold' }}
+            sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold', py: 1 }}
           >
             View Source
           </Button>
@@ -353,6 +358,8 @@ const PortfolioSection = () => {
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [selectedTags, setselectedTags] = useState<string[]>([]);
   const [showImportantOnly, setShowImportantOnly] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState(0);
 
   const allTags = useMemo(() => {
     const tagSet = new Set<string>();
@@ -364,18 +371,39 @@ const PortfolioSection = () => {
 
   const filteredProjectsData = useMemo(() => {
     const filtered: ProjectsData = {};
+    const query = searchQuery.toLowerCase();
+    if (query.length == 1) return projectsData; // Skip filtering for very short queries
+
     Object.entries(projectsData).forEach(([key, projects]) => {
       const matches = projects.filter((proj) => {
         const matchesTag =
           selectedTags.length === 0 ||
           selectedTags.every((t) => proj.tags.includes(t));
         const matchesImportance = !showImportantOnly || proj.important;
-        return matchesTag && matchesImportance;
+        const matchesSearch =
+          proj.title.toLowerCase().includes(query) ||
+          proj.dec.toLowerCase().includes(query);
+
+        return matchesTag && matchesImportance && matchesSearch;
       });
       if (matches.length > 0) filtered[key] = matches;
     });
     return filtered;
-  }, [selectedTags, showImportantOnly]);
+  }, [selectedTags, showImportantOnly, searchQuery]);
+
+  const scrollToCategory = (id: string, index: number) => {
+    setActiveCategory(index);
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 140; // Adjusted for mobile sticky header height
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      window.scrollTo({
+        top: elementRect - bodyRect - offset,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   const availableTags = useMemo(() => {
     const available = new Set<string>();
@@ -398,7 +426,6 @@ const PortfolioSection = () => {
   }, [allTags, selectedTags, showImportantOnly]);
 
   const toggleTag = (tag: string) => {
-    if (!availableTags.has(tag) && !selectedTags.includes(tag)) return;
     setselectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
@@ -407,150 +434,234 @@ const PortfolioSection = () => {
   return (
     <Box
       sx={{
-        py: 8,
+        py: { xs: 4, md: 8 },
         px: { xs: 2, sm: 4, md: 8 },
         maxWidth: '1400px',
         margin: '0 auto',
+        overflowX: 'hidden',
       }}
     >
       <Stack alignItems="center" mb={6}>
-        <Typography variant="h4" fontWeight="900" gutterBottom>
+        <Typography
+          variant="h4"
+          fontWeight="900"
+          gutterBottom
+          sx={{ fontSize: { xs: '1.75rem', md: '2.125rem' } }}
+        >
           💼 Portfolio
         </Typography>
         <Typography
           variant="subtitle1"
           color="text.secondary"
           textAlign="center"
-          sx={{ maxWidth: 600 }}
+          sx={{ maxWidth: 600, px: 2 }}
         >
           A collection of my work ranging from Low-Level Systems in C to Modern
           AI Applications.
         </Typography>
       </Stack>
 
-      <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        justifyContent="center"
-        alignItems="center"
-        spacing={2}
-        mb={4}
+      <Paper
+        elevation={0}
+        sx={{
+          p: 2,
+          mb: 4,
+          borderRadius: { xs: 3, md: 4 },
+          border: `1px solid ${theme.palette.divider}`,
+          position: 'sticky',
+          top: { xs: 10, md: 20 },
+          zIndex: 10,
+          backdropFilter: 'blur(10px)',
+          bgcolor: alpha(theme.palette.background.paper, 0.8),
+        }}
       >
-        <Stack direction="row" spacing={2}>
-          <Badge badgeContent={selectedTags.length} color="primary">
-            <Button
-              variant="outlined"
-              startIcon={<FilterAltIcon />}
-              onClick={() => setFiltersVisible(!filtersVisible)}
-              sx={{ borderRadius: 10, px: 4 }}
+        <Grid container spacing={1.5} alignItems="center">
+          <Grid size={{ xs: 12, md: 4 }}>
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="Search projects..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon fontSize="small" color="action" />
+                  </InputAdornment>
+                ),
+                sx: { borderRadius: 10 },
+              }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 8 }}>
+            <Stack
+              direction="row"
+              spacing={1}
+              justifyContent={{ xs: 'space-between', md: 'flex-end' }}
+              alignItems="center"
             >
-              Filter Tags
-            </Button>
-          </Badge>
-          {selectedTags.length > 0 && (
-            <IconButton onClick={() => setselectedTags([])} color="error">
-              <ClearAllIcon />
-            </IconButton>
-          )}
-        </Stack>
-
-        <Box
-          sx={{
-            borderLeft: { sm: `1px solid ${theme.palette.divider}` },
-            pl: { sm: 2 },
-          }}
-        >
-          <FormControlLabel
-            control={
-              <Switch
-                checked={showImportantOnly}
-                onChange={(e) => setShowImportantOnly(e.target.checked)}
-                color="primary"
-              />
-            }
-            label={
-              <Typography variant="body2" fontWeight="700">
-                Featured Only
-              </Typography>
-            }
-          />
-        </Box>
-      </Stack>
-
-      <Collapse in={filtersVisible}>
-        <Paper
-          variant="outlined"
-          sx={{
-            p: 3,
-            mb: 6,
-            borderRadius: 4,
-            bgcolor: alpha(theme.palette.primary.main, 0.01),
-          }}
-        >
-          <Stack
-            direction="row"
-            flexWrap="wrap"
-            spacing={1}
-            useFlexGap
-            justifyContent="center"
-          >
-            {allTags.map((tag) => (
-              <Chip
-                key={tag}
-                label={tag}
-                onClick={() => toggleTag(tag)}
-                color={selectedTags.includes(tag) ? 'primary' : 'default'}
-                variant={selectedTags.includes(tag) ? 'filled' : 'outlined'}
-                disabled={
-                  !availableTags.has(tag) && !selectedTags.includes(tag)
+              <Badge badgeContent={selectedTags.length} color="primary">
+                <Button
+                  variant={filtersVisible ? 'contained' : 'outlined'}
+                  startIcon={<FilterAltIcon />}
+                  onClick={() => setFiltersVisible(!filtersVisible)}
+                  sx={{
+                    borderRadius: 10,
+                    px: { xs: 2, md: 3 },
+                    fontSize: { xs: '0.8rem', md: '0.875rem' },
+                  }}
+                >
+                  Tags
+                </Button>
+              </Badge>
+              <FormControlLabel
+                sx={{ mr: 0 }}
+                control={
+                  <Switch
+                    size="small"
+                    checked={showImportantOnly}
+                    onChange={(e) => setShowImportantOnly(e.target.checked)}
+                  />
                 }
-                sx={{ borderRadius: 1 }}
+                label={
+                  <Typography
+                    variant="body2"
+                    fontWeight="700"
+                    sx={{ fontSize: '0.8rem' }}
+                  >
+                    Featured
+                  </Typography>
+                }
               />
-            ))}
-          </Stack>
-        </Paper>
-      </Collapse>
+              {(selectedTags.length > 0 || searchQuery) && (
+                <IconButton
+                  size="small"
+                  onClick={() => {
+                    setselectedTags([]);
+                    setSearchQuery('');
+                    setShowImportantOnly(false);
+                  }}
+                  color="error"
+                >
+                  <ClearAllIcon />
+                </IconButton>
+              )}
+            </Stack>
+          </Grid>
+        </Grid>
+        <Collapse in={filtersVisible}>
+          <Box
+            sx={{
+              pt: 2,
+              mt: 2,
+              borderTop: `1px solid ${theme.palette.divider}`,
+            }}
+          >
+            <Stack
+              direction="row"
+              flexWrap="wrap"
+              spacing={1}
+              useFlexGap
+              justifyContent="center"
+            >
+              {allTags.map((tag) => (
+                <Chip
+                  key={tag}
+                  label={tag}
+                  onClick={() => toggleTag(tag)}
+                  color={selectedTags.includes(tag) ? 'primary' : 'default'}
+                  variant={selectedTags.includes(tag) ? 'filled' : 'outlined'}
+                  disabled={
+                    !availableTags.has(tag) && !selectedTags.includes(tag)
+                  }
+                  sx={{ borderRadius: 1, fontSize: '0.75rem' }}
+                />
+              ))}
+            </Stack>
+          </Box>
+        </Collapse>
+      </Paper>
+
+      <Box
+        sx={{ mb: 4, display: 'flex', justifyContent: 'center', width: '100%' }}
+      >
+        <Tabs
+          value={activeCategory}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+          sx={{
+            maxWidth: '100%',
+            '& .MuiTabs-indicator': { height: 3, borderRadius: '3px 3px 0 0' },
+          }}
+        >
+          {Object.keys(filteredProjectsData).map((key, index) => (
+            <Tab
+              key={key}
+              label={filteredProjectsData[key][0].cat.split(' & ')[0]}
+              onClick={() => scrollToCategory(key, index)}
+              sx={{
+                fontWeight: 'bold',
+                textTransform: 'none',
+                minWidth: 'auto',
+                px: 2,
+              }}
+            />
+          ))}
+        </Tabs>
+      </Box>
 
       {Object.entries(filteredProjectsData).map(([key, projects]) => (
-        <Box key={key} sx={{ mb: 10 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+        <Box key={key} id={key} sx={{ mb: 10 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              mb: 4,
+              flexWrap: { xs: 'wrap', sm: 'nowrap' },
+              gap: 1,
+            }}
+          >
             <Typography
               variant="h5"
               fontWeight="800"
-              sx={{ whiteSpace: 'nowrap' }}
+              sx={{
+                whiteSpace: { xs: 'normal', sm: 'nowrap' },
+                fontSize: { xs: '1.25rem', sm: '1.5rem' },
+                display: 'flex',
+                alignItems: 'center',
+              }}
             >
               {projects[0].cat}
+              <Chip
+                label={projects.length}
+                size="small"
+                sx={{
+                  ml: 2,
+                  fontWeight: 'bold',
+                  bgcolor: alpha(theme.palette.primary.main, 0.1),
+                }}
+              />
             </Typography>
             <Box
-              sx={{ ml: 2, height: '1px', width: '100%', bgcolor: 'divider' }}
+              sx={{
+                height: '1px',
+                flexGrow: 1,
+                bgcolor: 'divider',
+                minWidth: { xs: '100%', sm: 'auto' },
+              }}
             />
           </Box>
-
           <Grid container spacing={3}>
             {projects.map((proj, pIdx) => (
-              <Grid key={proj.id} size={{ xs: 12, sm: 6, lg: 4 }}>
+              <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={proj.id}>
                 <ProjectCard proj={proj} index={pIdx} />
               </Grid>
             ))}
           </Grid>
         </Box>
       ))}
-
-      {Object.keys(filteredProjectsData).length === 0 && (
-        <Stack alignItems="center" py={10}>
-          <Typography variant="h6" color="text.disabled">
-            No projects found matching these filters.
-          </Typography>
-          <Button
-            sx={{ mt: 2 }}
-            onClick={() => {
-              setselectedTags([]);
-              setShowImportantOnly(false);
-            }}
-          >
-            Reset All Filters
-          </Button>
-        </Stack>
-      )}
+      <ScrollTop />
     </Box>
   );
 };
