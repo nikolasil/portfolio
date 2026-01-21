@@ -146,7 +146,7 @@ const ContactSection = () => {
             best to get back to you!
           </Typography>
 
-          <Stack spacing={3} mb={6}>
+          <Stack spacing={2} mb={6}>
             <Stack direction="row" spacing={2} alignItems="center">
               <IconButton
                 sx={{
@@ -230,25 +230,73 @@ const ContactSection = () => {
             </Stack>
           </Stack>
 
-          <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-            FOLLOW ME
+          <Typography
+            variant="subtitle2"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ mt: 2 }}
+          >
+            Follow Me:
           </Typography>
-          <Stack direction="row" spacing={1}>
-            <IconButton
-              component="a"
-              href="https://www.linkedin.com/in/nikolasiliopoulos/"
-              target="_blank"
-              color="primary"
-            >
-              <LinkedIn fontSize="large" />
-            </IconButton>
-            <IconButton
-              component="a"
-              href="https://github.com/nikolasil"
-              target="_blank"
-            >
-              <GitHub fontSize="large" />
-            </IconButton>
+
+          <Stack spacing={2}>
+            {/* Primary Social Icons */}
+            <Stack direction="row" spacing={1} alignItems="center">
+              <IconButton
+                component="a"
+                href="https://www.linkedin.com/in/nikolasiliopoulos/"
+                target="_blank"
+                color="primary"
+                sx={{ p: 0 }}
+              >
+                <LinkedIn fontSize="large" />
+              </IconButton>
+              <IconButton
+                component="a"
+                href="https://github.com/nikolasil"
+                target="_blank"
+                sx={{ p: 0 }}
+              >
+                <GitHub fontSize="large" />
+              </IconButton>
+            </Stack>
+
+            {/* Technical Profile Badges */}
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              {[
+                {
+                  href: 'https://stackoverflow.com/users/13285897',
+                  src: 'https://img.shields.io/badge/-StackOverflow-FE7A16?style=flat&logo=stack-overflow&logoColor=white',
+                },
+                {
+                  href: 'https://kaggle.com/nikolasil2000',
+                  src: 'https://img.shields.io/badge/-Kaggle-20BEFF?style=flat&logo=kaggle&logoColor=white',
+                },
+                {
+                  href: 'https://www.leetcode.com/nikolasil2000',
+                  src: 'https://img.shields.io/badge/-LeetCode-FFA116?style=flat&logo=leetcode&logoColor=white',
+                },
+                {
+                  href: 'https://discord.com/users/nikolasil#9639',
+                  src: 'https://img.shields.io/badge/-Discord-5865F2?style=flat&logo=discord&logoColor=white',
+                },
+              ].map((badge, idx) => (
+                <Box
+                  key={idx}
+                  component="a"
+                  href={badge.href}
+                  target="_blank"
+                  sx={{
+                    display: 'inline-block',
+                    transition: 'transform 0.2s',
+                    '&:hover': { transform: 'scale(1.05)' },
+                    lineHeight: 0,
+                  }}
+                >
+                  <img src={badge.src} alt="social-badge" height="25" />
+                </Box>
+              ))}
+            </Stack>
           </Stack>
         </Box>
 

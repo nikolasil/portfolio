@@ -1,12 +1,24 @@
 import React from 'react';
-import { Box, Typography, Button, Stack } from '@mui/material';
+import { Box, Typography, Button, Stack, keyframes } from '@mui/material';
 import { ReactTyped } from 'react-typed';
 import Link from 'next/link';
+
+// Define the waving animation
+const waveAnimation = keyframes`
+  0% { transform: rotate( 0.0deg) }
+  10% { transform: rotate(14.0deg) }
+  20% { transform: rotate(-8.0deg) }
+  30% { transform: rotate(14.0deg) }
+  40% { transform: rotate(-4.0deg) }
+  50% { transform: rotate(10.0deg) }
+  60% { transform: rotate( 0.0deg) }
+  100% { transform: rotate( 0.0deg) }
+`;
 
 const IntroContent = () => (
   <Box
     sx={{
-      height: 'calc(100dvh - 64px)', // subtract navbar height
+      height: 'calc(100dvh - 64px)',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -26,9 +38,24 @@ const IntroContent = () => (
       <Typography
         variant="h4"
         gutterBottom
-        sx={{ textShadow: '0 0 5px rgba(0,0,0,0.7)' }}
+        sx={{
+          textShadow: '0 0 5px rgba(0,0,0,0.7)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1,
+        }}
       >
-        👋 Hello
+        <Box
+          component="span"
+          sx={{
+            display: 'inline-block',
+            animation: `${waveAnimation} 2.5s infinite`,
+            transformOrigin: '70% 70%', // Pivot point at the wrist
+          }}
+        >
+          👋
+        </Box>
+        Hello
       </Typography>
 
       <Typography
@@ -79,6 +106,7 @@ const IntroContent = () => (
           color="primary"
           component={Link}
           href="/contact"
+          sx={{ borderRadius: 2, px: 3 }}
         >
           Contact Me
         </Button>
@@ -87,6 +115,7 @@ const IntroContent = () => (
           color="primary"
           href="/resume/Nikolas Iliopoulos.pdf"
           target="_blank"
+          sx={{ borderRadius: 2, px: 3 }}
         >
           View Resume
         </Button>

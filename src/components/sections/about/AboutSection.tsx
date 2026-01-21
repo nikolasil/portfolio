@@ -220,14 +220,14 @@ const AboutSection = () => {
             ))}
           </Grid>
 
-          {/* Technical Toolbelt */}
+          {/* Technical Toolbelt Overview*/}
           <Typography
             variant="subtitle2"
             fontWeight="900"
             gutterBottom
             sx={{ letterSpacing: 1, mb: 2 }}
           >
-            TECHNICAL TOOLBELT OVERVIEW
+            Technical Toolbelt Overview:
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mb: 6 }}>
             {skills.map((skill) => (
