@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import {
   Box,
   Typography,
@@ -24,19 +25,67 @@ import {
   LocationOn,
   Phone,
 } from '@mui/icons-material';
-import Image from 'next/image';
 
+// --- Types ---
 type ContactErrors = {
   name: string;
   email: string;
   message: string;
 };
 
+// --- Sub-components for cleaner JSX ---
+const InfoItem = ({
+  icon,
+  title,
+  value,
+  href,
+  color,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  value: string;
+  href?: string;
+  color: string;
+}) => {
+  return (
+    <Stack direction="row" spacing={2} alignItems="center">
+      <IconButton
+        sx={{
+          bgcolor: alpha(color, 0.1),
+          color: color,
+          '&:hover': { bgcolor: alpha(color, 0.2) },
+        }}
+      >
+        {icon}
+      </IconButton>
+      <Box>
+        <Typography variant="caption" color="text.secondary" display="block">
+          {title}
+        </Typography>
+        <Typography
+          variant="body1"
+          fontWeight="bold"
+          component={href ? 'a' : 'p'}
+          href={href}
+          sx={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          {value}
+        </Typography>
+      </Box>
+    </Stack>
+  );
+};
+
 const ContactSection = () => {
   const theme = useTheme();
 
+  // --- State ---
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [errors, setErrors] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState<ContactErrors>({
+    name: '',
+    email: '',
+    message: '',
+  });
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -46,6 +95,7 @@ const ContactSection = () => {
 
   const lastSentRef = useRef(0);
 
+  // --- Logic ---
   const validate = () => {
     let valid = true;
     const newErrors: ContactErrors = { name: '', email: '', message: '' };
@@ -71,9 +121,10 @@ const ContactSection = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    if (errors[e.target.name as keyof ContactErrors]) {
-      setErrors({ ...errors, [e.target.name]: '' });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    if (errors[name as keyof ContactErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
@@ -110,7 +161,7 @@ const ContactSection = () => {
       lastSentRef.current = Date.now();
       setForm({ name: '', email: '', message: '' });
     } catch (err) {
-      console.log(err);
+      console.debug(err);
       setSnackbar({
         open: true,
         message: 'Failed to send message. Try again later.',
@@ -124,130 +175,78 @@ const ContactSection = () => {
   return (
     <Box
       sx={{
-        py: 5,
+        py: 10,
         px: { xs: 2, md: 8 },
         maxWidth: '1200px',
         margin: '0 auto',
       }}
     >
-      <Stack direction={{ xs: 'column', md: 'row' }} spacing={8}>
+      <Stack
+        direction={{ xs: 'column', md: 'row' }}
+        spacing={8}
+        alignItems="center"
+      >
         {/* Left Side: Contact Info */}
         <Box sx={{ flex: 1 }}>
-          <Typography variant="h3" fontWeight="900" gutterBottom>
+          <Typography
+            variant="h3"
+            fontWeight="900"
+            gutterBottom
+            sx={{ letterSpacing: '-0.02em' }}
+          >
             Let&apos;s{' '}
             <span style={{ color: theme.palette.primary.main }}>Connect</span>.
           </Typography>
+
           <Typography
             variant="body1"
             color="text.secondary"
-            sx={{ mb: 4, fontSize: '1.1rem' }}
+            sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.6 }}
           >
             I&apos;m currently open to new opportunities and collaborations.
             Whether you have a question or just want to say hi, I&apos;ll try my
             best to get back to you!
           </Typography>
 
-          <Stack spacing={2} mb={6}>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <IconButton
-                sx={{
-                  bgcolor: alpha(theme.palette.primary.main, 0.1),
-                  color: 'primary.main',
-                }}
-              >
-                <Email />
-              </IconButton>
-              <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  display="block"
-                >
-                  Email Me
-                </Typography>
-                <Typography
-                  variant="body1"
-                  fontWeight="bold"
-                  component="a"
-                  href="mailto:iliopoulos.info@gmail.com"
-                  sx={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                  iliopoulos.info@gmail.com
-                </Typography>
-              </Box>
-            </Stack>
-
-            {/* Added US Phone Number */}
-            <Stack direction="row" spacing={2} alignItems="center">
-              <IconButton
-                sx={{
-                  bgcolor: alpha(theme.palette.success.main, 0.1),
-                  color: 'success.main',
-                }}
-              >
-                <Phone />
-              </IconButton>
-              <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  display="block"
-                >
-                  Call Me
-                </Typography>
-                <Typography
-                  variant="body1"
-                  fontWeight="bold"
-                  component="a"
-                  href="tel:+15162635151"
-                  sx={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                  +1 (516) 263 5151
-                </Typography>
-              </Box>
-            </Stack>
-
-            <Stack direction="row" spacing={2} alignItems="center">
-              <IconButton
-                sx={{
-                  bgcolor: alpha(theme.palette.secondary.main, 0.1),
-                  color: 'secondary.main',
-                }}
-              >
-                <LocationOn />
-              </IconButton>
-              <Box>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  display="block"
-                >
-                  Location
-                </Typography>
-                <Typography variant="body1" fontWeight="bold">
-                  New York, United States
-                </Typography>
-              </Box>
-            </Stack>
+          <Stack spacing={3} mb={6}>
+            <InfoItem
+              icon={<Email />}
+              title="Email Me"
+              value="iliopoulos.info@gmail.com"
+              href="mailto:iliopoulos.info@gmail.com"
+              color={theme.palette.primary.main}
+            />
+            <InfoItem
+              icon={<Phone />}
+              title="Call Me"
+              value="+1 (516) 263 5151"
+              href="tel:+15162635151"
+              color={theme.palette.success.main}
+            />
+            <InfoItem
+              icon={<LocationOn />}
+              title="Location"
+              value="New York, United States"
+              color={theme.palette.secondary.main}
+            />
           </Stack>
 
-          <Typography
-            variant="subtitle2"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ mt: 2 }}
-          >
+          <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
             Follow Me:
           </Typography>
 
           <Stack spacing={2}>
-            <Stack direction="row" spacing={1} alignItems="center">
+            <Stack direction="row" spacing={2} alignItems="center">
               <IconButton
                 component="a"
                 href="https://www.linkedin.com/in/nikolasiliopoulos/"
                 target="_blank"
                 color="primary"
-                sx={{ p: 0 }}
+                sx={{
+                  p: 0,
+                  '&:hover': { transform: 'translateY(-2px)' },
+                  transition: '0.2s',
+                }}
               >
                 <LinkedIn fontSize="large" />
               </IconButton>
@@ -255,7 +254,11 @@ const ContactSection = () => {
                 component="a"
                 href="https://github.com/nikolasil"
                 target="_blank"
-                sx={{ p: 0 }}
+                sx={{
+                  p: 0,
+                  '&:hover': { transform: 'translateY(-2px)' },
+                  transition: '0.2s',
+                }}
               >
                 <GitHub fontSize="large" />
               </IconButton>
@@ -266,22 +269,22 @@ const ContactSection = () => {
                 {
                   href: 'https://stackoverflow.com/users/13285897',
                   src: 'https://img.shields.io/badge/-StackOverflow-FE7A16?style=flat&logo=stack-overflow&logoColor=white',
-                  alt: 'Stack Overflow profile',
+                  alt: 'Stack Overflow',
                 },
                 {
                   href: 'https://kaggle.com/nikolasil2000',
                   src: 'https://img.shields.io/badge/-Kaggle-20BEFF?style=flat&logo=kaggle&logoColor=white',
-                  alt: 'Kaggle profile',
+                  alt: 'Kaggle',
                 },
                 {
                   href: 'https://www.leetcode.com/nikolasil2000',
                   src: 'https://img.shields.io/badge/-LeetCode-FFA116?style=flat&logo=leetcode&logoColor=white',
-                  alt: 'LeetCode profile',
+                  alt: 'LeetCode',
                 },
                 {
                   href: 'https://discord.com/users/nikolasil#9639',
                   src: 'https://img.shields.io/badge/-Discord-5865F2?style=flat&logo=discord&logoColor=white',
-                  alt: 'Discord profile',
+                  alt: 'Discord',
                 },
               ].map((badge, idx) => (
                 <Box
@@ -300,12 +303,9 @@ const ContactSection = () => {
                     src={badge.src}
                     alt={badge.alt}
                     height={25}
-                    width={100} // Approximate width; unoptimized + auto style handles actual display
-                    unoptimized // Shields.io badges are SVGs and don't need Next image optimization
-                    style={{
-                      height: '25px',
-                      width: 'auto',
-                    }}
+                    width={100}
+                    unoptimized
+                    style={{ height: '25px', width: 'auto' }}
                   />
                 </Box>
               ))}
@@ -314,7 +314,7 @@ const ContactSection = () => {
         </Box>
 
         {/* Right Side: Contact Form */}
-        <Box sx={{ flex: 1.2 }}>
+        <Box sx={{ flex: 1.2, width: '100%' }}>
           <Grow in timeout={1000}>
             <Paper
               elevation={0}
@@ -324,6 +324,10 @@ const ContactSection = () => {
                 border: `1px solid ${theme.palette.divider}`,
                 bgcolor: alpha(theme.palette.background.paper, 0.8),
                 backdropFilter: 'blur(10px)',
+                transition: 'box-shadow 0.3s ease-in-out',
+                '&:hover': {
+                  boxShadow: `0 20px 40px ${alpha(theme.palette.common.black, 0.05)}`,
+                },
               }}
             >
               <form onSubmit={handleSubmit}>
@@ -337,7 +341,6 @@ const ContactSection = () => {
                     onChange={handleChange}
                     error={!!errors.name}
                     helperText={errors.name}
-                    hiddenLabel
                   />
                   <TextField
                     fullWidth
@@ -374,10 +377,15 @@ const ContactSection = () => {
                       )
                     }
                     sx={{
-                      py: 1.5,
+                      py: 1.8,
                       borderRadius: 2,
                       fontWeight: 'bold',
-                      boxShadow: `0 8px 16px ${alpha(theme.palette.primary.main, 0.3)}`,
+                      textTransform: 'none',
+                      fontSize: '1rem',
+                      boxShadow: `0 8px 20px ${alpha(theme.palette.primary.main, 0.3)}`,
+                      '&:hover': {
+                        boxShadow: `0 12px 24px ${alpha(theme.palette.primary.main, 0.4)}`,
+                      },
                     }}
                   >
                     {loading ? 'Sending...' : 'Send Message'}
@@ -392,7 +400,7 @@ const ContactSection = () => {
       <Snackbar
         open={snackbar.open}
         autoHideDuration={5000}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
         <Alert
