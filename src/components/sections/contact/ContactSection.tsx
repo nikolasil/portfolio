@@ -236,7 +236,7 @@ const ContactSection = () => {
           <Stack direction="row" spacing={1}>
             <IconButton
               component="a"
-              href="https://linkedin.com/..."
+              href="https://www.linkedin.com/in/nikolasiliopoulos/"
               target="_blank"
               color="primary"
             >
@@ -244,7 +244,7 @@ const ContactSection = () => {
             </IconButton>
             <IconButton
               component="a"
-              href="https://github.com/..."
+              href="https://github.com/nikolasil"
               target="_blank"
             >
               <GitHub fontSize="large" />

@@ -37,7 +37,7 @@ const IntroContent = () => (
         gutterBottom
         sx={{ textShadow: '0 0 8px rgba(0,0,0,0.4)' }}
       >
-        I&apos;m Nicolas Eliopoulos
+        I&apos;m Nikolas Eliopoulos
       </Typography>
 
       <Typography

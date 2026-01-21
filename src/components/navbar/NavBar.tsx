@@ -15,6 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DesktopMenu from './DesktopMenu';
 import MobileDrawer from './MobileDrawer';
 import ThemeToggle from '../ThemeToggle';
+import Link from 'next/link';
 
 // Exported as a constant for reuse in other components
 export const NAV_ITEMS = [
@@ -52,8 +53,14 @@ const Navbar = () => {
           {/* Logo / Brand Name */}
           <Typography
             variant="h6"
-            component="div"
-            sx={{ fontWeight: 700, cursor: 'pointer' }}
+            component={Link} // Use Link as the underlying component
+            href="/" // Link uses href
+            sx={{
+              fontWeight: 700,
+              cursor: 'pointer',
+              textDecoration: 'none', // Remove default underline
+              color: 'inherit', // Keep your branding color
+            }}
           >
             &lt;Nikolas /&gt;
           </Typography>
