@@ -38,7 +38,7 @@ export type Project = {
   cat: string;
   id: string;
   title: string;
-  dec: string;
+  desc: string;
   url: string;
   tags: string[];
   important?: boolean;
@@ -55,7 +55,7 @@ const projectsData: ProjectsData = {
       cat: 'Artificial Intelligence & Machine Learning',
       id: 'ai-email-assistant',
       title: 'Async AI Property Assistant',
-      dec: 'An industrial-grade backend service using Python Asyncio and OpenAI to automate property management. Features a concurrent workflow engine that parses tenant requests, classifies intent, and generates structured action tickets.',
+      desc: 'An industrial-grade backend service using Python Asyncio and OpenAI to automate property management. Features a concurrent workflow engine that parses tenant requests, classifies intent, and generates structured action tickets.',
       url: 'https://github.com/nikolasil/property-management-assistant-ai',
       tags: ['Python', 'AI', 'LLMs', 'System Design'],
       important: true,
@@ -65,7 +65,7 @@ const projectsData: ProjectsData = {
       id: 'transformer-qa-bert',
       important: true,
       title: 'Question Answering with Transformer Architectures',
-      dec: 'Fine-tuned BERT and DistilBERT models for Extractive Question Answering. Performed cross-dataset validation between SQuAD 2.0 and TriviaQA, optimizing sequence lengths and memory management for Tesla P100 GPUs.',
+      desc: 'Fine-tuned BERT and DistilBERT models for Extractive Question Answering. Performed cross-dataset validation between SQuAD 2.0 and TriviaQA, optimizing sequence lengths and memory management for Tesla P100 GPUs.',
       url: 'https://github.com/nikolasil/transformer-qa-bert-squad',
       tags: ['Python', 'AI', 'Deep Learning', 'PyTorch', 'NLP'],
       context: 'National and Kapodistrian University of Athens',
@@ -74,7 +74,7 @@ const projectsData: ProjectsData = {
       cat: 'Artificial Intelligence & Machine Learning',
       id: 'nlp-sentiment-evolution',
       title: 'NLP Evolution: Logistic Regression to LSTMs',
-      dec: 'An end-to-end comparative study of sentiment classification. Progressed from classical ML (TF-IDF, Softmax) to Deep Learning (PyTorch FFNN) and Sequential Modeling (LSTM/GRU).',
+      desc: 'An end-to-end comparative study of sentiment classification. Progressed from classical ML (TF-IDF, Softmax) to Deep Learning (PyTorch FFNN) and Sequential Modeling (LSTM/GRU).',
       url: 'https://github.com/nikolasil?tab=repositories&q=nlp-sentiment-analysis',
       tags: ['Python', 'AI', 'Deep Learning', 'PyTorch', 'NLP'],
       context: 'National and Kapodistrian University of Athens',
@@ -83,7 +83,7 @@ const projectsData: ProjectsData = {
       cat: 'Artificial Intelligence & Machine Learning',
       id: 'berkeley-pacman-master',
       title: 'Berkeley Pacman AI Suite',
-      dec: 'Implementation of core AI foundations including Algorithmic Search (DFS, BFS, A*), Heuristic Design, and Adversarial Search (Minimax, Alpha-Beta Pruning, Expectimax).',
+      desc: 'Implementation of core AI foundations including Algorithmic Search (DFS, BFS, A*), Heuristic Design, and Adversarial Search (Minimax, Alpha-Beta Pruning, Expectimax).',
       url: 'https://github.com/nikolasil?tab=repositories&q=Berkeley-Pacman',
       tags: ['Python', 'AI', 'Algorithms'],
       context: 'National and Kapodistrian University of Athens',
@@ -95,7 +95,7 @@ const projectsData: ProjectsData = {
       id: 'web-portfolio',
       important: true,
       title: 'Engineering Portfolio',
-      dec: 'A modern, responsive web portfolio built with Next.js and MUI to showcase complex software engineering projects.',
+      desc: 'A modern, responsive web portfolio built with Next.js and MUI to showcase complex software engineering projects.',
       url: 'https://github.com/nikolasil/portfolio',
       tags: [
         'Web',
@@ -111,7 +111,7 @@ const projectsData: ProjectsData = {
       cat: 'Web Applications',
       id: 'iliopoulosrent',
       title: 'Luxury Vacation Rental Platform',
-      dec: 'High-performance Next.js web platform with SSR and advanced image optimization. Focused on SEO and conversion to reduce third-party booking dependency.',
+      desc: 'High-performance Next.js web platform with SSR and advanced image optimization. Focused on SEO and conversion to reduce third-party booking dependency.',
       url: 'https://github.com/nikolasil/iliopoulosrent',
       tags: [
         'Web',
@@ -123,6 +123,24 @@ const projectsData: ProjectsData = {
         'AWS EC2',
       ],
     },
+    {
+      cat: 'Web Applications',
+      id: 'bidpoint-auction-platform',
+      important: true,
+      title: 'BidPoint Auction Platform',
+      desc: 'BidPoint is a full-stack auction web platform that enables real-time bidding, item management, and personalized user experiences. Built with a focus on scalability and security, it leverages Spring Boot for a robust backend and React.js for a dynamic, responsive frontend.',
+      url: 'https://github.com/nikolasil/bidpoint-auction-platform',
+      tags: [
+        'Web',
+        'React',
+        'Frontend',
+        'Backend',
+        'JavaScript',
+        'Java Spring Boot',
+        'PostgreSQL',
+        'Docker',
+      ],
+    },
   ],
   security: [
     {
@@ -130,7 +148,7 @@ const projectsData: ProjectsData = {
       id: 'sec-eclass-attack',
       important: true,
       title: 'Defensive Patching & Pentesting',
-      dec: 'Security audit of Open eClass CMS. Implemented defenses against OWASP Top 10 and conducted penetration tests for SQLi, XSS, and CSRF.',
+      desc: 'Security audit of Open eClass CMS. Implemented defenses against OWASP Top 10 and conducted penetration tests for SQLi, XSS, and CSRF.',
       url: 'https://github.com/nikolasil/security-1-openeclass',
       tags: ['Web', 'Security', 'Systems', 'Docker'],
       context: 'National and Kapodistrian University of Athens',
@@ -142,7 +160,7 @@ const projectsData: ProjectsData = {
       id: 'parallel-inverted-index',
       important: true,
       title: 'Parallel Inverted Search Engine',
-      dec: 'A high-performance C++ search engine using a custom thread-pool and job scheduler. Implements BK-Trees for fuzzy matching and lock-free Inverted Hash Tables for near-linear scalability.',
+      desc: 'A high-performance C++ search engine using a custom thread-pool and job scheduler. Implements BK-Trees for fuzzy matching and lock-free Inverted Hash Tables for near-linear scalability.',
       url: 'https://github.com/nikolasil/InvertedSearchEngine',
       tags: ['C++', 'Systems', 'Concurrency', 'Algorithms'],
       context: 'National and Kapodistrian University of Athens',
@@ -152,7 +170,7 @@ const projectsData: ProjectsData = {
       id: 'networked-vaccine-monitor',
       important: true,
       title: 'Networked TCP Monitor System',
-      dec: 'A high-concurrency distributed system over TCP/IP. Implements a thread-pooled server with a synchronized Cyclic Buffer (Producer-Consumer) for real-time parallel data ingestion.',
+      desc: 'A high-concurrency distributed system over TCP/IP. Implements a thread-pooled server with a synchronized Cyclic Buffer (Producer-Consumer) for real-time parallel data ingestion.',
       url: 'https://github.com/nikolasil/vaccineMonitor_3',
       tags: ['C++', 'Systems', 'Networking', 'Concurrency'],
       context: 'National and Kapodistrian University of Athens',
@@ -161,7 +179,7 @@ const projectsData: ProjectsData = {
       cat: 'Systems Programming & Operating Systems',
       id: 'db-file-structures',
       title: 'Storage Engine: Heap & Hash Structures',
-      dec: 'A low-level storage engine implementation in C. Developed custom Block-level management for Heap files and Primary/Secondary Hash Tables with overflow handling.',
+      desc: 'A low-level storage engine implementation in C. Developed custom Block-level management for Heap files and Primary/Secondary Hash Tables with overflow handling.',
       url: 'https://github.com/nikolasil/FileStructure-BlockHeapHashFiles-SecondaryIndex',
       tags: ['C', 'Systems', 'Data Structures'],
       context: 'National and Kapodistrian University of Athens',
@@ -170,7 +188,7 @@ const projectsData: ProjectsData = {
       cat: 'Systems Programming & Operating Systems',
       id: 'os-ram-pagination',
       title: 'Virtual Memory & Pagination Simulator',
-      dec: 'Architectural simulation of an MMU. Implements Hashed Page Tables and evaluates LRU vs. Second Chance (Clock) algorithms using real-world memory traces.',
+      desc: 'Architectural simulation of an MMU. Implements Hashed Page Tables and evaluates LRU vs. Second Chance (Clock) algorithms using real-world memory traces.',
       url: 'https://github.com/nikolasil/HashedPagedTable-LRU-SecondChange',
       tags: ['C', 'Systems', 'Algorithms'],
       context: 'National and Kapodistrian University of Athens',
@@ -179,7 +197,7 @@ const projectsData: ProjectsData = {
       cat: 'Systems Programming & Operating Systems',
       id: 'ipc-shared-mem',
       title: 'IPC: Shared Memory & Semaphores',
-      dec: 'Multi-process system utilizing POSIX Shared Memory and Semaphores. Features custom packet framing with checksums and thread-managed non-blocking UI.',
+      desc: 'Multi-process system utilizing POSIX Shared Memory and Semaphores. Features custom packet framing with checksums and thread-managed non-blocking UI.',
       url: 'https://github.com/nikolasil/ipc-shared-memory-synchronization',
       tags: ['C', 'Systems', 'Concurrency'],
       context: 'National and Kapodistrian University of Athens',
@@ -191,7 +209,7 @@ const projectsData: ProjectsData = {
       id: 'comp-llvm-gen',
       important: true,
       title: 'MiniJava to LLVM IR Compiler',
-      dec: 'Full compiler backend for MiniJava. Implements Virtual Tables (VTables) for dynamic dispatch, heap allocation, and automated LLVM IR generation.',
+      desc: 'Full compiler backend for MiniJava. Implements Virtual Tables (VTables) for dynamic dispatch, heap allocation, and automated LLVM IR generation.',
       url: 'https://github.com/nikolasil/compiler-llvm-generator',
       tags: ['Java', 'Compilers', 'Language Design'],
       context: 'National and Kapodistrian University of Athens',
@@ -200,7 +218,7 @@ const projectsData: ProjectsData = {
       cat: 'Compilers & Language Engineering',
       id: 'comp-minijava-check',
       title: 'MiniJava Semantic Analyzer',
-      dec: 'Multi-pass static analysis tool. Implements a Symbol Table to handle class inheritance, method overriding, and nested scopes for type safety.',
+      desc: 'Multi-pass static analysis tool. Implements a Symbol Table to handle class inheritance, method overriding, and nested scopes for type safety.',
       url: 'https://github.com/nikolasil/compiler-minijava-check',
       tags: ['Java', 'Compilers', 'Language Design'],
       context: 'National and Kapodistrian University of Athens',
@@ -211,7 +229,7 @@ const projectsData: ProjectsData = {
       cat: 'Data Science & Mining',
       id: 'nyc-taxi-duration-predictor',
       title: 'NYC Taxi Geospatial Predictor',
-      dec: 'End-to-end spatial-temporal regression. Uses Random Forest and K-Means to predict trip durations via geospatial outlier filtering and Manhattan distance calculations.',
+      desc: 'End-to-end spatial-temporal regression. Uses Random Forest and K-Means to predict trip durations via geospatial outlier filtering and Manhattan distance calculations.',
       url: 'https://github.com/nikolasil/nyc-taxi-duration-predictor',
       tags: ['Python', 'Data Science', 'Algorithms'],
       context: 'National and Kapodistrian University of Athens',
@@ -220,7 +238,7 @@ const projectsData: ProjectsData = {
       cat: 'Data Science & Mining',
       id: 'vaccine-sentiment-lda',
       title: 'COVID-19 Vaccine Topic Modeling',
-      dec: 'Large-scale discourse analysis using LDA to extract hidden discussion topics, optimized via Coherence Score analysis and time-series sentiment tracking.',
+      desc: 'Large-scale discourse analysis using LDA to extract hidden discussion topics, optimized via Coherence Score analysis and time-series sentiment tracking.',
       url: 'https://github.com/nikolasil/vaccine-sentiment-lda-mining',
       tags: ['Python', 'Data Science', 'NLP'],
       context: 'National and Kapodistrian University of Athens',
@@ -278,7 +296,12 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
           },
         }}
       >
-        <Stack direction="row" justifyContent="space-between" alignItems="flex-start" mb={2}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="flex-start"
+          mb={2}
+        >
           <Box>
             <Stack direction="row" spacing={1} mb={1}>
               {proj.important && (
@@ -287,7 +310,12 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
                   label="Featured"
                   size="small"
                   color="primary"
-                  sx={{ height: 18, fontSize: '0.65rem', fontWeight: 700, px: 0.5 }}
+                  sx={{
+                    height: 18,
+                    fontSize: '0.65rem',
+                    fontWeight: 700,
+                    px: 0.5,
+                  }}
                 />
               )}
               {proj.context && (
@@ -296,15 +324,29 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
                   label="University"
                   size="small"
                   variant="outlined"
-                  sx={{ height: 18, fontSize: '0.65rem', fontWeight: 700, px: 0.5 }}
+                  sx={{
+                    height: 18,
+                    fontSize: '0.65rem',
+                    fontWeight: 700,
+                    px: 0.5,
+                  }}
                 />
               )}
             </Stack>
-            <Typography variant="h6" fontWeight="800" lineHeight={1.3} sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}>
+            <Typography
+              variant="h6"
+              fontWeight="800"
+              lineHeight={1.3}
+              sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}
+            >
               {proj.title}
             </Typography>
             {proj.context && (
-              <Typography variant="caption" color="text.disabled" sx={{ display: 'block', mt: 0.5, fontWeight: 600 }}>
+              <Typography
+                variant="caption"
+                color="text.disabled"
+                sx={{ display: 'block', mt: 0.5, fontWeight: 600 }}
+              >
                 {proj.context}
               </Typography>
             )}
@@ -314,12 +356,22 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
           )}
         </Stack>
 
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 'auto', minHeight: '60px' }}>
-          {proj.dec}
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ mb: 'auto', minHeight: '60px' }}
+        >
+          {proj.desc}
         </Typography>
 
         <Box sx={{ mt: 3 }}>
-          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            flexWrap="wrap"
+            useFlexGap
+            sx={{ mb: 2 }}
+          >
             {proj.tags.map((tag) => (
               <Chip
                 key={tag}
@@ -343,7 +395,12 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
             variant="contained"
             disableElevation
             endIcon={<LaunchIcon sx={{ fontSize: 16 }} />}
-            sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 'bold', py: 1 }}
+            sx={{
+              borderRadius: 2,
+              textTransform: 'none',
+              fontWeight: 'bold',
+              py: 1,
+            }}
           >
             View Source
           </Button>
@@ -382,7 +439,7 @@ const PortfolioSection = () => {
         const matchesImportance = !showImportantOnly || proj.important;
         const matchesSearch =
           proj.title.toLowerCase().includes(query) ||
-          proj.dec.toLowerCase().includes(query);
+          proj.desc.toLowerCase().includes(query);
 
         return matchesTag && matchesImportance && matchesSearch;
       });
