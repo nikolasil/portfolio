@@ -24,6 +24,7 @@ import {
   LocationOn,
   Phone,
 } from '@mui/icons-material';
+import Image from 'next/image';
 
 type ContactErrors = {
   name: string;
@@ -240,7 +241,6 @@ const ContactSection = () => {
           </Typography>
 
           <Stack spacing={2}>
-            {/* Primary Social Icons */}
             <Stack direction="row" spacing={1} alignItems="center">
               <IconButton
                 component="a"
@@ -261,24 +261,27 @@ const ContactSection = () => {
               </IconButton>
             </Stack>
 
-            {/* Technical Profile Badges */}
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
               {[
                 {
                   href: 'https://stackoverflow.com/users/13285897',
                   src: 'https://img.shields.io/badge/-StackOverflow-FE7A16?style=flat&logo=stack-overflow&logoColor=white',
+                  alt: 'Stack Overflow profile',
                 },
                 {
                   href: 'https://kaggle.com/nikolasil2000',
                   src: 'https://img.shields.io/badge/-Kaggle-20BEFF?style=flat&logo=kaggle&logoColor=white',
+                  alt: 'Kaggle profile',
                 },
                 {
                   href: 'https://www.leetcode.com/nikolasil2000',
                   src: 'https://img.shields.io/badge/-LeetCode-FFA116?style=flat&logo=leetcode&logoColor=white',
+                  alt: 'LeetCode profile',
                 },
                 {
                   href: 'https://discord.com/users/nikolasil#9639',
                   src: 'https://img.shields.io/badge/-Discord-5865F2?style=flat&logo=discord&logoColor=white',
+                  alt: 'Discord profile',
                 },
               ].map((badge, idx) => (
                 <Box
@@ -293,7 +296,17 @@ const ContactSection = () => {
                     lineHeight: 0,
                   }}
                 >
-                  <img src={badge.src} alt="social-badge" height="25" />
+                  <Image
+                    src={badge.src}
+                    alt={badge.alt}
+                    height={25}
+                    width={100} // Approximate width; unoptimized + auto style handles actual display
+                    unoptimized // Shields.io badges are SVGs and don't need Next image optimization
+                    style={{
+                      height: '25px',
+                      width: 'auto',
+                    }}
+                  />
                 </Box>
               ))}
             </Stack>
