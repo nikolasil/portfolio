@@ -80,7 +80,12 @@ const ContactSection = () => {
   const theme = useTheme();
 
   // --- State ---
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    message: '',
+    _honeypot: '',
+  });
   const [errors, setErrors] = useState<ContactErrors>({
     name: '',
     email: '',
@@ -159,7 +164,7 @@ const ContactSection = () => {
         severity: 'success',
       });
       lastSentRef.current = Date.now();
-      setForm({ name: '', email: '', message: '' });
+      setForm({ name: '', email: '', message: '', _honeypot: '' });
     } catch (err) {
       console.debug(err);
       setSnackbar({
@@ -331,6 +336,14 @@ const ContactSection = () => {
               }}
             >
               <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  name="_honeypot"
+                  style={{ display: 'none' }}
+                  tabIndex={-1}
+                  value={form._honeypot}
+                  onChange={handleChange}
+                />
                 <Stack spacing={3}>
                   <TextField
                     fullWidth
