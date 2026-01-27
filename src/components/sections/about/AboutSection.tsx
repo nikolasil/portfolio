@@ -39,9 +39,14 @@ const AboutSection = () => {
       detail: 'Microservices & Enterprise Logic',
     },
     {
-      label: 'Distributed Systems (Kafka/Redis)',
+      label: 'Distributed Systems',
       icon: <SettingsSuggestIcon fontSize="small" />,
-      detail: 'Event-driven & Caching',
+      detail: 'Kafka, Redis, & Event-Driven Arch',
+    },
+    {
+      label: 'CS Foundations',
+      icon: <IntegrationInstructionsIcon fontSize="small" />,
+      detail: 'C++, Assembly, & Algorithms',
     },
     {
       label: 'React / Next.js',
@@ -51,34 +56,30 @@ const AboutSection = () => {
     {
       label: 'Python / FastAPI / AI',
       icon: <TerminalIcon fontSize="small" />,
-      detail: 'Automation & ML APIs',
+      detail: 'Automation, ETL & ML Pipelines',
     },
     {
-      label: 'Cloud & DevOps (Docker/AWS)',
+      label: 'Cloud & DevOps',
       icon: <CloudQueueIcon fontSize="small" />,
-      detail: 'CI/CD & Infrastructure',
-    },
-    {
-      label: 'System Design & Architecture',
-      icon: <IntegrationInstructionsIcon fontSize="small" />,
-      detail: 'Scalable Patterns',
+      detail: 'Docker, AWS, CI/CD & Testing',
     },
   ];
 
+  // Updated principles to match the "Production Grade" & "Under the hood" philosophy
   const principles = [
     {
-      title: 'High Availability',
-      desc: 'Designing for 99.9% uptime and fault tolerance.',
+      title: 'Under the Hood',
+      desc: 'Deep understanding of internals, from memory management to thread synchronization.',
       icon: <Security color="primary" />,
     },
     {
       title: 'Scalability',
-      desc: 'Architecting systems that grow seamlessly with demand.',
+      desc: 'Architecting distributed systems that grow seamlessly with demand.',
       icon: <Speed color="primary" />,
     },
     {
-      title: 'Modern DX',
-      desc: 'Prioritizing clean code and robust CI/CD pipelines.',
+      title: 'Production Grade',
+      desc: 'Prioritizing maintainability, robust testing, and clean documentation.',
       icon: <AutoAwesome color="primary" />,
     },
   ];
@@ -157,7 +158,6 @@ const AboutSection = () => {
             Engineering scalable solutions with{' '}
             <span style={{ color: theme.palette.primary.main }}>purpose</span>.
           </Typography>
-
           <Typography
             variant="body1"
             color="text.secondary"
@@ -170,7 +170,16 @@ const AboutSection = () => {
             turning complex technical challenges into seamless, high-performance
             reality.
           </Typography>
-
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.8 }}
+          >
+            I don&apos;t just memorize syntax; I focus on perspective. Whether it&apos;s{' '}
+            <strong>Java Spring Boot, Python, or React</strong>, I engineer
+            production-grade systems that solve real human headaches—automating
+            the boring stuff so users can focus on their goals.
+          </Typography>
           {/* Stats Row with Skeleton Support */}
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
@@ -231,7 +240,12 @@ const AboutSection = () => {
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mb: 6 }}>
             {skills.map((skill) => (
-              <Tooltip key={skill.label} title={skill.detail} arrow>
+              <Tooltip
+                key={skill.label}
+                title={skill.detail}
+                enterTouchDelay={0}
+                leaveTouchDelay={2000}
+              >
                 <Chip
                   icon={skill.icon}
                   label={skill.label}
