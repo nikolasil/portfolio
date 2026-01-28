@@ -77,6 +77,7 @@ jobs:
               -e NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
               -e GMAIL_USER=${{ secrets.GMAIL_USER }} \
               -e GMAIL_APP_PASSWORD=${{ secrets.GMAIL_APP_PASSWORD }} \
+              -e ADMIN_SECRET=${{ secrets.ADMIN_SECRET }} \
               -p 8080:3000 \
               $IMAGE_NAME:$IMAGE_TAG; then
 
@@ -92,6 +93,7 @@ jobs:
                   -e NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
                   -e GMAIL_USER=${{ secrets.GMAIL_USER }} \
                   -e GMAIL_APP_PASSWORD=${{ secrets.GMAIL_APP_PASSWORD }} \
+                  -e ADMIN_SECRET=${{ secrets.ADMIN_SECRET }} \
                   -p 8080:3000 \
                   $IMAGE_NAME:$PREV_IMAGE_TAG
               else
