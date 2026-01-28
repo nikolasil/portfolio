@@ -62,3 +62,33 @@ export async function DELETE(req: Request) {
   }
   return NextResponse.json({ success: deleted });
 }
+
+export async function PATCH(req: Request) {
+  const auth = req.headers.get('x-admin-secret');
+  if (auth !== ADMIN_SECRET)
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const { id, name, message } = await req.json().catch(() => ({}));
+  if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
+
+  const paths = await getAllFilePaths();
+  let updated = false;
+
+  for (const p of paths) {
+    const content = await fs.readFile(p, 'utf8');
+    const entries = JSON.parse(content) as WallEntry[];
+
+    const index = entries.findIndex((e: WallEntry) => e.id === id);
+
+    if (index !== -1) {
+      // Update fields if provided
+      if (name) entries[index].name = name;
+      if (message) entries[index].message = message;
+
+      await fs.writeFile(p, JSON.stringify(entries));
+      updated = true;
+      break;
+    }
+  }
+  return NextResponse.json({ success: updated });
+}

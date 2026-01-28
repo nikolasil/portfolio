@@ -18,8 +18,12 @@ import {
   alpha,
   Stack,
   CircularProgress,
+  Button,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
 import SecurityIcon from '@mui/icons-material/Security';
 
 interface WallEntry {
@@ -35,6 +39,11 @@ export default function AdminWall() {
   const [entries, setEntries] = useState<WallEntry[]>([]);
   const [loading, setLoading] = useState(false);
 
+  // Edit State
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState('');
+  const [editMessage, setEditMessage] = useState('');
+
   const fetchAll = async () => {
     if (!secret) return;
     setLoading(true);
@@ -43,6 +52,24 @@ export default function AdminWall() {
     });
     if (res.ok) setEntries(await res.json());
     setLoading(false);
+  };
+
+  const handleEditInit = (entry: WallEntry) => {
+    setEditingId(entry.id);
+    setEditName(entry.name);
+    setEditMessage(entry.message);
+  };
+
+  const handleSave = async (id: string) => {
+    const res = await fetch('/api/admin/wall', {
+      method: 'PATCH',
+      headers: { 'x-admin-secret': secret, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, name: editName, message: editMessage }),
+    });
+    if (res.ok) {
+      setEditingId(null);
+      fetchAll();
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -73,18 +100,13 @@ export default function AdminWall() {
             value={secret}
             onChange={(e) => setSecret(e.target.value)}
           />
-          <IconButton
+          <Button
+            variant="contained"
             onClick={fetchAll}
-            sx={{
-              bgcolor: 'primary.main',
-              color: 'white',
-              '&:hover': { bgcolor: 'primary.dark' },
-              borderRadius: 2,
-              px: 4,
-            }}
+            sx={{ px: 4, borderRadius: 2, fontWeight: 'bold' }}
           >
             Load Entries
-          </IconButton>
+          </Button>
         </Stack>
       </Paper>
 
@@ -95,50 +117,94 @@ export default function AdminWall() {
       ) : (
         <TableContainer
           component={Paper}
-          sx={{ borderRadius: 4, overflow: 'hidden' }}
+          sx={{ borderRadius: 4, border: '1px solid divider' }}
         >
           <Table>
             <TableHead sx={{ bgcolor: alpha('#000', 0.05) }}>
               <TableRow>
-                <TableCell>User</TableCell>
-                <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-                  Message
-                </TableCell>
-                <TableCell>IP Address</TableCell>
+                <TableCell>User / ID</TableCell>
+                <TableCell>Message</TableCell>
+                <TableCell>Meta</TableCell>
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {entries.map((entry: WallEntry) => (
-                <TableRow key={entry.id}>
-                  <TableCell>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                      <span>{entry.emoji}</span>
-                      <Typography variant="subtitle2" fontWeight="700">
-                        {entry.name}
+              {entries.map((entry) => (
+                <TableRow key={entry.id} hover>
+                  <TableCell sx={{ minWidth: 200 }}>
+                    <Stack spacing={1}>
+                      {editingId === entry.id ? (
+                        <TextField
+                          size="small"
+                          value={editName}
+                          onChange={(e) => setEditName(e.target.value)}
+                        />
+                      ) : (
+                        <Stack direction="row" spacing={1} alignItems="center">
+                          <span>{entry.emoji}</span>
+                          <Typography fontWeight="700">{entry.name}</Typography>
+                        </Stack>
+                      )}
+                      <Typography
+                        variant="caption"
+                        sx={{ fontFamily: 'monospace', opacity: 0.5 }}
+                      >
+                        {entry.id}
                       </Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell
-                    sx={{
-                      display: { xs: 'none', md: 'table-cell' },
-                      maxWidth: 300,
-                    }}
-                  >
-                    <Typography variant="body2" noWrap>
-                      {entry.message}
-                    </Typography>
+                  <TableCell>
+                    {editingId === entry.id ? (
+                      <TextField
+                        fullWidth
+                        multiline
+                        size="small"
+                        value={editMessage}
+                        onChange={(e) => setEditMessage(e.target.value)}
+                      />
+                    ) : (
+                      <Typography variant="body2">{entry.message}</Typography>
+                    )}
                   </TableCell>
                   <TableCell>
                     <Chip label={entry.ip} size="small" variant="outlined" />
                   </TableCell>
                   <TableCell align="right">
-                    <IconButton
-                      color="error"
-                      onClick={() => handleDelete(entry.id)}
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      justifyContent="flex-end"
                     >
-                      <DeleteIcon />
-                    </IconButton>
+                      {editingId === entry.id ? (
+                        <>
+                          <IconButton
+                            color="success"
+                            onClick={() => handleSave(entry.id)}
+                          >
+                            <SaveIcon />
+                          </IconButton>
+                          <IconButton onClick={() => setEditingId(null)}>
+                            <CloseIcon />
+                          </IconButton>
+                        </>
+                      ) : (
+                        <>
+                          <IconButton
+                            size="small"
+                            onClick={() => handleEditInit(entry)}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                          <IconButton
+                            size="small"
+                            color="error"
+                            onClick={() => handleDelete(entry.id)}
+                          >
+                            <DeleteIcon fontSize="small" />
+                          </IconButton>
+                        </>
+                      )}
+                    </Stack>
                   </TableCell>
                 </TableRow>
               ))}
