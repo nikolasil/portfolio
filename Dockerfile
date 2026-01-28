@@ -29,6 +29,10 @@ ENV NODE_ENV=production
 
 RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001 -G nodejs
 
+# Create the data directory and set ownership to the nextjs user
+RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
+
+
 # Copy only necessary files from builder
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
