@@ -1,11 +1,12 @@
 import Navbar from '@/components/navbar/NavBar';
 import StarDotsBackground from '@/components/StarDotsBackground';
+import WallPopup from '@/components/WallPopup'; // Import here
 import { ThemeRegistry } from '@/lib/ThemeProvider';
 import { Fira_Code } from 'next/font/google';
 
 const firaCode = Fira_Code({
   subsets: ['latin'],
-  weight: ['500'], // or any weights you're using
+  weight: ['500'],
   variable: '--font-fira-code',
 });
 
@@ -18,14 +19,15 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-  }) {
+}) {
   return (
     <html lang="en" className={firaCode.variable}>
       <body>
         <ThemeRegistry>
           <Navbar />
-          <StarDotsBackground/>
+          <StarDotsBackground />
           {children}
+          <WallPopup />
         </ThemeRegistry>
       </body>
     </html>
