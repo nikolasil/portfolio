@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import BusinessIcon from '@mui/icons-material/Business';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import WorkIcon from '@mui/icons-material/Work';
 // Simplified types for cleaner logic
 export type Role = {
   title: string;
@@ -68,21 +69,29 @@ const ExperienceSection = () => {
   return (
     <Box
       sx={{
-        py: 8,
+        py: 4,
         px: { xs: 2, sm: 4, md: 10 },
         maxWidth: '1000px',
         margin: '0 auto',
       }}
     >
-      <Typography
-        variant="h4"
-        fontWeight="900"
-        textAlign="center"
-        gutterBottom
-        sx={{ mb: 6 }}
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
+        sx={{ mb: 8 }}
       >
-        💼 Experience
-      </Typography>
+        <WorkIcon sx={{ fontSize: '2rem' }} color="primary" />
+        <Typography
+          variant="h3"
+          fontWeight="900"
+          letterSpacing="-0.02em"
+          fontSize="2rem"
+        >
+          Experience
+        </Typography>
+      </Stack>
 
       <Stack spacing={4}>
         {experienceData.map((exp, idx) => (

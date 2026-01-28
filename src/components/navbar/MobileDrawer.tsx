@@ -94,7 +94,7 @@ const MobileDrawer = ({ open, onClose, items }: MobileDrawerProps) => {
                   primary={page.text}
                   primaryTypographyProps={{
                     fontWeight: isActive ? 700 : 500,
-                    fontSize: '1.1rem',
+                    fontSize: '1rem',
                   }}
                 />
               </ListItemButton>

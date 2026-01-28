@@ -11,6 +11,8 @@ import {
   alpha,
   Skeleton,
   Tooltip,
+  Button,
+  Divider,
 } from '@mui/material';
 import {
   Storage,
@@ -19,6 +21,11 @@ import {
   AutoAwesome,
   Security,
   Speed,
+  LocationOn,
+  Cake,
+  School,
+  FileDownload,
+  Public
 } from '@mui/icons-material';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
@@ -65,7 +72,6 @@ const AboutSection = () => {
     },
   ];
 
-  // Updated principles to match the "Production Grade" & "Under the hood" philosophy
   const principles = [
     {
       title: 'Under the Hood',
@@ -94,7 +100,6 @@ const AboutSection = () => {
           }),
           fetch(`https://api.github.com/users/${username}`),
         ]);
-
         const commitData = await commitRes.json();
         if (commitData.total_count) {
           const count = commitData.total_count;
@@ -102,11 +107,8 @@ const AboutSection = () => {
             count >= 1000 ? `${(count / 1000).toFixed(1)}k+` : `${count}+`,
           );
         }
-
         const userData = await userRes.json();
-        if (userData.public_repos) {
-          setRepoCount(`${userData.public_repos}+`);
-        }
+        if (userData.public_repos) setRepoCount(`${userData.public_repos}+`);
       } catch (error) {
         console.error('Error fetching GitHub data:', error);
       } finally {
@@ -128,163 +130,240 @@ const AboutSection = () => {
     },
   ];
 
+  const calculateAge = (birthDate: string): number => {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
+
+  const myAge = calculateAge('2000-11-28');
+
   return (
     <Box
       sx={{
-        py: 8,
+        py: 4,
         px: { xs: 2, sm: 4, md: 10 },
         maxWidth: '1200px',
         margin: '0 auto',
       }}
     >
-      <Typography
-        variant="h4"
-        fontWeight="900"
-        textAlign="center"
-        gutterBottom
+      {/* Section Header */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
         sx={{ mb: 8 }}
       >
-        <Person
-          sx={{ fontSize: 35, verticalAlign: 'middle', mr: 1, mb: 0.5 }}
-          color="primary"
-        />{' '}
-        About Me
-      </Typography>
+        <Person sx={{ fontSize: "2rem" }} color="primary" />
+        <Typography variant="h3" fontWeight="900" letterSpacing="-0.02em" fontSize="2rem">
+          About Me
+        </Typography>
+      </Stack>
 
-      <Grid container justifyContent="center">
-        <Grid size={{ xs: 12, lg: 10 }}>
-          {/* Hero Text */}
-          <Typography variant="h3" fontWeight="900" gutterBottom>
+      <Grid container spacing={8}>
+        {/* Left Column: Bio & Experience */}
+        <Grid size={{ xs: 12, md: 7 }}>
+          <Typography
+            variant="h4"
+            fontWeight="800"
+            gutterBottom
+            sx={{ lineHeight: 1.2 }}
+            fontSize="1.3rem"
+          >
             Engineering scalable solutions with{' '}
-            <span style={{ color: theme.palette.primary.main }}>purpose</span>.
+            <Box component="span" sx={{ color: 'primary.main' }}>
+              purpose
+            </Box>
+            !
           </Typography>
+
           <Typography
             variant="body1"
             color="text.secondary"
-            sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.8 }}
+            sx={{ mb: 3, fontSize: '1rem', lineHeight: 1.8 }}
           >
-            I&apos;m a Senior Software Engineer with a Bachelor’s in Computer
-            Science and a passion for engineering scalable, high-availability
-            solutions. My expertise spans the full stack, with a deep focus on
-            Distributed Systems and Microservices architecture. I thrive on
+            I&apos;m a <strong>Senior Software Engineer</strong> with a deep focus
+            on Distributed Systems and Microservices architecture. I thrive on
             turning complex technical challenges into seamless, high-performance
             reality.
           </Typography>
+
           <Typography
             variant="body1"
             color="text.secondary"
-            sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.8 }}
+            sx={{ mb: 5, fontSize: '1rem', lineHeight: 1.8 }}
           >
-            I don&apos;t just memorize syntax; I focus on perspective. Whether it&apos;s{' '}
-            <strong>Java Spring Boot, Python, or React</strong>, I engineer
-            production-grade systems that solve real human headaches—automating
-            the boring stuff so users can focus on their goals.
+            I don&apos;t just memorize syntax. I focus on perspective. Whether
+            it&apos;s
+            <strong> Java Spring Boot, Python, or React</strong>, I engineer
+            production-grade systems that solve real human headaches.
           </Typography>
-          {/* Stats Row with Skeleton Support */}
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={{ xs: 3, sm: 6 }}
-            sx={{ mb: 6 }}
-          >
-            {stats.map((stat, index) => (
-              <Box key={index}>
-                {loading ? (
-                  <Skeleton width={60} height={40} />
-                ) : (
-                  <Typography variant="h4" fontWeight="bold" color="primary">
-                    {stat.value}
-                  </Typography>
-                )}
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  fontWeight="bold"
-                  sx={{ letterSpacing: 1 }}
-                >
-                  {stat.label.toUpperCase()}
-                </Typography>
-              </Box>
-            ))}
-          </Stack>
 
-          {/* Core Principles Grid */}
+          {/* Stats Row */}
           <Grid container spacing={3} sx={{ mb: 6 }}>
-            {principles.map((p) => (
-              <Grid size={{ xs: 12, sm: 4 }} key={p.title}>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  sx={{ mb: 1 }}
-                >
-                  {p.icon}
-                  <Typography variant="subtitle1" fontWeight="bold">
-                    {p.title}
+            {stats.map((stat, index) => (
+              <Grid size={{ xs: 6, sm: 3 }} key={index}>
+                <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
+                  {loading ? (
+                    <Skeleton width="60%" height={40} />
+                  ) : (
+                    <Typography variant="h4" fontWeight="800" color="primary">
+                      {stat.value}
+                    </Typography>
+                  )}
+                  <Typography
+                    variant="caption"
+                    fontWeight="700"
+                    color="text.secondary"
+                    sx={{ letterSpacing: 1 }}
+                  >
+                    {stat.label.toUpperCase()}
                   </Typography>
-                </Stack>
-                <Typography variant="body2" color="text.secondary">
-                  {p.desc}
-                </Typography>
+                </Box>
               </Grid>
             ))}
           </Grid>
 
-          {/* Technical Toolbelt Overview*/}
-          <Typography
-            variant="subtitle2"
-            fontWeight="900"
-            gutterBottom
-            sx={{ letterSpacing: 1, mb: 2 }}
-          >
-            Technical Toolbelt Overview:
+          {/* Principles */}
+          <Typography variant="h6" fontWeight="800" sx={{ mb: 3 }}>
+            Core Engineering Principles
           </Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mb: 6 }}>
-            {skills.map((skill) => (
-              <Tooltip
-                key={skill.label}
-                title={skill.detail}
-                enterTouchDelay={0}
-                leaveTouchDelay={2000}
-              >
-                <Chip
-                  icon={skill.icon}
-                  label={skill.label}
-                  sx={{
-                    py: 2.5,
-                    px: 1,
-                    borderRadius: 2,
-                    fontWeight: 600,
-                    bgcolor: alpha(theme.palette.background.paper, 0.5),
-                    border: `1px solid ${theme.palette.divider}`,
-                    transition: '0.3s',
-                    '&:hover': {
-                      bgcolor: alpha(theme.palette.primary.main, 0.05),
-                      borderColor: theme.palette.primary.main,
-                    },
-                    '& .MuiChip-icon': { color: theme.palette.primary.main },
-                  }}
-                />
-              </Tooltip>
+          <Grid container spacing={3}>
+            {principles.map((p) => (
+              <Grid size={{ xs: 12, sm: 4 }} key={p.title}>
+                <Stack spacing={1}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {p.icon}
+                    <Typography variant="subtitle2" fontWeight="700">
+                      {p.title}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" color="text.secondary">
+                    {p.desc}
+                  </Typography>
+                </Stack>
+              </Grid>
             ))}
-          </Box>
+          </Grid>
+        </Grid>
 
-          {/* Current Focus Badge */}
+        {/* Right Column: Quick Facts & Resume */}
+        <Grid size={{ xs: 12, md: 5 }}>
           <Box
             sx={{
-              p: 2,
-              borderRadius: 2,
-              bgcolor: alpha(theme.palette.primary.main, 0.05),
-              borderLeft: `4px solid ${theme.palette.primary.main}`,
+              py: 2,
+              px: 3,
+              borderRadius: 4,
+              bgcolor: alpha(theme.palette.background.paper, 0.5),
+              border: `1px solid ${theme.palette.divider}`,
+              position: 'sticky',
+              top: 100,
             }}
           >
-            <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
-              <strong>Current Focus:</strong> Architecting event-driven
-              pipelines with Kafka and exploring RAG patterns in AI-integrated
-              applications.
+            <Typography variant="h6" fontWeight="800" gutterBottom>
+              Quick Facts
             </Typography>
+            <Divider sx={{ mb: 3 }} />
+
+            <Stack spacing={2.5} sx={{ mb: 4 }}>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Cake color="primary" fontSize="small" />
+                <Typography variant="body2">
+                  <strong>Age:</strong> {myAge} Years Old
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Public color="primary" fontSize="small" />
+                <Typography variant="body2">
+                  <strong>Born:</strong> Athens, Greece
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <LocationOn color="primary" fontSize="small" />
+                <Typography variant="body2">
+                  <strong>Based in:</strong> New York City, NY
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <School color="primary" fontSize="small" />
+                <Typography variant="body2">
+                  <strong>Education:</strong> B.S. Computer Science
+                </Typography>
+              </Stack>
+            </Stack>
+
+            <Button
+              fullWidth
+              variant="contained"
+              size="large"
+              startIcon={<FileDownload />}
+              href="/resume/Nikolas Iliopoulos.pdf"
+              target="_blank"
+              sx={{
+                py: 1.5,
+                borderRadius: 2,
+                fontWeight: 700,
+                textTransform: 'none',
+                boxShadow: theme.shadows[4],
+              }}
+            >
+              Download Resume
+            </Button>
+
+            <Box sx={{ mt: 4 }}>
+              <Typography variant="subtitle2" fontWeight="800" gutterBottom>
+                Technical Toolbelt
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {skills.map((skill) => (
+                  <Tooltip key={skill.label} title={skill.detail} arrow>
+                    <Chip
+                      label={skill.label}
+                      size="small"
+                      sx={{
+                        borderRadius: 1,
+                        fontWeight: 600,
+                        bgcolor: alpha(theme.palette.primary.main, 0.08),
+                        color: 'primary.main',
+                        border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                      }}
+                    />
+                  </Tooltip>
+                ))}
+              </Box>
+            </Box>
           </Box>
         </Grid>
       </Grid>
+
+      {/* Footer Focus Badge */}
+      <Box
+        sx={{
+          mt: 8,
+          p: 3,
+          borderRadius: 3,
+          bgcolor: alpha(theme.palette.primary.main, 0.05),
+          borderLeft: `6px solid ${theme.palette.primary.main}`,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+        }}
+      >
+        <AutoAwesome color="primary" />
+        <Typography variant="body1" sx={{ fontStyle: 'italic' }}>
+          <strong>Current Focus:</strong> Architecting event-driven pipelines
+          with Kafka and exploring RAG patterns in AI-integrated applications.
+        </Typography>
+      </Box>
     </Box>
   );
 };

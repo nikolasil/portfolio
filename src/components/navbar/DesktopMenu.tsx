@@ -37,7 +37,7 @@ const DesktopMenu = ({ items }: DesktopMenuProps) => {
             underline="none"
             sx={{
               position: 'relative',
-              fontSize: '0.95rem',
+              fontSize: '1rem',
               fontWeight: 600,
               color: isActive ? 'primary.main' : 'text.secondary',
               transition: 'color 0.3s ease',

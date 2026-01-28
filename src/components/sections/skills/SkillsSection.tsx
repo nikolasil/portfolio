@@ -20,8 +20,8 @@ import StorageIcon from '@mui/icons-material/Storage';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
 import WebIcon from '@mui/icons-material/Web';
-import ConstructionIcon from '@mui/icons-material/Construction';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import ConstructionIcon from '@mui/icons-material/Construction';
 
 const skillsData = [
   {
@@ -98,16 +98,24 @@ const SkillsSection = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <Box sx={{ py: 8, px: { xs: 2, sm: 4, md: 10 }, minHeight: '100vh' }}>
-      <Typography
-        variant="h4"
-        fontWeight="900"
-        textAlign="center"
-        gutterBottom
-        sx={{ mb: 6, letterSpacing: -1 }}
+    <Box sx={{ py: 4, px: { xs: 2, sm: 4, md: 10 }, minHeight: '100vh' }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
+        sx={{ mb: 8 }}
       >
-        🎯 Skills
-      </Typography>
+        <ConstructionIcon sx={{ fontSize: '2rem' }} color="primary" />
+        <Typography
+          variant="h3"
+          fontWeight="900"
+          letterSpacing="-0.02em"
+          fontSize="2rem"
+        >
+          Skills
+        </Typography>
+      </Stack>
 
       <Grid container spacing={3}>
         {skillsData.map((skillGroup, idx) => (

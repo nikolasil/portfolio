@@ -180,12 +180,29 @@ const ContactSection = () => {
   return (
     <Box
       sx={{
-        py: 10,
+        py: 4,
         px: { xs: 2, md: 8 },
         maxWidth: '1200px',
         margin: '0 auto',
       }}
     >
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
+        sx={{ mb: 4 }}
+      >
+        <Phone sx={{ fontSize: '2rem' }} color="primary" />
+        <Typography
+          variant="h3"
+          fontWeight="900"
+          letterSpacing="-0.02em"
+          fontSize="2rem"
+        >
+          Contact
+        </Typography>
+      </Stack>
       <Stack
         direction={{ xs: 'column', md: 'row' }}
         spacing={8}
@@ -200,13 +217,13 @@ const ContactSection = () => {
             sx={{ letterSpacing: '-0.02em' }}
           >
             Let&apos;s{' '}
-            <span style={{ color: theme.palette.primary.main }}>Connect</span>.
+            <span style={{ color: theme.palette.primary.main }}>Connect</span>!
           </Typography>
 
           <Typography
             variant="body1"
             color="text.secondary"
-            sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.6 }}
+            sx={{ mb: 4, fontSize: '1rem', lineHeight: 1.6 }}
           >
             I&apos;m currently open to new opportunities and collaborations.
             Whether you have a question or just want to say hi, I&apos;ll try my

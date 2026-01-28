@@ -12,6 +12,7 @@ import {
   Divider,
 } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import SchoolIcon from '@mui/icons-material/School'; 
 
 const educationData = [
   {
@@ -73,6 +74,7 @@ const EducationItem = ({
               fontWeight="800"
               color="primary.main"
               gutterBottom
+              fontSize="1.3rem"
             >
               {edu.title}
             </Typography>
@@ -143,21 +145,29 @@ const EducationSection = () => {
   return (
     <Box
       sx={{
-        py: 8,
+        py: 4,
         px: { xs: 2, sm: 4, md: 10 },
         maxWidth: '1000px',
         margin: '0 auto',
       }}
     >
-      <Typography
-        variant="h4"
-        fontWeight="900"
-        textAlign="center"
-        gutterBottom
-        sx={{ mb: 6 }}
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
+        sx={{ mb: 8 }}
       >
-        🎓 Education
-      </Typography>
+        <SchoolIcon sx={{ fontSize: '2rem' }} color="primary" />
+        <Typography
+          variant="h3"
+          fontWeight="900"
+          letterSpacing="-0.02em"
+          fontSize="2rem"
+        >
+          Education
+        </Typography>
+      </Stack>
 
       <Stack spacing={4} position="relative">
         {/* Vertical Line for Timeline effect (hidden on mobile) */}

@@ -33,6 +33,7 @@ import StarIcon from '@mui/icons-material/Star';
 import SchoolIcon from '@mui/icons-material/School';
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import ComputerIcon from '@mui/icons-material/Computer';
 
 export type Project = {
   cat: string;
@@ -491,7 +492,7 @@ const PortfolioSection = () => {
   return (
     <Box
       sx={{
-        py: { xs: 4, md: 8 },
+        py: 4,
         px: { xs: 2, sm: 4, md: 8 },
         maxWidth: '1400px',
         margin: '0 auto',
@@ -499,14 +500,23 @@ const PortfolioSection = () => {
       }}
     >
       <Stack alignItems="center" mb={6}>
-        <Typography
-          variant="h4"
-          fontWeight="900"
-          gutterBottom
-          sx={{ fontSize: { xs: '1.75rem', md: '2.125rem' } }}
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          spacing={2}
+          sx={{ mb: 4 }}
         >
-          💼 Portfolio
-        </Typography>
+          <ComputerIcon sx={{ fontSize: '2rem' }} color="primary" />
+          <Typography
+            variant="h3"
+            fontWeight="900"
+            letterSpacing="-0.02em"
+            fontSize="2rem"
+          >
+            Portfolio
+          </Typography>
+        </Stack>
         <Typography
           variant="subtitle1"
           color="text.secondary"
@@ -590,7 +600,9 @@ const PortfolioSection = () => {
                   </Typography>
                 }
               />
-              {(selectedTags.length > 0 || searchQuery || showImportantOnly) && (
+              {(selectedTags.length > 0 ||
+                searchQuery ||
+                showImportantOnly) && (
                 <IconButton
                   size="small"
                   onClick={() => {

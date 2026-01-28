@@ -184,7 +184,7 @@ const StarDotsBackground = React.memo(
     twinkle = true,
     connectDistance = 160,
     shootingStarFrequency = 0.005,
-    initialInteractionMode = 'attract',
+    initialInteractionMode = 'repulse',
     starColor,
     bgColor,
     showControls = true,
