@@ -147,13 +147,7 @@ const WallOfFameSection = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        py: { xs: 4, md: 8 },
-        background: `linear-gradient(135deg, ${alpha(selectedColor, 0.05)} 0%, ${alpha(theme.palette.background.default, 1)} 50%, ${alpha(theme.palette.secondary.light, 0.05)} 100%)`,
-      }}
-    >
+    <Box sx={{ py: 4, px: { xs: 2, sm: 4, md: 10 }, minHeight: '100vh' }}>
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <Stack
           direction="row"
