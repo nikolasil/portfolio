@@ -18,7 +18,6 @@ import {
   Snackbar,
   Alert,
   LinearProgress,
-  Tooltip,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
@@ -26,7 +25,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import TimerIcon from '@mui/icons-material/Timer';
 import BugReportIcon from '@mui/icons-material/BugReport';
 
-const EMOJIS = ['🔥', '💻', '🎨', '✨', '🤘', '🚀', '🌈', '💎', '🍦', '👾'];
+const EMOJIS = ['🔥', '💻', '🎨', '✨', '🤘'];
 const COLORS = [
   '#FF4D4D',
   '#FF9F43',
@@ -151,7 +150,7 @@ const WallOfFameSection = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        py: 4,
+        py: { xs: 4, md: 8 },
         background: `linear-gradient(135deg, ${alpha(selectedColor, 0.05)} 0%, ${alpha(theme.palette.background.default, 1)} 50%, ${alpha(theme.palette.secondary.light, 0.05)} 100%)`,
       }}
     >
@@ -177,9 +176,9 @@ const WallOfFameSection = () => {
         <Paper
           elevation={0}
           sx={{
-            p: { xs: 3, md: 5 },
-            mb: 10,
-            borderRadius: 8,
+            p: { xs: 2, sm: 3, md: 5 },
+            mb: { xs: 6, md: 10 },
+            borderRadius: { xs: 4, md: 8 },
             border: `2px solid ${alpha(selectedColor, 0.1)}`,
             background: alpha(theme.palette.background.paper, 0.8),
             backdropFilter: 'blur(20px)',
@@ -187,8 +186,8 @@ const WallOfFameSection = () => {
           }}
         >
           <form onSubmit={handleSubmit}>
-            <Stack spacing={4}>
-              <Stack direction={{ xs: 'column', md: 'row' }} spacing={3}>
+            <Stack spacing={3}>
+              <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                 <TextField
                   placeholder="What's your name?"
                   fullWidth
@@ -197,25 +196,34 @@ const WallOfFameSection = () => {
                   variant="outlined"
                   sx={{
                     '& .MuiOutlinedInput-root': {
-                      borderRadius: 4,
+                      borderRadius: 3,
                       fontWeight: 600,
                     },
                   }}
                 />
 
-                <Stack direction="row" spacing={2} justifyContent="center">
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  justifyContent="center"
+                  flexWrap="wrap"
+                  useFlexGap
+                >
                   <Box
                     sx={{
-                      p: 1,
-                      borderRadius: 4,
+                      p: 0.5,
+                      borderRadius: 3,
                       bgcolor: alpha(theme.palette.action.hover, 0.05),
                       border: `1px dashed ${theme.palette.divider}`,
                       display: 'flex',
+                      flexWrap: 'wrap',
+                      justifyContent: 'center',
                     }}
                   >
                     {EMOJIS.slice(0, 5).map((emo) => (
                       <IconButton
                         key={emo}
+                        size="small"
                         onClick={() => setSelectedEmoji(emo)}
                         sx={{
                           transform:
@@ -232,12 +240,13 @@ const WallOfFameSection = () => {
                   <Box
                     sx={{
                       p: 1,
-                      borderRadius: 4,
+                      borderRadius: 3,
                       bgcolor: alpha(theme.palette.action.hover, 0.05),
                       border: `1px dashed ${theme.palette.divider}`,
                       display: 'flex',
                       gap: 1,
                       alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                   >
                     {COLORS.map((col) => (
@@ -245,8 +254,8 @@ const WallOfFameSection = () => {
                         key={col}
                         onClick={() => setSelectedColor(col)}
                         sx={{
-                          width: 24,
-                          height: 24,
+                          width: 20,
+                          height: 20,
                           borderRadius: '50%',
                           bgcolor: col,
                           cursor: 'pointer',
@@ -260,7 +269,7 @@ const WallOfFameSection = () => {
                         }}
                       >
                         {selectedColor === col && (
-                          <CheckIcon sx={{ color: 'white', fontSize: 14 }} />
+                          <CheckIcon sx={{ color: 'white', fontSize: 12 }} />
                         )}
                       </Box>
                     ))}
@@ -275,19 +284,20 @@ const WallOfFameSection = () => {
                 fullWidth
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                sx={{ '& .MuiOutlinedInput-root': { borderRadius: 5 } }}
+                sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
               />
 
               <Box
                 sx={{
                   position: 'relative',
                   alignSelf: 'center',
-                  width: 'fit-content',
+                  width: { xs: '100%', sm: 'fit-content' },
                 }}
               >
                 <Button
                   type="submit"
                   variant="contained"
+                  fullWidth
                   disabled={
                     submitting || !name || !message || cooldownSeconds > 0
                   }
@@ -301,10 +311,10 @@ const WallOfFameSection = () => {
                     )
                   }
                   sx={{
-                    py: 2,
-                    px: 6,
-                    minWidth: 240,
-                    borderRadius: 4,
+                    py: 1.5,
+                    px: { md: 6 },
+                    minWidth: { md: 240 },
+                    borderRadius: 3,
                     fontWeight: 800,
                     textTransform: 'none',
                     bgcolor:
@@ -353,25 +363,30 @@ const WallOfFameSection = () => {
             <CircularProgress thickness={5} size={60} />
           </Stack>
         ) : (
-          <Box sx={{ columnCount: { xs: 1, sm: 2, md: 3 }, columnGap: 3 }}>
+          <Box
+            sx={{
+              columnCount: { xs: 1, sm: 2, md: 3 },
+              columnGap: { xs: 2, md: 3 },
+            }}
+          >
             {entries.map((entry, idx) => (
               <Grow in key={entry.id || idx} timeout={idx * 50}>
                 <Paper
                   sx={{
                     display: 'inline-block',
                     width: '100%',
-                    mb: 3,
-                    p: 4,
-                    pb: 6, // Added extra padding for the ID at the bottom
-                    borderRadius: 7,
+                    mb: { xs: 2, md: 3 },
+                    p: { xs: 2.5, md: 4 },
+                    pb: 6,
+                    borderRadius: { xs: 4, md: 7 },
                     position: 'relative',
                     overflow: 'hidden',
                     border: `1px solid ${alpha(entry.color || theme.palette.divider, 0.2)}`,
                     transition: 'transform 0.2s ease-in-out',
                     '&:hover': {
-                      transform: 'scale(1.02) rotate(1deg)',
+                      transform: { md: 'scale(1.02) rotate(1deg)' },
                       boxShadow: `0 20px 40px ${alpha(entry.color || '#000', 0.15)}`,
-                      '& .debug-id': { opacity: 0.8 }, // Make ID clearer on hover
+                      '& .debug-id': { opacity: 0.8 },
                     },
                   }}
                 >
@@ -379,18 +394,20 @@ const WallOfFameSection = () => {
                     direction="row"
                     spacing={2}
                     alignItems="center"
-                    sx={{ mb: 3 }}
+                    sx={{ mb: 2 }}
                   >
                     <Avatar
                       sx={{
                         bgcolor: entry.color || theme.palette.primary.main,
                         fontWeight: 800,
+                        width: 40,
+                        height: 40,
                       }}
                     >
                       {entry.name?.[0]?.toUpperCase()}
                     </Avatar>
-                    <Box>
-                      <Typography variant="subtitle1" fontWeight="800">
+                    <Box sx={{ minWidth: 0 }}>
+                      <Typography variant="subtitle2" fontWeight="800" noWrap>
                         {entry.name}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
@@ -408,19 +425,25 @@ const WallOfFameSection = () => {
                       </Typography>
                     </Box>
                     <Typography
-                      sx={{ ml: 'auto !important', fontSize: '1.5rem' }}
+                      sx={{
+                        ml: 'auto !important',
+                        fontSize: { xs: '1.2rem', md: '1.5rem' },
+                      }}
                     >
                       {entry.emoji}
                     </Typography>
                   </Stack>
                   <Typography
-                    variant="body1"
-                    sx={{ color: 'text.primary', lineHeight: 1.7 }}
+                    variant="body2"
+                    sx={{
+                      color: 'text.primary',
+                      lineHeight: 1.6,
+                      wordBreak: 'break-word',
+                    }}
                   >
                     {entry.message}
                   </Typography>
 
-                  {/* DEBUG ID LABEL */}
                   <Box
                     className="debug-id"
                     sx={{
@@ -430,20 +453,19 @@ const WallOfFameSection = () => {
                       display: 'flex',
                       alignItems: 'center',
                       gap: 0.5,
-                      opacity: 0.3, // Subtle by default
+                      opacity: 0.3,
                       transition: 'opacity 0.2s',
                       pointerEvents: 'none',
-                      userSelect: 'all', // Allows you to triple-click and copy the ID easily
+                      userSelect: 'all',
                     }}
                   >
-                    <BugReportIcon sx={{ fontSize: 12 }} />
+                    <BugReportIcon sx={{ fontSize: 10 }} />
                     <Typography
                       variant="caption"
                       sx={{
                         fontFamily: 'monospace',
-                        fontSize: '10px',
+                        fontSize: '9px',
                         fontWeight: 'bold',
-                        letterSpacing: '0.5px',
                       }}
                     >
                       ID: {entry.id}
@@ -466,7 +488,7 @@ const WallOfFameSection = () => {
           severity="warning"
           variant="filled"
           onClose={() => setErrorMsg(null)}
-          sx={{ borderRadius: 4 }}
+          sx={{ borderRadius: 3, width: '100%' }}
         >
           {errorMsg}
         </Alert>
