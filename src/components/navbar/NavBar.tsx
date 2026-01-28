@@ -26,6 +26,7 @@ export const NAV_ITEMS = [
   { text: 'Skills', navLink: '/skills' },
   { text: 'Portfolio', navLink: '/portfolio' },
   { text: 'Contact', navLink: '/contact' },
+  { text: 'Wall of Fame', navLink: '/wall' },
 ] as const;
 
 const Navbar = () => {

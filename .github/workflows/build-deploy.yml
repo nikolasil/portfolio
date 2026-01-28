@@ -72,6 +72,7 @@ jobs:
             echo "Starting new container..."
             if ! sudo docker run -d \
               --name $CONTAINER_NAME \
+              -v /home/${{ secrets.EC2_USERNAME }}/portfolio-data:/app/data \
               -e NEXTAUTH_URL=$NEXTAUTH_URL \
               -e NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
               -e GMAIL_USER=${{ secrets.GMAIL_USER }} \
@@ -86,6 +87,7 @@ jobs:
                 sudo docker rm -f $CONTAINER_NAME || true
                 sudo docker run -d \
                   --name $CONTAINER_NAME \
+                  -v /home/${{ secrets.EC2_USERNAME }}/portfolio-data:/app/data \
                   -e NEXTAUTH_URL=$NEXTAUTH_URL \
                   -e NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
                   -e GMAIL_USER=${{ secrets.GMAIL_USER }} \
