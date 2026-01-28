@@ -18,12 +18,16 @@ import {
   Snackbar,
   Alert,
   LinearProgress,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import CheckIcon from '@mui/icons-material/Check';
 import TimerIcon from '@mui/icons-material/Timer';
 import BugReportIcon from '@mui/icons-material/BugReport';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const EMOJIS = ['🔥', '💻', '🎨', '✨', '🤘'];
 const COLORS = [
@@ -150,207 +154,235 @@ const WallOfFameSection = () => {
     <Box sx={{ py: 4, px: { xs: 2, sm: 4, md: 10 }, minHeight: '100vh' }}>
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <Stack
-          direction="row"
+          direction="column"
           alignItems="center"
           justifyContent="center"
-          spacing={2}
-          sx={{ mb: 8 }}
+          spacing={1}
+          sx={{ mb: 4 }}
         >
-          <RocketLaunchIcon sx={{ fontSize: '2rem' }} color="primary" />
+          <Stack direction="row" spacing={2} alignItems="center">
+            <RocketLaunchIcon sx={{ fontSize: '2rem' }} color="primary" />
+            <Typography
+              variant="h3"
+              fontWeight="900"
+              letterSpacing="-0.02em"
+              fontSize="2rem"
+            >
+              Wall of Fame
+            </Typography>
+          </Stack>
           <Typography
-            variant="h3"
-            fontWeight="900"
-            letterSpacing="-0.02em"
-            fontSize="2rem"
+            variant="body1"
+            color="text.secondary"
+            textAlign="center"
+            sx={{ maxWidth: 600, fontWeight: 500 }}
           >
-            Wall of Fame
+            A space every visitor can leave their thoughts, ideas,
+            or just mark on the digital wall.
           </Typography>
         </Stack>
 
-        <Paper
+        {/* Accordion Submission Form */}
+        <Accordion
           elevation={0}
           sx={{
-            p: { xs: 2, sm: 3, md: 5 },
-            mb: { xs: 6, md: 10 },
-            borderRadius: { xs: 4, md: 8 },
+            mb: { xs: 6, md: 8 },
+            borderRadius: '24px !important',
             border: `2px solid ${alpha(selectedColor, 0.1)}`,
             background: alpha(theme.palette.background.paper, 0.8),
             backdropFilter: 'blur(20px)',
             boxShadow: `0 24px 80px ${alpha(theme.palette.common.black, 0.08)}`,
+            '&:before': { display: 'none' },
           }}
         >
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={3}>
-              <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                <TextField
-                  placeholder="What's your name?"
-                  fullWidth
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  variant="outlined"
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 3,
-                      fontWeight: 600,
-                    },
-                  }}
-                />
-
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  justifyContent="center"
-                  flexWrap="wrap"
-                  useFlexGap
-                >
-                  <Box
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ px: { xs: 2, md: 5 }, py: 1 }}
+          >
+            <Typography fontWeight="700" color="text.primary">
+              Leave your message on the Wall
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails
+            sx={{ px: { xs: 2, sm: 3, md: 5 }, pb: { xs: 2, sm: 3, md: 5 } }}
+          >
+            <form onSubmit={handleSubmit}>
+              <Stack spacing={3}>
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                  <TextField
+                    placeholder="What's your name?"
+                    fullWidth
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    variant="outlined"
                     sx={{
-                      p: 0.5,
-                      borderRadius: 3,
-                      bgcolor: alpha(theme.palette.action.hover, 0.05),
-                      border: `1px dashed ${theme.palette.divider}`,
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {EMOJIS.slice(0, 5).map((emo) => (
-                      <IconButton
-                        key={emo}
-                        size="small"
-                        onClick={() => setSelectedEmoji(emo)}
-                        sx={{
-                          transform:
-                            selectedEmoji === emo ? 'scale(1.2)' : 'scale(1)',
-                          filter:
-                            selectedEmoji === emo ? 'none' : 'grayscale(1)',
-                        }}
-                      >
-                        {emo}
-                      </IconButton>
-                    ))}
-                  </Box>
-
-                  <Box
-                    sx={{
-                      p: 1,
-                      borderRadius: 3,
-                      bgcolor: alpha(theme.palette.action.hover, 0.05),
-                      border: `1px dashed ${theme.palette.divider}`,
-                      display: 'flex',
-                      gap: 1,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {COLORS.map((col) => (
-                      <Box
-                        key={col}
-                        onClick={() => setSelectedColor(col)}
-                        sx={{
-                          width: 20,
-                          height: 20,
-                          borderRadius: '50%',
-                          bgcolor: col,
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          border:
-                            selectedColor === col ? '2px solid white' : 'none',
-                          boxShadow:
-                            selectedColor === col ? `0 0 0 2px ${col}` : 'none',
-                        }}
-                      >
-                        {selectedColor === col && (
-                          <CheckIcon sx={{ color: 'white', fontSize: 12 }} />
-                        )}
-                      </Box>
-                    ))}
-                  </Box>
-                </Stack>
-              </Stack>
-
-              <TextField
-                placeholder="Share something awesome..."
-                multiline
-                rows={3}
-                fullWidth
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
-              />
-
-              <Box
-                sx={{
-                  position: 'relative',
-                  alignSelf: 'center',
-                  width: { xs: '100%', sm: 'fit-content' },
-                }}
-              >
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  disabled={
-                    submitting || !name || !message || cooldownSeconds > 0
-                  }
-                  endIcon={
-                    submitting ? (
-                      <CircularProgress size={20} color="inherit" />
-                    ) : cooldownSeconds > 0 ? (
-                      <TimerIcon />
-                    ) : (
-                      <SendIcon />
-                    )
-                  }
-                  sx={{
-                    py: 1.5,
-                    px: { md: 6 },
-                    minWidth: { md: 240 },
-                    borderRadius: 3,
-                    fontWeight: 800,
-                    textTransform: 'none',
-                    bgcolor:
-                      cooldownSeconds > 0
-                        ? theme.palette.action.disabledBackground
-                        : selectedColor,
-                    '&:hover': {
-                      bgcolor: selectedColor,
-                      filter: 'brightness(0.9)',
-                      transform: 'translateY(-2px)',
-                    },
-                  }}
-                >
-                  {submitting
-                    ? 'Sending...'
-                    : cooldownSeconds > 0
-                      ? `Wait ${formatTime(cooldownSeconds)}`
-                      : 'Drop it on the Wall'}
-                </Button>
-                {cooldownSeconds > 0 && (
-                  <LinearProgress
-                    variant="determinate"
-                    value={(cooldownSeconds / initialCooldown) * 100}
-                    sx={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 10,
-                      right: 10,
-                      height: 4,
-                      borderRadius: 2,
-                      bgcolor: 'transparent',
-                      '& .MuiLinearProgress-bar': {
-                        bgcolor: selectedColor,
-                        borderRadius: 2,
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 3,
+                        fontWeight: 600,
                       },
                     }}
                   />
-                )}
-              </Box>
-            </Stack>
-          </form>
-        </Paper>
+
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    justifyContent="center"
+                    flexWrap="wrap"
+                    useFlexGap
+                  >
+                    <Box
+                      sx={{
+                        p: 0.5,
+                        borderRadius: 3,
+                        bgcolor: alpha(theme.palette.action.hover, 0.05),
+                        border: `1px dashed ${theme.palette.divider}`,
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {EMOJIS.slice(0, 5).map((emo) => (
+                        <IconButton
+                          key={emo}
+                          size="small"
+                          onClick={() => setSelectedEmoji(emo)}
+                          sx={{
+                            transform:
+                              selectedEmoji === emo ? 'scale(1.2)' : 'scale(1)',
+                            filter:
+                              selectedEmoji === emo ? 'none' : 'grayscale(1)',
+                          }}
+                        >
+                          {emo}
+                        </IconButton>
+                      ))}
+                    </Box>
+
+                    <Box
+                      sx={{
+                        p: 1,
+                        borderRadius: 3,
+                        bgcolor: alpha(theme.palette.action.hover, 0.05),
+                        border: `1px dashed ${theme.palette.divider}`,
+                        display: 'flex',
+                        gap: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {COLORS.map((col) => (
+                        <Box
+                          key={col}
+                          onClick={() => setSelectedColor(col)}
+                          sx={{
+                            width: 20,
+                            height: 20,
+                            borderRadius: '50%',
+                            bgcolor: col,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border:
+                              selectedColor === col
+                                ? '2px solid white'
+                                : 'none',
+                            boxShadow:
+                              selectedColor === col
+                                ? `0 0 0 2px ${col}`
+                                : 'none',
+                          }}
+                        >
+                          {selectedColor === col && (
+                            <CheckIcon sx={{ color: 'white', fontSize: 12 }} />
+                          )}
+                        </Box>
+                      ))}
+                    </Box>
+                  </Stack>
+                </Stack>
+
+                <TextField
+                  placeholder="Share something awesome..."
+                  multiline
+                  rows={3}
+                  fullWidth
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
+                />
+
+                <Box
+                  sx={{
+                    position: 'relative',
+                    alignSelf: 'center',
+                    width: { xs: '100%', sm: 'fit-content' },
+                  }}
+                >
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    disabled={
+                      submitting || !name || !message || cooldownSeconds > 0
+                    }
+                    endIcon={
+                      submitting ? (
+                        <CircularProgress size={20} color="inherit" />
+                      ) : cooldownSeconds > 0 ? (
+                        <TimerIcon />
+                      ) : (
+                        <SendIcon />
+                      )
+                    }
+                    sx={{
+                      py: 1.5,
+                      px: { md: 6 },
+                      minWidth: { md: 240 },
+                      borderRadius: 3,
+                      fontWeight: 800,
+                      textTransform: 'none',
+                      bgcolor:
+                        cooldownSeconds > 0
+                          ? theme.palette.action.disabledBackground
+                          : selectedColor,
+                      '&:hover': {
+                        bgcolor: selectedColor,
+                        filter: 'brightness(0.9)',
+                        transform: 'translateY(-2px)',
+                      },
+                    }}
+                  >
+                    {submitting
+                      ? 'Sending...'
+                      : cooldownSeconds > 0
+                        ? `Wait ${formatTime(cooldownSeconds)}`
+                        : 'Drop it on the Wall'}
+                  </Button>
+                  {cooldownSeconds > 0 && (
+                    <LinearProgress
+                      variant="determinate"
+                      value={(cooldownSeconds / initialCooldown) * 100}
+                      sx={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 10,
+                        right: 10,
+                        height: 4,
+                        borderRadius: 2,
+                        bgcolor: 'transparent',
+                        '& .MuiLinearProgress-bar': {
+                          bgcolor: selectedColor,
+                          borderRadius: 2,
+                        },
+                      }}
+                    />
+                  )}
+                </Box>
+              </Stack>
+            </form>
+          </AccordionDetails>
+        </Accordion>
 
         {loading ? (
           <Stack alignItems="center" py={10}>
