@@ -210,7 +210,7 @@ const WallOfFameSection = () => {
         {/* Accordion Submission Form */}
         <Accordion
           elevation={0}
-          defaultExpanded={entries.length === 0}
+          defaultExpanded={false}
           sx={{
             mb: { xs: 6, md: 8 },
             borderRadius: '24px !important',
