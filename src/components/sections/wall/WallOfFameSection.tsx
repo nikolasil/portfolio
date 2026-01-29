@@ -177,8 +177,8 @@ const WallOfFameSection = () => {
             textAlign="center"
             sx={{ maxWidth: 600, fontWeight: 500 }}
           >
-            A space every visitor can leave their thoughts, ideas,
-            or just mark on the digital wall.
+            A space every visitor can leave their thoughts, ideas, or just mark
+            on the digital wall.
           </Typography>
         </Stack>
 
@@ -200,7 +200,7 @@ const WallOfFameSection = () => {
             sx={{ px: { xs: 2, md: 5 }, py: 1 }}
           >
             <Typography fontWeight="700" color="text.primary">
-              Leave your message on the Wall
+              Leave your message on the Wall of Fame!
             </Typography>
           </AccordionSummary>
           <AccordionDetails
@@ -485,17 +485,6 @@ const WallOfFameSection = () => {
                       userSelect: 'all',
                     }}
                   >
-                    <BugReportIcon sx={{ fontSize: 10 }} />
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        fontFamily: 'monospace',
-                        fontSize: '9px',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      ID: {entry.id}
-                    </Typography>
                   </Box>
                 </Paper>
               </Grow>
