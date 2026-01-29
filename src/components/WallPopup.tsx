@@ -25,22 +25,19 @@ export default function WallPopup() {
   const router = useRouter();
 
   useEffect(() => {
-    // 1. Always close the popup when the route changes
-    setOpen(false);
-
-    // 2. If the user is currently on the wall, mark it as visited in storage
+    // 1. If the user is currently on the wall, mark it as visited in storage
     if (pathname === '/wall') {
       localStorage.setItem('hasVisitedWall', 'true');
       return;
     }
 
-    // 3. Check if the user has EVER visited the wall previously
+    // 2. Check if the user has EVER visited the wall previously
     const hasVisited = localStorage.getItem('hasVisitedWall');
     if (hasVisited) {
       return;
     }
 
-    // 4. If they haven't visited and aren't on the wall, trigger popup
+    // 3. If they haven't visited and aren't on the wall, trigger popup
     const timer = setTimeout(() => {
       setOpen(true);
     }, 5000);
