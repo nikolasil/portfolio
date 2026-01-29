@@ -24,6 +24,7 @@ import {
   Fab,
   Zoom,
   useScrollTrigger,
+  Tooltip,
 } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -603,6 +604,25 @@ const PortfolioSection = () => {
               {(selectedTags.length > 0 ||
                 searchQuery ||
                 showImportantOnly) && (
+                <Tooltip title="Clear All Filters">
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      setselectedTags([]);
+                      setSearchQuery('');
+                      setShowImportantOnly(false);
+                    }}
+                    color="error"
+                  >
+                    <ClearAllIcon />
+                  </IconButton>
+                </Tooltip>
+              )}
+              {!(
+                selectedTags.length > 0 ||
+                searchQuery ||
+                showImportantOnly
+              ) && (
                 <IconButton
                   size="small"
                   onClick={() => {
@@ -610,7 +630,8 @@ const PortfolioSection = () => {
                     setSearchQuery('');
                     setShowImportantOnly(false);
                   }}
-                  color="error"
+                  color="success"
+                  disabled
                 >
                   <ClearAllIcon />
                 </IconButton>
