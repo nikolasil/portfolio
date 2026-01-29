@@ -657,7 +657,7 @@ const WallOfFameSection = () => {
                             fontSize: '1.05rem',
                           }}
                         >
-                          "{entry.message}"
+                          &quot;{entry.message}&quot;
                         </Typography>
                       </Box>
                     </Paper>
