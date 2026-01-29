@@ -7,7 +7,6 @@ import {
   keyframes,
   Container,
 } from '@mui/material';
-import { ReactTyped } from 'react-typed';
 import Link from 'next/link';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { FileDownload, Phone } from '@mui/icons-material';
@@ -118,12 +117,17 @@ const IntroSection = () => {
                 fontSize: { xs: '1rem', md: '1.5rem' },
               }}
             >
-              <ReactTyped
-                strings={['Software Engineer', 'Full-Stack Developer']}
-                typeSpeed={50}
-                backSpeed={30}
-                loop
-              />
+              Full-Stack Software Engineer
+            </Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 400,
+                color: 'text.primary',
+                fontSize: { xs: '1rem', md: '1.5rem' },
+              }}
+            >
+              Backend leaning
             </Typography>
           </Box>
 
