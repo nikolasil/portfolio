@@ -93,6 +93,31 @@ const AboutSection = () => {
   useEffect(() => {
     const fetchGithubData = async () => {
       const username = 'nikolasil';
+      const CACHE_KEY = 'github_stats_cache';
+      const CACHE_DURATION = 1000 * 60 * 60; // 1 hour in milliseconds
+
+      // 1. Check LocalStorage first
+      const cachedData = localStorage.getItem(CACHE_KEY);
+
+      if (cachedData) {
+        try {
+          const parsedCache = JSON.parse(cachedData);
+          const now = Date.now();
+
+          // If cache exists and is fresh (less than 1 hour old)
+          if (now - parsedCache.timestamp < CACHE_DURATION) {
+            setCommitCount(parsedCache.commitCount);
+            setRepoCount(parsedCache.repoCount);
+            setLoading(false);
+            return; // EXIT EARLY: Do not fetch
+          }
+        } catch (e) {
+          // If JSON parse fails, ignore and proceed to fetch
+          console.error('Cache parsing error', e);
+        }
+      }
+
+      // 2. Fetch if no cache or expired
       try {
         const [commitRes, userRes] = await Promise.all([
           fetch(`https://api.github.com/search/commits?q=author:${username}`, {
@@ -100,21 +125,43 @@ const AboutSection = () => {
           }),
           fetch(`https://api.github.com/users/${username}`),
         ]);
+
+        // Process Commits
         const commitData = await commitRes.json();
+        let newCommitCount = '1k+'; // Default fallback
         if (commitData.total_count) {
           const count = commitData.total_count;
-          setCommitCount(
-            count >= 1000 ? `${(count / 1000).toFixed(1)}k+` : `${count}+`,
-          );
+          newCommitCount =
+            count >= 1000 ? `${(count / 1000).toFixed(1)}k+` : `${count}+`;
         }
+
+        // Process Repos
         const userData = await userRes.json();
-        if (userData.public_repos) setRepoCount(`${userData.public_repos}+`);
+        let newRepoCount = '20+'; // Default fallback
+        if (userData.public_repos) {
+          newRepoCount = `${userData.public_repos}+`;
+        }
+
+        // Update State
+        setCommitCount(newCommitCount);
+        setRepoCount(newRepoCount);
+
+        // 3. Save new data to LocalStorage
+        localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({
+            timestamp: Date.now(),
+            commitCount: newCommitCount,
+            repoCount: newRepoCount,
+          }),
+        );
       } catch (error) {
         console.error('Error fetching GitHub data:', error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchGithubData();
   }, []);
 
