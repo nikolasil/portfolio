@@ -28,15 +28,15 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import SecurityIcon from '@mui/icons-material/Security';
 
-const EMOJIS = ['🔥', '💻', '🎨', '✨', '🤘'];
+const EMOJIS = ['🔥', '💻', '🎨', '✨', '🤘', '🚀', '🍕', '❤️'];
 const COLORS = [
-  '#FF4D4D',
-  '#FF9F43',
-  '#FECA57',
-  '#1DD1A1',
-  '#61dafb',
-  '#5F27CD',
-  '#F368E0',
+  '#FF4D4D', // Red
+  '#FF9F43', // Orange
+  '#FECA57', // Yellow
+  '#1DD1A1', // Green
+  '#48DBFB', // Light Blue
+  '#5F27CD', // Purple
+  '#F368E0', // Pink
 ];
 
 interface WallEntry {

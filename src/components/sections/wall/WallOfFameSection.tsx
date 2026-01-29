@@ -11,7 +11,6 @@ import {
   alpha,
   TextField,
   Button,
-  IconButton,
   CircularProgress,
   Avatar,
   Container,
@@ -27,16 +26,18 @@ import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import CheckIcon from '@mui/icons-material/Check';
 import TimerIcon from '@mui/icons-material/Timer';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PushPinIcon from '@mui/icons-material/PushPin';
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
-const EMOJIS = ['🔥', '💻', '🎨', '✨', '🤘'];
+const EMOJIS = ['🔥', '💻', '🎨', '✨', '🤘', '🚀', '🍕', '❤️'];
 const COLORS = [
-  '#FF4D4D',
-  '#FF9F43',
-  '#FECA57',
-  '#1DD1A1',
-  '#61dafb',
-  '#5F27CD',
-  '#F368E0',
+  '#FF4D4D', // Red
+  '#FF9F43', // Orange
+  '#FECA57', // Yellow
+  '#1DD1A1', // Green
+  '#48DBFB', // Light Blue
+  '#5F27CD', // Purple
+  '#F368E0', // Pink
 ];
 
 interface Entry {
@@ -48,6 +49,13 @@ interface Entry {
   timestamp: number;
   ip: string;
 }
+
+// Helper to generate a stable random rotation based on ID
+const getRotation = (id: string) => {
+  if (!id) return 0;
+  const num = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return (num % 6) - 3; // Returns a number between -3 and 3
+};
 
 const WallOfFameSection = () => {
   const theme = useTheme();
@@ -111,8 +119,9 @@ const WallOfFameSection = () => {
       message,
       emoji: selectedEmoji,
       color: selectedColor,
-      timestamp: new Date().toISOString(),
+      timestamp: Date.now(), // Changed to number to match interface
       id: `tmp_${Date.now()}`,
+      ip: '127.0.0.1', // Mock IP for client side type satisfaction
     };
 
     try {
@@ -150,16 +159,32 @@ const WallOfFameSection = () => {
   };
 
   return (
-    <Box sx={{ py: 4, px: { xs: 2, sm: 4, md: 10 }, minHeight: '100vh' }}>
+    <Box
+      sx={{
+        py: 4,
+        px: { xs: 2, sm: 4, md: 10 },
+        minHeight: '100vh',
+        position: 'relative',
+        // Subtle dot background pattern
+        backgroundImage: `radial-gradient(${alpha(theme.palette.text.primary, 0.1)} 1px, transparent 1px)`,
+        backgroundSize: '30px 30px',
+      }}
+    >
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <Stack
           direction="column"
           alignItems="center"
           justifyContent="center"
           spacing={1}
-          sx={{ mb: 4 }}
+          sx={{ mb: 6 }}
         >
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing={2}
+            sx={{ mb: 8 }}
+          >
             <RocketLaunchIcon sx={{ fontSize: '2rem' }} color="primary" />
             <Typography
               variant="h3"
@@ -170,103 +195,117 @@ const WallOfFameSection = () => {
               Wall of Fame
             </Typography>
           </Stack>
+
           <Typography
-            variant="body1"
+            variant="h6"
             color="text.secondary"
             textAlign="center"
-            sx={{ maxWidth: 600, fontWeight: 500 }}
+            sx={{ maxWidth: 600, fontWeight: 500, lineHeight: 1.6 }}
           >
-            A space every visitor can leave their thoughts, ideas, or just mark
-            on the digital wall.
+            Leave your mark on the digital wall. <br />
+            Inspire, joke, or just say hello!
           </Typography>
         </Stack>
 
         {/* Accordion Submission Form */}
         <Accordion
           elevation={0}
+          defaultExpanded={entries.length === 0}
           sx={{
             mb: { xs: 6, md: 8 },
             borderRadius: '24px !important',
-            border: `2px solid ${alpha(selectedColor, 0.1)}`,
-            background: alpha(theme.palette.background.paper, 0.8),
+            border: `1px solid ${theme.palette.divider}`,
+            background: alpha(theme.palette.background.paper, 0.6),
             backdropFilter: 'blur(20px)',
-            boxShadow: `0 24px 80px ${alpha(theme.palette.common.black, 0.08)}`,
+            boxShadow: theme.shadows[4],
+            overflow: 'hidden',
             '&:before': { display: 'none' },
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              boxShadow: theme.shadows[10],
+              borderColor: theme.palette.primary.main,
+            },
           }}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            sx={{ px: { xs: 2, md: 5 }, py: 1 }}
+            sx={{
+              px: { xs: 2, md: 4 },
+              py: 1,
+              bgcolor: alpha(theme.palette.primary.main, 0.05),
+            }}
           >
-            <Typography fontWeight="700" color="text.primary">
-              Leave your message on the Wall of Fame!
-            </Typography>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Avatar sx={{ bgcolor: 'primary.main', width: 32, height: 32 }}>
+                <SendIcon fontSize="small" />
+              </Avatar>
+              <Typography fontWeight="700" color="text.primary">
+                Write something new
+              </Typography>
+            </Stack>
           </AccordionSummary>
           <AccordionDetails
-            sx={{ px: { xs: 2, sm: 3, md: 5 }, pb: { xs: 2, sm: 3, md: 5 } }}
+            sx={{
+              px: { xs: 2, sm: 3, md: 5 },
+              pb: { xs: 2, sm: 3, md: 5 },
+              pt: 4,
+            }}
           >
             <form onSubmit={handleSubmit}>
-              <Stack spacing={3}>
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField
-                    placeholder="What's your name?"
-                    fullWidth
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    variant="outlined"
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 3,
-                        fontWeight: 600,
-                      },
-                    }}
-                  />
-
-                  <Stack
-                    direction="row"
-                    spacing={1}
-                    justifyContent="center"
-                    flexWrap="wrap"
-                    useFlexGap
-                  >
-                    <Box
+              <Stack spacing={4}>
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={3}>
+                  <Box sx={{ flex: 1 }}>
+                    <Typography
+                      variant="caption"
+                      fontWeight="bold"
                       sx={{
-                        p: 0.5,
-                        borderRadius: 3,
-                        bgcolor: alpha(theme.palette.action.hover, 0.05),
-                        border: `1px dashed ${theme.palette.divider}`,
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        justifyContent: 'center',
+                        ml: 1,
+                        mb: 1,
+                        display: 'block',
+                        color: 'text.secondary',
                       }}
                     >
-                      {EMOJIS.slice(0, 5).map((emo) => (
-                        <IconButton
-                          key={emo}
-                          size="small"
-                          onClick={() => setSelectedEmoji(emo)}
-                          sx={{
-                            transform:
-                              selectedEmoji === emo ? 'scale(1.2)' : 'scale(1)',
-                            filter:
-                              selectedEmoji === emo ? 'none' : 'grayscale(1)',
-                          }}
-                        >
-                          {emo}
-                        </IconButton>
-                      ))}
-                    </Box>
+                      YOUR NAME
+                    </Typography>
+                    <TextField
+                      placeholder="Captain Anonymous"
+                      fullWidth
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      variant="outlined"
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          borderRadius: 3,
+                          bgcolor: 'background.paper',
+                        },
+                      }}
+                    />
+                  </Box>
 
+                  <Box sx={{ flex: 1 }}>
+                    <Typography
+                      variant="caption"
+                      fontWeight="bold"
+                      sx={{
+                        ml: 1,
+                        mb: 1,
+                        display: 'block',
+                        color: 'text.secondary',
+                      }}
+                    >
+                      PICK A COLOR
+                    </Typography>
                     <Box
                       sx={{
-                        p: 1,
+                        p: 1.5,
                         borderRadius: 3,
-                        bgcolor: alpha(theme.palette.action.hover, 0.05),
-                        border: `1px dashed ${theme.palette.divider}`,
+                        bgcolor: 'background.paper',
+                        border: `1px solid ${theme.palette.divider}`,
                         display: 'flex',
-                        gap: 1,
+                        gap: 1.5,
                         alignItems: 'center',
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
+                        flexWrap: 'wrap',
                       }}
                     >
                       {COLORS.map((col) => (
@@ -274,54 +313,137 @@ const WallOfFameSection = () => {
                           key={col}
                           onClick={() => setSelectedColor(col)}
                           sx={{
-                            width: 20,
-                            height: 20,
+                            width: 24,
+                            height: 24,
                             borderRadius: '50%',
                             bgcolor: col,
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
+                            transition: 'transform 0.2s',
+                            transform:
+                              selectedColor === col ? 'scale(1.2)' : 'scale(1)',
+                            boxShadow:
+                              selectedColor === col
+                                ? `0 0 10px ${col}`
+                                : 'none',
                             border:
                               selectedColor === col
                                 ? '2px solid white'
                                 : 'none',
-                            boxShadow:
-                              selectedColor === col
-                                ? `0 0 0 2px ${col}`
-                                : 'none',
                           }}
                         >
                           {selectedColor === col && (
-                            <CheckIcon sx={{ color: 'white', fontSize: 12 }} />
+                            <CheckIcon
+                              sx={{
+                                color: 'white',
+                                fontSize: 14,
+                                filter:
+                                  'drop-shadow(0 1px 2px rgba(0,0,0,0.5))',
+                              }}
+                            />
                           )}
                         </Box>
                       ))}
                     </Box>
-                  </Stack>
+                  </Box>
                 </Stack>
 
-                <TextField
-                  placeholder="Share something awesome..."
-                  multiline
-                  rows={3}
-                  fullWidth
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
-                />
+                <Box>
+                  <Typography
+                    variant="caption"
+                    fontWeight="bold"
+                    sx={{
+                      ml: 1,
+                      mb: 1,
+                      display: 'block',
+                      color: 'text.secondary',
+                    }}
+                  >
+                    VIBE CHECK
+                  </Typography>
+                  <Box
+                    sx={{
+                      p: 2,
+                      borderRadius: 3,
+                      bgcolor: 'background.paper',
+                      border: `1px solid ${theme.palette.divider}`,
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: 1,
+                    }}
+                  >
+                    {EMOJIS.map((emo) => (
+                      <Button
+                        key={emo}
+                        onClick={() => setSelectedEmoji(emo)}
+                        sx={{
+                          minWidth: 40,
+                          height: 40,
+                          borderRadius: 2,
+                          fontSize: '1.2rem',
+                          bgcolor:
+                            selectedEmoji === emo
+                              ? alpha(theme.palette.primary.main, 0.1)
+                              : 'transparent',
+                          border:
+                            selectedEmoji === emo
+                              ? `1px solid ${theme.palette.primary.main}`
+                              : '1px solid transparent',
+                          filter:
+                            selectedEmoji === emo
+                              ? 'grayscale(0)'
+                              : 'grayscale(1)',
+                          opacity: selectedEmoji === emo ? 1 : 0.6,
+                          transition: 'all 0.2s',
+                          '&:hover': {
+                            transform: 'scale(1.1)',
+                            filter: 'grayscale(0)',
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        {emo}
+                      </Button>
+                    ))}
+                  </Box>
+                </Box>
 
-                <Box
-                  sx={{
-                    position: 'relative',
-                    alignSelf: 'center',
-                    width: { xs: '100%', sm: 'fit-content' },
-                  }}
-                >
+                <Box>
+                  <Typography
+                    variant="caption"
+                    fontWeight="bold"
+                    sx={{
+                      ml: 1,
+                      mb: 1,
+                      display: 'block',
+                      color: 'text.secondary',
+                    }}
+                  >
+                    YOUR MESSAGE
+                  </Typography>
+                  <TextField
+                    placeholder="Share something awesome..."
+                    multiline
+                    rows={3}
+                    fullWidth
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 3,
+                        bgcolor: 'background.paper',
+                      },
+                    }}
+                  />
+                </Box>
+
+                <Box sx={{ textAlign: 'right' }}>
                   <Button
                     type="submit"
                     variant="contained"
-                    fullWidth
+                    size="large"
                     disabled={
                       submitting || !name || !message || cooldownSeconds > 0
                     }
@@ -336,11 +458,12 @@ const WallOfFameSection = () => {
                     }
                     sx={{
                       py: 1.5,
-                      px: { md: 6 },
-                      minWidth: { md: 240 },
+                      px: 4,
                       borderRadius: 3,
                       fontWeight: 800,
                       textTransform: 'none',
+                      fontSize: '1rem',
+                      boxShadow: `0 8px 20px ${alpha(selectedColor, 0.4)}`,
                       bgcolor:
                         cooldownSeconds > 0
                           ? theme.palette.action.disabledBackground
@@ -349,6 +472,7 @@ const WallOfFameSection = () => {
                         bgcolor: selectedColor,
                         filter: 'brightness(0.9)',
                         transform: 'translateY(-2px)',
+                        boxShadow: `0 12px 24px ${alpha(selectedColor, 0.5)}`,
                       },
                     }}
                   >
@@ -356,23 +480,20 @@ const WallOfFameSection = () => {
                       ? 'Sending...'
                       : cooldownSeconds > 0
                         ? `Wait ${formatTime(cooldownSeconds)}`
-                        : 'Drop it on the Wall'}
+                        : 'Post to Wall'}
                   </Button>
                   {cooldownSeconds > 0 && (
                     <LinearProgress
                       variant="determinate"
                       value={(cooldownSeconds / initialCooldown) * 100}
                       sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 10,
-                        right: 10,
-                        height: 4,
-                        borderRadius: 2,
-                        bgcolor: 'transparent',
+                        mt: 2,
+                        height: 6,
+                        borderRadius: 3,
+                        bgcolor: alpha(theme.palette.grey[500], 0.2),
                         '& .MuiLinearProgress-bar': {
                           bgcolor: selectedColor,
-                          borderRadius: 2,
+                          borderRadius: 3,
                         },
                       }}
                     />
@@ -385,109 +506,165 @@ const WallOfFameSection = () => {
 
         {loading ? (
           <Stack alignItems="center" py={10}>
-            <CircularProgress thickness={5} size={60} />
+            <CircularProgress
+              thickness={5}
+              size={60}
+              sx={{ color: theme.palette.text.secondary }}
+            />
           </Stack>
         ) : (
           <Box
             sx={{
               columnCount: { xs: 1, sm: 2, md: 3 },
-              columnGap: { xs: 2, md: 3 },
+              columnGap: 3,
             }}
           >
-            {entries.map((entry, idx) => (
-              <Grow in key={entry.id || idx} timeout={idx * 50}>
-                <Paper
-                  sx={{
-                    display: 'inline-block',
-                    width: '100%',
-                    mb: { xs: 2, md: 3 },
-                    p: { xs: 2.5, md: 4 },
-                    pb: 6,
-                    borderRadius: { xs: 4, md: 7 },
-                    position: 'relative',
-                    overflow: 'hidden',
-                    border: `1px solid ${alpha(entry.color || theme.palette.divider, 0.2)}`,
-                    transition: 'transform 0.2s ease-in-out',
-                    '&:hover': {
-                      transform: { md: 'scale(1.02) rotate(1deg)' },
-                      boxShadow: `0 20px 40px ${alpha(entry.color || '#000', 0.15)}`,
-                      '& .debug-id': { opacity: 0.8 },
-                    },
-                  }}
-                >
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    alignItems="center"
-                    sx={{ mb: 2 }}
-                  >
-                    <Avatar
-                      sx={{
-                        bgcolor: entry.color || theme.palette.primary.main,
-                        fontWeight: 800,
-                        width: 40,
-                        height: 40,
-                      }}
-                    >
-                      {entry.name?.[0]?.toUpperCase()}
-                    </Avatar>
-                    <Box sx={{ minWidth: 0 }}>
-                      <Typography variant="subtitle2" fontWeight="800" noWrap>
-                        {entry.name}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {mounted
-                          ? new Date(entry.timestamp).toLocaleString(
-                              undefined,
-                              {
-                                month: 'short',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              },
-                            )
-                          : '...'}
-                      </Typography>
-                    </Box>
-                    <Typography
-                      sx={{
-                        ml: 'auto !important',
-                        fontSize: { xs: '1.2rem', md: '1.5rem' },
-                      }}
-                    >
-                      {entry.emoji}
-                    </Typography>
-                  </Stack>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: 'text.primary',
-                      lineHeight: 1.6,
-                      wordBreak: 'break-word',
-                    }}
-                  >
-                    {entry.message}
-                  </Typography>
+            {entries.map((entry, idx) => {
+              // Determine rotation once based on ID
+              const rotation = getRotation(entry.id || idx.toString());
 
+              return (
+                <Grow in key={entry.id || idx} timeout={idx * 100 + 200}>
                   <Box
-                    className="debug-id"
                     sx={{
-                      position: 'absolute',
-                      bottom: 12,
-                      right: 16,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 0.5,
-                      opacity: 0.3,
-                      transition: 'opacity 0.2s',
-                      pointerEvents: 'none',
-                      userSelect: 'all',
+                      breakInside: 'avoid',
+                      mb: 4,
+                      position: 'relative',
+                      pt: 2, // Space for the pin
                     }}
                   >
+                    {/* The Push Pin */}
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        zIndex: 2,
+                        filter: 'drop-shadow(2px 4px 2px rgba(0,0,0,0.2))',
+                      }}
+                    >
+                      <PushPinIcon
+                        sx={{
+                          color: '#E74C3C',
+                          fontSize: 32,
+                          transform: 'rotate(15deg)',
+                        }}
+                      />
+                    </Box>
+
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        p: 3,
+                        position: 'relative',
+                        borderRadius: 4,
+                        background: alpha(theme.palette.background.paper, 0.7),
+                        backdropFilter: 'blur(10px)',
+                        borderTop: `6px solid ${entry.color}`, // The glowing top border
+                        boxShadow: theme.shadows[3],
+                        transform: `rotate(${rotation}deg)`,
+                        transition:
+                          'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                        overflow: 'hidden',
+                        '&:hover': {
+                          transform: `scale(1.03) rotate(0deg)`,
+                          zIndex: 10,
+                          boxShadow: `0 20px 40px -10px ${alpha(entry.color || '#000', 0.3)}`,
+                          '& .quote-icon': {
+                            transform: 'scale(1.2) rotate(-10deg)',
+                            opacity: 0.15,
+                          },
+                        },
+                      }}
+                    >
+                      {/* Watermark Icon */}
+                      <FormatQuoteIcon
+                        className="quote-icon"
+                        sx={{
+                          position: 'absolute',
+                          bottom: -10,
+                          right: 10,
+                          fontSize: 80,
+                          color: entry.color,
+                          opacity: 0.05,
+                          transform: 'rotate(0deg)',
+                          transition: 'all 0.5s ease',
+                          pointerEvents: 'none',
+                        }}
+                      />
+
+                      {/* Header */}
+                      <Stack
+                        direction="row"
+                        spacing={1.5}
+                        alignItems="flex-start"
+                        sx={{ mb: 2 }}
+                      >
+                        <Avatar
+                          sx={{
+                            bgcolor: alpha(entry.color, 0.15),
+                            color: entry.color,
+                            fontWeight: 900,
+                            width: 44,
+                            height: 44,
+                            border: `2px solid ${alpha(entry.color, 0.3)}`,
+                          }}
+                        >
+                          {entry.name?.[0]?.toUpperCase()}
+                        </Avatar>
+                        <Box sx={{ pt: 0.5 }}>
+                          <Typography
+                            variant="subtitle1"
+                            fontWeight="800"
+                            lineHeight={1.1}
+                          >
+                            {entry.name}
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            fontWeight="600"
+                            color="text.secondary"
+                            sx={{ opacity: 0.7 }}
+                          >
+                            {mounted
+                              ? new Date(entry.timestamp).toLocaleString(
+                                  undefined,
+                                  {
+                                    month: 'short',
+                                    day: 'numeric',
+                                  },
+                                )
+                              : '...'}
+                          </Typography>
+                        </Box>
+                        <Typography
+                          sx={{ fontSize: '2rem', ml: 'auto !important' }}
+                        >
+                          {entry.emoji}
+                        </Typography>
+                      </Stack>
+
+                      {/* Message */}
+                      <Box sx={{ position: 'relative', zIndex: 1 }}>
+                        <Typography
+                          variant="body1"
+                          color="text.primary"
+                          sx={{
+                            lineHeight: 1.6,
+                            fontWeight: 500,
+                            wordBreak: 'break-word',
+                            fontSize: '1.05rem',
+                          }}
+                        >
+                          "{entry.message}"
+                        </Typography>
+                      </Box>
+                    </Paper>
                   </Box>
-                </Paper>
-              </Grow>
-            ))}
+                </Grow>
+              );
+            })}
           </Box>
         )}
       </Container>
