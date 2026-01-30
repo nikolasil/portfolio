@@ -1,8 +1,9 @@
 import Navbar from '@/components/navbar/NavBar';
 import StarDotsBackground from '@/components/StarDotsBackground';
-import WallPopup from '@/components/WallPopup'; // Import here
+import WallPopup from '@/components/WallPopup';
 import { ThemeRegistry } from '@/lib/ThemeProvider';
 import { Fira_Code } from 'next/font/google';
+import HiringModal from '@/components/HiringModal';
 
 const firaCode = Fira_Code({
   subsets: ['latin'],
@@ -26,6 +27,7 @@ export default function RootLayout({
         <ThemeRegistry>
           <Navbar />
           <StarDotsBackground />
+          <HiringModal />
           {children}
           <WallPopup />
         </ThemeRegistry>
