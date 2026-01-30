@@ -100,6 +100,16 @@ const projectsData: ProjectsData = {
     {
       catShort: 'Web',
       cat: 'Web Applications',
+      id: 'algo-pulse',
+      important: true,
+      title: 'Algo Pulse: Diagnostic Pathfinding Engine',
+      desc: 'A high-performance algorithmic visualizer featuring real-time telemetry for Pathfinding (A*, Dijkstra, Greedy) and Tree Traversal logic. Built with TypeScript using asynchronous generators for frame-by-frame execution control and interactive weight-mapping (Mud/Walls).',
+      url: 'https://github.com/nikolasil/algo-pulse',
+      tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Algorithms', 'Frontend'],
+    },
+    {
+      catShort: 'Web',
+      cat: 'Web Applications',
       id: 'web-portfolio',
       important: true,
       title: 'Engineering Portfolio',
