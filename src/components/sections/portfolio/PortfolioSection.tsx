@@ -37,6 +37,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ComputerIcon from '@mui/icons-material/Computer';
 
 export type Project = {
+  catShort: string;
   cat: string;
   id: string;
   title: string;
@@ -54,6 +55,7 @@ export type ProjectsData = {
 const projectsData: ProjectsData = {
   ai_ml: [
     {
+      catShort: 'AI & ML',
       cat: 'Artificial Intelligence & Machine Learning',
       id: 'ai-email-assistant',
       title: 'Async AI Property Assistant',
@@ -63,6 +65,7 @@ const projectsData: ProjectsData = {
       important: true,
     },
     {
+      catShort: 'AI & ML',
       cat: 'Artificial Intelligence & Machine Learning',
       id: 'transformer-qa-bert',
       important: true,
@@ -73,6 +76,7 @@ const projectsData: ProjectsData = {
       context: 'National and Kapodistrian University of Athens',
     },
     {
+      catShort: 'AI & ML',
       cat: 'Artificial Intelligence & Machine Learning',
       id: 'nlp-sentiment-evolution',
       title: 'NLP Evolution: Logistic Regression to LSTMs',
@@ -82,6 +86,7 @@ const projectsData: ProjectsData = {
       context: 'National and Kapodistrian University of Athens',
     },
     {
+      catShort: 'AI & ML',
       cat: 'Artificial Intelligence & Machine Learning',
       id: 'berkeley-pacman-master',
       title: 'Berkeley Pacman AI Suite',
@@ -93,6 +98,7 @@ const projectsData: ProjectsData = {
   ],
   web: [
     {
+      catShort: 'Web',
       cat: 'Web Applications',
       id: 'web-portfolio',
       important: true,
@@ -110,6 +116,7 @@ const projectsData: ProjectsData = {
       ],
     },
     {
+      catShort: 'Web',
       cat: 'Web Applications',
       id: 'iliopoulosrent',
       title: 'Luxury Vacation Rental Platform',
@@ -126,6 +133,7 @@ const projectsData: ProjectsData = {
       ],
     },
     {
+      catShort: 'Web',
       cat: 'Web Applications',
       id: 'bidpoint-auction-platform',
       important: true,
@@ -146,6 +154,7 @@ const projectsData: ProjectsData = {
   ],
   security: [
     {
+      catShort: 'Cybersecurity',
       cat: 'Cybersecurity',
       id: 'sec-eclass-attack',
       important: true,
@@ -158,6 +167,7 @@ const projectsData: ProjectsData = {
   ],
   systems: [
     {
+      catShort: 'Low-Level Systems',
       cat: 'Systems Programming & Operating Systems',
       id: 'parallel-inverted-index',
       important: true,
@@ -168,6 +178,7 @@ const projectsData: ProjectsData = {
       context: 'National and Kapodistrian University of Athens',
     },
     {
+      catShort: 'Low-Level Systems',
       cat: 'Systems Programming & Operating Systems',
       id: 'networked-vaccine-monitor',
       important: true,
@@ -178,6 +189,7 @@ const projectsData: ProjectsData = {
       context: 'National and Kapodistrian University of Athens',
     },
     {
+      catShort: 'Low-Level Systems',
       cat: 'Systems Programming & Operating Systems',
       id: 'db-file-structures',
       title: 'Storage Engine: Heap & Hash Structures',
@@ -187,6 +199,7 @@ const projectsData: ProjectsData = {
       context: 'National and Kapodistrian University of Athens',
     },
     {
+      catShort: 'Low-Level Systems',
       cat: 'Systems Programming & Operating Systems',
       id: 'os-ram-pagination',
       title: 'Virtual Memory & Pagination Simulator',
@@ -196,6 +209,7 @@ const projectsData: ProjectsData = {
       context: 'National and Kapodistrian University of Athens',
     },
     {
+      catShort: 'Low-Level Systems',
       cat: 'Systems Programming & Operating Systems',
       id: 'ipc-shared-mem',
       title: 'IPC: Shared Memory & Semaphores',
@@ -207,6 +221,7 @@ const projectsData: ProjectsData = {
   ],
   compilers: [
     {
+      catShort: 'Compilers',
       cat: 'Compilers & Language Engineering',
       id: 'comp-llvm-gen',
       important: true,
@@ -217,6 +232,7 @@ const projectsData: ProjectsData = {
       context: 'National and Kapodistrian University of Athens',
     },
     {
+      catShort: 'Compilers',
       cat: 'Compilers & Language Engineering',
       id: 'comp-minijava-check',
       title: 'MiniJava Semantic Analyzer',
@@ -228,6 +244,7 @@ const projectsData: ProjectsData = {
   ],
   data_science: [
     {
+      catShort: 'Data Science',
       cat: 'Data Science & Mining',
       id: 'nyc-taxi-duration-predictor',
       title: 'NYC Taxi Geospatial Predictor',
@@ -237,6 +254,7 @@ const projectsData: ProjectsData = {
       context: 'National and Kapodistrian University of Athens',
     },
     {
+      catShort: 'Data Science',
       cat: 'Data Science & Mining',
       id: 'vaccine-sentiment-lda',
       title: 'COVID-19 Vaccine Topic Modeling',
@@ -685,19 +703,32 @@ const PortfolioSection = () => {
             '& .MuiTabs-indicator': { height: 3, borderRadius: '3px 3px 0 0' },
           }}
         >
-          {Object.keys(filteredProjectsData).map((key, index) => (
-            <Tab
-              key={key}
-              label={filteredProjectsData[key][0].cat.split(' & ')[0]}
-              onClick={() => scrollToCategory(key, index)}
-              sx={{
-                fontWeight: 'bold',
-                textTransform: 'none',
-                minWidth: 'auto',
-                px: 2,
-              }}
-            />
-          ))}
+          {Object.keys(projectsData).map((key, index) => {
+            // Get category name safely from the original data source
+            const categoryName = projectsData[key][0].catShort;
+            // Get count from filtered data, default to 0 if category is filtered out
+            const count = filteredProjectsData[key]
+              ? filteredProjectsData[key].length
+              : 0;
+
+            return (
+              <Tab
+                key={key}
+                label={`${categoryName} (${count})`}
+                // Disable tab if there are no results, as there is no section to scroll to
+                disabled={count === 0}
+                onClick={() => {
+                  if (count > 0) scrollToCategory(key, index);
+                }}
+                sx={{
+                  fontWeight: 'bold',
+                  textTransform: 'none',
+                  minWidth: 'auto',
+                  px: 2,
+                }}
+              />
+            );
+          })}
         </Tabs>
       </Box>
 
