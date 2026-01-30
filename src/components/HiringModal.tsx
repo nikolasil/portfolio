@@ -29,16 +29,16 @@ export default function HiringModal() {
     }
   }, []);
 
-  const handleClose = (persist = false) => {
+  const handleClose = (close_foerever = false) => {
     setOpen(false);
-    if (persist) {
+    if (close_foerever) {
       // Prevents the modal from showing up for 7 days
       localStorage.setItem('hiring_modal_dismissed', 'true');
     }
   };
 
   const handleNavigation = () => {
-    handleClose(false);
+    handleClose(true);
     router.push('/contact?form_id=hiring_inquiry');
   };
 
