@@ -12,7 +12,7 @@ import {
   Divider,
 } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import SchoolIcon from '@mui/icons-material/School'; 
+import SchoolIcon from '@mui/icons-material/School';
 
 const educationData = [
   {
@@ -55,11 +55,6 @@ const EducationItem = ({
           borderRadius: 4,
           border: `1px solid ${theme.palette.divider}`,
           transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-          // '&:hover': {
-          //   transform: 'translateY(-4px)',
-          //   boxShadow: theme.shadows[8],
-          //   borderColor: theme.palette.primary.main,
-          // },
         }}
       >
         <Stack
@@ -112,7 +107,6 @@ const EducationItem = ({
           </Typography>
         )}
 
-        {/* Skills/Languages as Chips */}
         {edu.skills && (
           <Box sx={{ mb: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {edu.skills.map((skill) => (
@@ -152,25 +146,38 @@ const EducationSection = () => {
       }}
     >
       <Stack
-        direction="row"
+        direction="column"
         alignItems="center"
         justifyContent="center"
-        spacing={2}
         sx={{ mb: 8 }}
+        spacing={2}
       >
-        <SchoolIcon sx={{ fontSize: '2rem' }} color="primary" />
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <SchoolIcon sx={{ fontSize: '2rem' }} color="primary" />
+          <Typography
+            variant="h3"
+            fontWeight="900"
+            letterSpacing="-0.02em"
+            fontSize="2rem"
+          >
+            Education
+          </Typography>
+        </Stack>
+
+        {/* Added Education Summary */}
         <Typography
-          variant="h3"
-          fontWeight="900"
-          letterSpacing="-0.02em"
-          fontSize="2rem"
+          variant="body1"
+          color="text.secondary"
+          textAlign="center"
+          sx={{ maxWidth: '600px', lineHeight: 1.6 }}
         >
-          Education
+          A solid academic foundation in Computer Science with a focus on
+          software engineering, algorithmic problem solving, and modern web
+          technologies.
         </Typography>
       </Stack>
 
       <Stack spacing={4} position="relative">
-        {/* Vertical Line for Timeline effect (hidden on mobile) */}
         <Box
           sx={{
             display: { xs: 'none', md: 'block' },

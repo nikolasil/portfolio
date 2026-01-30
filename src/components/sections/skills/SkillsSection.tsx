@@ -29,58 +29,82 @@ import ConstructionIcon from '@mui/icons-material/Construction';
 // --- Data Structure ---
 const SKILLS_DATA = [
   {
-    category: 'Distributed Systems',
+    category: 'Distributed Systems & Architecture',
     icon: <SettingsSuggestIcon />,
     items: [
-      'Spring Boot',
+      'Microservices',
       'Apache Kafka',
-      'Redis',
-      'Concurrency',
+      'Event-Driven Design',
       'System Design',
-    ],
-    color: '#61dafb', // Custom color for category branding
-  },
-  {
-    category: 'Backend Engineering',
-    icon: <TerminalIcon />,
-    items: [
-      'Java',
-      'Python (FastAPI)',
-      'Node.js',
-      'RESTful API',
-      'ETL Pipelines',
-    ],
-    color: '#4caf50',
-  },
-  {
-    category: 'Frontend Engineering',
-    icon: <WebIcon />,
-    items: ['React.js', 'Next.js', 'JavaScript', 'TypeScript', 'MUI'],
-    color: '#2196f3',
-  },
-  {
-    category: 'DevOps & Cloud',
-    icon: <CloudQueueIcon />,
-    items: ['Docker', 'CI/CD', 'Grafana', 'Prometheus', 'AWS (EC2, S3)'],
-    color: '#ff9800',
-  },
-  {
-    category: 'Data & Storage',
-    icon: <StorageIcon />,
-    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Elasticsearch'],
-    color: '#9c27b0',
-  },
-  {
-    category: 'Architecture',
-    icon: <IntegrationInstructionsIcon />,
-    items: [
       'High Availability',
       'Fault-tolerance',
-      'Caching',
-      'Load Balancing',
-      'Microservices',
     ],
-    color: '#f44336',
+    color: '#61dafb', // Cyber Blue
+  },
+  {
+    category: 'Core Backend & Integration',
+    icon: <TerminalIcon />,
+    items: [
+      'Java (Spring Boot)',
+      'Python (FastAPI)',
+      'Node.js',
+      'RESTful APIs',
+      'ETL Pipelines',
+      'Concurrency Control',
+    ],
+    color: '#4caf50', // Logic Green
+  },
+  {
+    category: 'Data Engineering & Storage',
+    icon: <StorageIcon />,
+    items: [
+      'PostgreSQL',
+      'Redis (Caching)',
+      'Elasticsearch',
+      'MongoDB',
+      'Distributed Locking',
+      'Data Modeling',
+    ],
+    color: '#9c27b0', // Storage Purple
+  },
+  {
+    category: 'Cloud, DevOps & Observability',
+    icon: <CloudQueueIcon />,
+    items: [
+      'Docker',
+      'CI/CD Pipelines',
+      'AWS (EC2, S3)',
+      'Prometheus & Grafana',
+      'Load Balancing',
+      'Terraform',
+    ],
+    color: '#ff9800', // Warning Orange
+  },
+  {
+    category: 'Frontend & UI Engineering',
+    icon: <WebIcon />,
+    items: [
+      'React.js',
+      'Next.js',
+      'TypeScript',
+      'Material UI (MUI)',
+      'State Management',
+      'Client-side Performance',
+    ],
+    color: '#2196f3', // UI Blue
+  },
+  {
+    category: 'Engineering Practices',
+    icon: <IntegrationInstructionsIcon />,
+    items: [
+      'Agile / Scrum',
+      'Unit & Integration Testing',
+      'Code Refactoring',
+      'API Standardization',
+      'Technical Leadership',
+      'Scalable Design Patterns',
+    ],
+    color: '#f44336', // Management Red
   },
 ];
 
@@ -89,14 +113,12 @@ const SkillsSection = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showScrollTop, setShowScrollTop] = React.useState(false);
 
-  // Handle Scroll logic
   React.useEffect(() => {
     const handleScroll = () => setShowScrollTop(window.scrollY > 400);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Filter Logic: Filter groups if the category OR any item matches the search
   const filteredSkills = useMemo(() => {
     return SKILLS_DATA.filter(
       (group) =>
@@ -111,23 +133,40 @@ const SkillsSection = () => {
 
   return (
     <Box sx={{ py: 4, px: { xs: 2, sm: 4, md: 10 }, minHeight: '100vh' }}>
+      {/* Header with Title and Summary */}
       <Stack
-        direction="row"
+        direction="column"
         alignItems="center"
         justifyContent="center"
         spacing={2}
-        sx={{ mb: 8 }}
+        sx={{ mb: 6 }}
       >
-        <ConstructionIcon sx={{ fontSize: '2rem' }} color="primary" />
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <ConstructionIcon sx={{ fontSize: '2rem' }} color="primary" />
+          <Typography
+            variant="h3"
+            fontWeight="900"
+            letterSpacing="-0.02em"
+            fontSize="2rem"
+          >
+            Skills
+          </Typography>
+        </Stack>
+
         <Typography
-          variant="h3"
-          fontWeight="900"
-          letterSpacing="-0.02em"
-          fontSize="2rem"
+          variant="body1"
+          color="text.secondary"
+          textAlign="center"
+          sx={{ maxWidth: '700px', lineHeight: 1.6 }}
         >
-          Skills
+          Specialized in architecting high-throughput distributed systems and
+          event-driven microservices. My technical focus bridges the gap between
+          robust backend engineering and scalable system design, ensuring
+          performance, observability, and maintainability across the full
+          development lifecycle.
         </Typography>
       </Stack>
+
       <Stack
         direction="row"
         alignItems="center"
@@ -185,7 +224,6 @@ const SkillsSection = () => {
                   },
                 }}
               >
-                {/* Decorative background blob */}
                 <Box
                   sx={{
                     position: 'absolute',
@@ -269,7 +307,6 @@ const SkillsSection = () => {
         ))}
       </Grid>
 
-      {/* Empty State */}
       {filteredSkills.length === 0 && (
         <Stack alignItems="center" sx={{ mt: 10, opacity: 0.5 }}>
           <ConstructionIcon sx={{ fontSize: 60, mb: 2 }} />
@@ -279,7 +316,6 @@ const SkillsSection = () => {
         </Stack>
       )}
 
-      {/* Scroll Top Button */}
       <Zoom in={showScrollTop}>
         <Fab
           onClick={scrollToTop}

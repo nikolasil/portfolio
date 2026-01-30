@@ -14,6 +14,7 @@ import {
 import BusinessIcon from '@mui/icons-material/Business';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkIcon from '@mui/icons-material/Work';
+
 // Simplified types for cleaner logic
 export type Role = {
   title: string;
@@ -24,7 +25,6 @@ export type ExperienceEntry = {
   company: string;
   location: string;
   dateRange: string;
-  // We'll treat all roles as a list to unify the UI
   roles: Role[];
   details: string[];
 };
@@ -75,21 +75,36 @@ const ExperienceSection = () => {
         margin: '0 auto',
       }}
     >
+      {/* Header with Title and Summary */}
       <Stack
-        direction="row"
+        direction="column"
         alignItems="center"
         justifyContent="center"
         spacing={2}
         sx={{ mb: 8 }}
       >
-        <WorkIcon sx={{ fontSize: '2rem' }} color="primary" />
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <WorkIcon sx={{ fontSize: '2rem' }} color="primary" />
+          <Typography
+            variant="h3"
+            fontWeight="900"
+            letterSpacing="-0.02em"
+            fontSize="2rem"
+          >
+            Experience
+          </Typography>
+        </Stack>
+
         <Typography
-          variant="h3"
-          fontWeight="900"
-          letterSpacing="-0.02em"
-          fontSize="2rem"
+          variant="body1"
+          color="text.secondary"
+          textAlign="center"
+          sx={{ maxWidth: '700px', lineHeight: 1.6 }}
         >
-          Experience
+          Senior Software Engineer with extensive experience in architecting
+          distributed systems, migrating monoliths to microservices, and
+          delivering high-performance backend solutions across various
+          industries.
         </Typography>
       </Stack>
 
@@ -155,7 +170,7 @@ const ExperienceSection = () => {
                 </Typography>
               </Stack>
 
-              {/* Roles Timeline (Career Progression) */}
+              {/* Roles Timeline */}
               <Box sx={{ mb: 3, pl: 1 }}>
                 {exp.roles.map((role, rIdx) => (
                   <Box
@@ -166,7 +181,6 @@ const ExperienceSection = () => {
                       pb: rIdx === exp.roles.length - 1 ? 0 : 2,
                     }}
                   >
-                    {/* Vertical line between roles */}
                     {exp.roles.length > 1 && rIdx !== exp.roles.length - 1 && (
                       <Box
                         sx={{
@@ -179,7 +193,6 @@ const ExperienceSection = () => {
                         }}
                       />
                     )}
-                    {/* Dot */}
                     <Box
                       sx={{
                         position: 'absolute',
