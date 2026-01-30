@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, Suspense } from 'react';
 import Image from 'next/image';
 import {
   Box,
@@ -102,10 +102,10 @@ const InfoItem = ({
   );
 };
 
-const ContactSection = () => {
+const Contact = () => {
   const theme = useTheme();
   const searchParams = useSearchParams(); // Hook to read URL params
-  
+
   // --- State ---
   const [form, setForm] = useState({
     name: '',
@@ -204,12 +204,15 @@ const ContactSection = () => {
     }
   };
 
-  const handleTemplateClick = useCallback((text: string) => {
-    setForm((prev) => ({ ...prev, message: text }));
-    if (errors.message) {
-      setErrors((prev) => ({ ...prev, message: '' }));
-    }
-  }, [errors.message]);
+  const handleTemplateClick = useCallback(
+    (text: string) => {
+      setForm((prev) => ({ ...prev, message: text }));
+      if (errors.message) {
+        setErrors((prev) => ({ ...prev, message: '' }));
+      }
+    },
+    [errors.message],
+  );
 
   useEffect(() => {
     const formId = searchParams.get('form_id');
@@ -544,4 +547,15 @@ const ContactSection = () => {
   );
 };
 
-export default ContactSection;
+// This creates the boundary Next.js needs for the build to succeed
+export default function ContactSection() {
+  return (
+    <Suspense fallback={
+      <Box sx={{ p: 4, textAlign: 'center' }}>
+        <CircularProgress />
+      </Box>
+    }>
+      <Contact />
+    </Suspense>
+  );
+}
