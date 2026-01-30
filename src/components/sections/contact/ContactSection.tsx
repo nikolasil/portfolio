@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import {
   Box,
@@ -204,14 +204,14 @@ const ContactSection = () => {
     }
   };
 
-  useEffect(() => {
-    const handleTemplateClick = (text: string) => {
-      setForm((prev) => ({ ...prev, message: text }));
-      if (errors.message) {
-        setErrors((prev) => ({ ...prev, message: '' }));
-      }
-    };
+  const handleTemplateClick = useCallback((text: string) => {
+    setForm((prev) => ({ ...prev, message: text }));
+    if (errors.message) {
+      setErrors((prev) => ({ ...prev, message: '' }));
+    }
+  }, [errors.message]);
 
+  useEffect(() => {
     const formId = searchParams.get('form_id');
     if (formId) {
       const template = QUICK_TEMPLATES.find((t) => t.id === formId);
@@ -220,7 +220,7 @@ const ContactSection = () => {
       }
     }
     // We only want to run this once on mount or when searchParams change
-  }, [errors.message, searchParams]);
+  }, [errors.message, handleTemplateClick, searchParams]);
 
   return (
     <Box
