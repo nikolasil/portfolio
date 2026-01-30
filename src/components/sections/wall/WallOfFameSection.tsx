@@ -72,7 +72,8 @@ const getRotation = (id: string) => {
 const WallOfFameSection = () => {
   const theme = useTheme();
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
-
+  const isFirstRender = useRef(true);
+  
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -125,9 +126,16 @@ const WallOfFameSection = () => {
     fetchEntries();
   }, []);
 
-  // Remove the scroll logic from handleSubmit and use this:
   useEffect(() => {
+    // 1. Check if we have data and are mounted
     if (entries.length > 0 && mounted) {
+      // 2. If it's the first time this effect runs, skip the scroll
+      if (isFirstRender.current) {
+        isFirstRender.current = false;
+        return;
+      }
+
+      // 3. Perform smooth scroll for subsequent updates
       scrollAnchorRef.current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -533,7 +541,7 @@ const WallOfFameSection = () => {
         </Accordion>
 
         <div ref={scrollAnchorRef} />
-        
+
         {loading ? (
           <Stack alignItems="center" py={10}>
             <CircularProgress
