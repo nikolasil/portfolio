@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import {
   Box,
@@ -26,6 +26,7 @@ import {
   Phone,
   AutoAwesome, // For a nice template icon
 } from '@mui/icons-material';
+import { useSearchParams } from 'next/navigation';
 
 // --- Types ---
 type ContactErrors = {
@@ -37,16 +38,24 @@ type ContactErrors = {
 // --- Templates ---
 const QUICK_TEMPLATES = [
   {
+    id: "hiring_inquiry",
     label: 'Hiring Inquiry',
     text: 'Hi Nikolas, I saw your portfolio and would love to discuss a potential role at our company...',
   },
   {
+    id: "project_collaboration",
     label: 'Project Collaboration',
     text: "Hey! I have an interesting project idea and was wondering if you'd be open to collaborating...",
   },
   {
+    id: "say_hello",
     label: 'Saying Hello',
     text: 'Hi Nikolas, just wanted to reach out and connect after seeing your work!',
+  },
+  {
+    id: "bug_report",
+    label: 'Report a Bug',
+    text: 'Hi Nikolas, I think I found a bug! I was on the [Page Name] and noticed that...',
   },
 ];
 
@@ -95,7 +104,8 @@ const InfoItem = ({
 
 const ContactSection = () => {
   const theme = useTheme();
-
+  const searchParams = useSearchParams(); // Hook to read URL params
+  
   // --- State ---
   const [form, setForm] = useState({
     name: '',
@@ -200,6 +210,17 @@ const ContactSection = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const formId = searchParams.get('form_id');
+    if (formId) {
+      const template = QUICK_TEMPLATES.find((t) => t.id === formId);
+      if (template) {
+        handleTemplateClick(template.text);
+      }
+    }
+    // We only want to run this once on mount or when searchParams change
+  }, [handleTemplateClick, searchParams]);
 
   return (
     <Box

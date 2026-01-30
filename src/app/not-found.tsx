@@ -8,7 +8,7 @@ const NotFoundSection = () => {
   return (
     <Box
       sx={{
-        height: 'calc(100dvh - 64px)', // full viewport minus navbar height
+        height: 'calc(100dvh - 64px)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -19,8 +19,16 @@ const NotFoundSection = () => {
     >
       <Typography
         variant="h1"
-        fontWeight="bold"
-        sx={{ fontSize: { xs: 80, sm: 120 } }}
+        sx={{
+          fontWeight: 900,
+          fontSize: { xs: '8rem', md: '12rem' },
+          lineHeight: 1,
+          background: (theme) =>
+            `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          mb: 1,
+        }}
       >
         404
       </Typography>
@@ -38,9 +46,9 @@ const NotFoundSection = () => {
           variant="outlined"
           color="primary"
           component={Link}
-          href="/contact"
+          href="/contact?form_id=bug_report"
         >
-          Contact Me
+          Report bug
         </Button>
       </Stack>
     </Box>

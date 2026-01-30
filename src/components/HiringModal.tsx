@@ -39,7 +39,7 @@ export default function HiringModal() {
 
   const handleNavigation = () => {
     handleClose(false);
-    router.push('/contact');
+    router.push('/contact?form_id=hiring_inquiry');
   };
 
   return (
