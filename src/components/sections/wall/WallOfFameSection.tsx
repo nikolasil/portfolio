@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Typography,
@@ -28,6 +28,7 @@ import TimerIcon from '@mui/icons-material/Timer';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+
 const EMOJIS = [
   '🔥',
   '💻',
@@ -62,15 +63,16 @@ interface Entry {
   ip: string;
 }
 
-// Helper to generate a stable random rotation based on ID
 const getRotation = (id: string) => {
   if (!id) return 0;
   const num = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return (num % 6) - 3; // Returns a number between -3 and 3
+  return (num % 6) - 3;
 };
 
 const WallOfFameSection = () => {
   const theme = useTheme();
+  const scrollAnchorRef = useRef<HTMLDivElement>(null);
+
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -82,6 +84,7 @@ const WallOfFameSection = () => {
   const [accordionExpanded, setAccordionExpanded] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [cooldownSeconds, setCooldownSeconds] = useState<number>(0);
   const [initialCooldown, setInitialCooldown] = useState<number>(0);
 
@@ -122,19 +125,29 @@ const WallOfFameSection = () => {
     fetchEntries();
   }, []);
 
+  // Remove the scroll logic from handleSubmit and use this:
+  useEffect(() => {
+    if (entries.length > 0 && mounted) {
+      scrollAnchorRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  }, [mounted, entries]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !message || cooldownSeconds > 0) return;
     setSubmitting(true);
 
-    const newEntry = {
+    const newEntryStub = {
       name,
       message,
       emoji: selectedEmoji,
       color: selectedColor,
-      timestamp: Date.now(), // Changed to number to match interface
+      timestamp: Date.now(),
       id: `tmp_${Date.now()}`,
-      ip: '127.0.0.1', // Mock IP for client side type satisfaction
+      ip: '127.0.0.1',
     };
 
     try {
@@ -160,10 +173,11 @@ const WallOfFameSection = () => {
       } else if (!res.ok) {
         setErrorMsg(data.error || 'Failed to post message.');
       } else {
-        setEntries((prev) => [data.entry || newEntry, ...prev]);
+        setEntries((prev) => [data.entry || newEntryStub, ...prev]);
         setName('');
         setMessage('');
-        setAccordionExpanded(false)
+        setAccordionExpanded(false);
+        setSuccessMsg('Thank you for adding a post to the wall!');
       }
     } catch {
       setErrorMsg('Connection error. Is the server running?');
@@ -179,7 +193,6 @@ const WallOfFameSection = () => {
         px: { xs: 2, sm: 4, md: 10 },
         minHeight: '100vh',
         position: 'relative',
-        // Subtle dot background pattern
         backgroundImage: `radial-gradient(${alpha(theme.palette.text.primary, 0.1)} 1px, transparent 1px)`,
         backgroundSize: '30px 30px',
       }}
@@ -224,7 +237,6 @@ const WallOfFameSection = () => {
         {/* Accordion Submission Form */}
         <Accordion
           elevation={0}
-          defaultExpanded={false}
           expanded={accordionExpanded}
           onChange={(_, expanded) => setAccordionExpanded(expanded)}
           sx={{
@@ -520,6 +532,8 @@ const WallOfFameSection = () => {
           </AccordionDetails>
         </Accordion>
 
+        <div ref={scrollAnchorRef} />
+        
         {loading ? (
           <Stack alignItems="center" py={10}>
             <CircularProgress
@@ -698,6 +712,23 @@ const WallOfFameSection = () => {
           sx={{ borderRadius: 3, width: '100%' }}
         >
           {errorMsg}
+        </Alert>
+      </Snackbar>
+
+      {/* Success Snackbar (Thank you message) */}
+      <Snackbar
+        open={!!successMsg}
+        autoHideDuration={5000}
+        onClose={() => setSuccessMsg(null)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          severity="success"
+          variant="filled"
+          onClose={() => setSuccessMsg(null)}
+          sx={{ borderRadius: 3, width: '100%', bgcolor: '#1DD1A1' }}
+        >
+          {successMsg}
         </Alert>
       </Snackbar>
     </Box>
