@@ -24,6 +24,7 @@ import {
   Email,
   LocationOn,
   Phone,
+  AutoAwesome, // For a nice template icon
 } from '@mui/icons-material';
 
 // --- Types ---
@@ -32,6 +33,22 @@ type ContactErrors = {
   email: string;
   message: string;
 };
+
+// --- Templates ---
+const QUICK_TEMPLATES = [
+  {
+    label: 'Hiring Inquiry',
+    text: 'Hi Nikolas, I saw your portfolio and would love to discuss a potential role at our company...',
+  },
+  {
+    label: 'Project Collaboration',
+    text: "Hey! I have an interesting project idea and was wondering if you'd be open to collaborating...",
+  },
+  {
+    label: 'Saying Hello',
+    text: 'Hi Nikolas, just wanted to reach out and connect after seeing your work!',
+  },
+];
 
 // --- Sub-components for cleaner JSX ---
 const InfoItem = ({
@@ -130,6 +147,13 @@ const ContactSection = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
     if (errors[name as keyof ContactErrors]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleTemplateClick = (text: string) => {
+    setForm((prev) => ({ ...prev, message: text }));
+    if (errors.message) {
+      setErrors((prev) => ({ ...prev, message: '' }));
     }
   };
 
@@ -382,6 +406,60 @@ const ContactSection = () => {
                     error={!!errors.email}
                     helperText={errors.email}
                   />
+
+                  {/* Pre-filled Templates Section */}
+                  <Box>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      alignItems="center"
+                      sx={{ mb: 1.5 }}
+                    >
+                      <AutoAwesome
+                        sx={{
+                          fontSize: '1rem',
+                          color: theme.palette.primary.main,
+                        }}
+                      />
+                      <Typography
+                        variant="caption"
+                        fontWeight="bold"
+                        color="text.secondary"
+                      >
+                        QUICK TEMPLATES
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      flexWrap="wrap"
+                      useFlexGap
+                    >
+                      {QUICK_TEMPLATES.map((temp) => (
+                        <Button
+                          key={temp.label}
+                          variant="outlined"
+                          size="small"
+                          onClick={() => handleTemplateClick(temp.text)}
+                          sx={{
+                            fontSize: '0.75rem',
+                            textTransform: 'none',
+                            borderRadius: '12px',
+                            borderStyle: 'dashed',
+                            color: 'text.secondary',
+                            borderColor: 'divider',
+                            '&:hover': {
+                              borderColor: theme.palette.primary.main,
+                              bgcolor: alpha(theme.palette.primary.main, 0.05),
+                            },
+                          }}
+                        >
+                          {temp.label}
+                        </Button>
+                      ))}
+                    </Stack>
+                  </Box>
+
                   <TextField
                     fullWidth
                     label="Your Message"
