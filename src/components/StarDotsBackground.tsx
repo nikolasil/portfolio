@@ -179,7 +179,7 @@ const STEP_STARS = 20;
 
 const StarDotsBackground = React.memo(
   ({
-    starCount = 400,
+    starCount = 360,
     maxSpeed = 0.8,
     twinkle = true,
     connectDistance = 160,
