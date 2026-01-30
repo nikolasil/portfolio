@@ -79,6 +79,7 @@ const WallOfFameSection = () => {
   const [selectedEmoji, setSelectedEmoji] = useState('🔥');
   const [selectedColor, setSelectedColor] = useState(COLORS[5]);
   const [mounted, setMounted] = useState(false);
+  const [accordionExpanded, setAccordionExpanded] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [cooldownSeconds, setCooldownSeconds] = useState<number>(0);
@@ -162,6 +163,7 @@ const WallOfFameSection = () => {
         setEntries((prev) => [data.entry || newEntry, ...prev]);
         setName('');
         setMessage('');
+        setAccordionExpanded(false)
       }
     } catch {
       setErrorMsg('Connection error. Is the server running?');
@@ -223,6 +225,8 @@ const WallOfFameSection = () => {
         <Accordion
           elevation={0}
           defaultExpanded={false}
+          expanded={accordionExpanded}
+          onChange={(_, expanded) => setAccordionExpanded(expanded)}
           sx={{
             mb: { xs: 6, md: 8 },
             borderRadius: '24px !important',

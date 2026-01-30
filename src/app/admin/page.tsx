@@ -19,7 +19,6 @@ import {
   Stack,
   CircularProgress,
   Button,
-  Tooltip,
   Grid,
   Dialog,
   DialogTitle,
@@ -27,6 +26,7 @@ import {
   DialogActions,
   DialogContentText,
   Alert,
+  TablePagination,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -35,6 +35,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import SecurityIcon from '@mui/icons-material/Security';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import KeyIcon from '@mui/icons-material/Key';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
 const EMOJIS = [
   '🔥',
@@ -50,15 +52,14 @@ const EMOJIS = [
   '🧠',
   '👾',
 ];
-
 const COLORS = [
-  '#FF4D4D', // Red
-  '#FF9F43', // Orange
-  '#FECA57', // Yellow
-  '#1DD1A1', // Green
-  '#48DBFB', // Light Blue
-  '#5F27CD', // Purple
-  '#F368E0', // Pink
+  '#FF4D4D',
+  '#FF9F43',
+  '#FECA57',
+  '#1DD1A1',
+  '#48DBFB',
+  '#5F27CD',
+  '#F368E0',
 ];
 
 interface WallEntry {
@@ -69,6 +70,7 @@ interface WallEntry {
   color: string;
   ip: string;
   timestamp: number;
+  fileName: string;
 }
 
 interface WallStats {
@@ -87,10 +89,13 @@ export default function AdminWall() {
   const [authError, setAuthError] = useState(false);
   const [loadingAuth, setLoadingAuth] = useState(false);
 
-  // Data State
+  // Data & Pagination State
   const [entries, setEntries] = useState<WallEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<WallStats | null>(null);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
 
   // Edit State
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -99,7 +104,11 @@ export default function AdminWall() {
   const [editEmoji, setEditEmoji] = useState('');
   const [editColor, setEditColor] = useState('');
 
-  const fetchAll = async (specificSecret?: string) => {
+  const fetchAll = async (
+    targetPage: number = page,
+    targetLimit: number = rowsPerPage,
+    specificSecret?: string,
+  ) => {
     const activeSecret = specificSecret || secret;
     if (!activeSecret) return false;
 
@@ -107,9 +116,12 @@ export default function AdminWall() {
     setAuthError(false);
 
     try {
-      const res = await fetch('/api/admin/wall', {
-        headers: { 'x-admin-secret': activeSecret },
-      });
+      const res = await fetch(
+        `/api/admin/wall?page=${targetPage + 1}&limit=${targetLimit}`,
+        {
+          headers: { 'x-admin-secret': activeSecret },
+        },
+      );
 
       if (res.status === 401) {
         setAuthError(true);
@@ -121,6 +133,7 @@ export default function AdminWall() {
         const data = await res.json();
         setEntries(data.entries);
         setStats(data.stats);
+        setTotalCount(data.pagination?.total || data.entries.length);
         setLoading(false);
         return true;
       }
@@ -134,25 +147,37 @@ export default function AdminWall() {
 
   const handleUnlock = async () => {
     setLoadingAuth(true);
-    const success = await fetchAll(tempSecret);
-
+    const success = await fetchAll(0, rowsPerPage, tempSecret);
     if (success) {
       setSecret(tempSecret);
       setOpenAuth(false);
+      setPage(0);
     }
     setLoadingAuth(false);
   };
 
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+    fetchAll(newPage, rowsPerPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newLimit = parseInt(event.target.value, 10);
+    setRowsPerPage(newLimit);
+    setPage(0);
+    fetchAll(0, newLimit);
+  };
+
   const deleteFullFile = async (fileName: string) => {
     if (!confirm(`Permanently delete ${fileName} and ALL its entries?`)) return;
-
     const res = await fetch('/api/admin/wall', {
       method: 'DELETE',
       headers: { 'x-admin-secret': secret, 'Content-Type': 'application/json' },
       body: JSON.stringify({ fileName }),
     });
-
-    if (res.ok) fetchAll();
+    if (res.ok) fetchAll(0, rowsPerPage);
   };
 
   const handleEditInit = (entry: WallEntry) => {
@@ -193,22 +218,19 @@ export default function AdminWall() {
 
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
-      {/* --- AUTH DIALOG --- */}
       <Dialog open={openAuth} disableEscapeKeyDown maxWidth="xs" fullWidth>
         <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <KeyIcon color="primary" /> Admin Verification
         </DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ mb: 2 }}>
-            Please enter the administrator secret key to manage the wall.
+            Enter the administrator secret key.
           </DialogContentText>
-
           {authError && (
             <Alert severity="error" sx={{ mb: 2 }}>
-              Invalid secret key. Access denied.
+              Invalid secret key.
             </Alert>
           )}
-
           <TextField
             autoFocus
             margin="dense"
@@ -242,7 +264,6 @@ export default function AdminWall() {
         </DialogActions>
       </Dialog>
 
-      {/* --- DASHBOARD HEADER --- */}
       <Stack
         direction="row"
         alignItems="center"
@@ -262,14 +283,13 @@ export default function AdminWall() {
             onClick={() => fetchAll()}
             disabled={loading}
           >
-            Refresh Data
+            Refresh
           </Button>
         )}
       </Stack>
 
       {stats && (
         <>
-          {/* --- STATS GRID --- */}
           <Grid container spacing={3} sx={{ mb: 4 }}>
             {[
               {
@@ -317,9 +337,8 @@ export default function AdminWall() {
             ))}
           </Grid>
 
-          {/* --- RAW FILES SECTION --- */}
           <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
-            Data Files on Disk
+            Files on Disk
           </Typography>
           <Grid container spacing={2} sx={{ mb: 6 }}>
             {stats.rawFiles.map((file) => (
@@ -342,88 +361,77 @@ export default function AdminWall() {
                       {file.name}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      Size: {file.size} KB
+                      {file.size} KB
                     </Typography>
                   </Box>
-                  <Tooltip title="Delete Whole File">
-                    <IconButton
-                      color="error"
-                      onClick={() => deleteFullFile(file.name)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
+                  <IconButton
+                    color="error"
+                    onClick={() => deleteFullFile(file.name)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </Paper>
               </Grid>
             ))}
           </Grid>
 
-          {/* --- ENTRIES TABLE --- */}
-          {loading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
-              <CircularProgress />
-            </Box>
-          ) : (
-            <TableContainer
-              component={Paper}
-              sx={{ borderRadius: 4, border: '1px solid divider' }}
-            >
-              <Table>
-                <TableHead sx={{ bgcolor: alpha('#000', 0.05) }}>
+          <TableContainer
+            component={Paper}
+            sx={{
+              borderRadius: '16px 16px 0 0',
+              border: '1px solid divider',
+              borderBottom: 0,
+            }}
+          >
+            <Table>
+              <TableHead sx={{ bgcolor: alpha('#000', 0.05) }}>
+                <TableRow>
+                  <TableCell>User & Style</TableCell>
+                  <TableCell>Message & Theme</TableCell>
+                  <TableCell>Origin & Time</TableCell>
+                  <TableCell align="right">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {loading ? (
                   <TableRow>
-                    <TableCell>User & Style</TableCell>
-                    <TableCell>Message & Theme</TableCell>
-                    <TableCell>IP Address</TableCell>
-                    <TableCell align="right">Actions</TableCell>
+                    <TableCell colSpan={4} align="center" sx={{ py: 10 }}>
+                      <CircularProgress />
+                    </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {entries.map((entry) => (
+                ) : (
+                  entries.map((entry) => (
                     <TableRow key={entry.id} hover>
                       <TableCell sx={{ minWidth: 280, verticalAlign: 'top' }}>
-                        <Stack spacing={2}>
+                        <Stack spacing={1}>
                           {editingId === entry.id ? (
-                            <Stack spacing={1.5}>
-                              <Box>
-                                <Typography
-                                  variant="caption"
-                                  sx={{ mb: 0.5, display: 'block' }}
-                                >
-                                  Choose Emoji:
-                                </Typography>
-                                <Stack
-                                  direction="row"
-                                  spacing={1}
-                                  flexWrap="wrap"
-                                  useFlexGap
-                                >
-                                  {EMOJIS.map((e) => (
-                                    <Box
-                                      key={e}
-                                      onClick={() => setEditEmoji(e)}
-                                      sx={{
-                                        cursor: 'pointer',
-                                        p: 0.5,
-                                        borderRadius: 1,
-                                        border: '2px solid',
-                                        borderColor:
-                                          editEmoji === e
-                                            ? 'primary.main'
-                                            : 'transparent',
-                                        bgcolor:
-                                          editEmoji === e
-                                            ? alpha('#000', 0.05)
-                                            : 'transparent',
-                                        fontSize: '1.2rem',
-                                      }}
-                                    >
-                                      {e}
-                                    </Box>
-                                  ))}
-                                </Stack>
-                              </Box>
+                            <Stack spacing={1}>
+                              <Stack
+                                direction="row"
+                                spacing={0.5}
+                                flexWrap="wrap"
+                              >
+                                {EMOJIS.map((e) => (
+                                  <Box
+                                    key={e}
+                                    onClick={() => setEditEmoji(e)}
+                                    sx={{
+                                      cursor: 'pointer',
+                                      fontSize: '1.2rem',
+                                      p: 0.5,
+                                      border: '2px solid',
+                                      borderColor:
+                                        editEmoji === e
+                                          ? 'primary.main'
+                                          : 'transparent',
+                                      borderRadius: 1,
+                                    }}
+                                  >
+                                    {e}
+                                  </Box>
+                                ))}
+                              </Stack>
                               <TextField
-                                label="Display Name"
                                 size="small"
                                 fullWidth
                                 value={editName}
@@ -456,22 +464,11 @@ export default function AdminWall() {
                               </Typography>
                             </Stack>
                           )}
-                          <Typography
-                            variant="caption"
-                            sx={{
-                              fontFamily: 'monospace',
-                              opacity: 0.4,
-                              fontSize: '10px',
-                            }}
-                          >
-                            ID: {entry.id}
-                          </Typography>
                         </Stack>
                       </TableCell>
-
                       <TableCell sx={{ verticalAlign: 'top' }}>
                         {editingId === entry.id ? (
-                          <Stack spacing={2}>
+                          <Stack spacing={1}>
                             <TextField
                               fullWidth
                               multiline
@@ -480,37 +477,25 @@ export default function AdminWall() {
                               value={editMessage}
                               onChange={(e) => setEditMessage(e.target.value)}
                             />
-                            <Box>
-                              <Typography
-                                variant="caption"
-                                sx={{ mb: 0.5, display: 'block' }}
-                              >
-                                Theme Color:
-                              </Typography>
-                              <Stack direction="row" spacing={1}>
-                                {COLORS.map((c) => (
-                                  <Tooltip key={c} title={c}>
-                                    <Box
-                                      onClick={() => setEditColor(c)}
-                                      sx={{
-                                        width: 24,
-                                        height: 24,
-                                        borderRadius: '50%',
-                                        bgcolor: c,
-                                        cursor: 'pointer',
-                                        border: '2px solid',
-                                        borderColor:
-                                          editColor === c
-                                            ? '#000'
-                                            : 'transparent',
-                                        boxShadow: editColor === c ? 2 : 0,
-                                        '&:hover': { transform: 'scale(1.1)' },
-                                      }}
-                                    />
-                                  </Tooltip>
-                                ))}
-                              </Stack>
-                            </Box>
+                            <Stack direction="row" spacing={1}>
+                              {COLORS.map((c) => (
+                                <Box
+                                  key={c}
+                                  onClick={() => setEditColor(c)}
+                                  sx={{
+                                    width: 20,
+                                    height: 20,
+                                    borderRadius: '50%',
+                                    bgcolor: c,
+                                    cursor: 'pointer',
+                                    border:
+                                      editColor === c
+                                        ? '2px solid #000'
+                                        : 'none',
+                                  }}
+                                />
+                              ))}
+                            </Stack>
                           </Stack>
                         ) : (
                           <Typography
@@ -521,63 +506,87 @@ export default function AdminWall() {
                           </Typography>
                         )}
                       </TableCell>
-
                       <TableCell sx={{ verticalAlign: 'top' }}>
-                        <Chip
-                          label={entry.ip}
-                          size="small"
-                          variant="outlined"
-                          sx={{ fontFamily: 'monospace' }}
-                        />
-                      </TableCell>
-
-                      <TableCell align="right" sx={{ verticalAlign: 'top' }}>
-                        <Stack
-                          direction="row"
-                          spacing={0.5}
-                          justifyContent="flex-end"
-                        >
-                          {editingId === entry.id ? (
-                            <>
-                              <IconButton
-                                color="success"
-                                onClick={() => handleSave(entry.id)}
-                                size="small"
-                              >
-                                <SaveIcon />
-                              </IconButton>
-                              <IconButton
-                                onClick={() => setEditingId(null)}
-                                size="small"
-                              >
-                                <CloseIcon />
-                              </IconButton>
-                            </>
-                          ) : (
-                            <>
-                              <IconButton
-                                onClick={() => handleEditInit(entry)}
-                                size="small"
-                              >
-                                <EditIcon fontSize="small" />
-                              </IconButton>
-                              <IconButton
-                                color="error"
-                                onClick={() => handleDelete(entry.id)}
-                                size="small"
-                              >
-                                <DeleteIcon fontSize="small" />
-                              </IconButton>
-                            </>
-                          )}
+                        <Stack spacing={1} alignItems="flex-start">
+                          <Chip
+                            label={entry.ip}
+                            size="small"
+                            variant="outlined"
+                            sx={{ fontWeight: 'bold' }}
+                          />
+                          <Stack
+                            direction="row"
+                            spacing={0.5}
+                            alignItems="center"
+                            sx={{ color: 'text.secondary' }}
+                          >
+                            <AccessTimeIcon sx={{ fontSize: 14 }} />
+                            <Typography
+                              variant="caption"
+                              sx={{ whiteSpace: 'nowrap' }}
+                            >
+                              {new Date(entry.timestamp).toLocaleString()}
+                            </Typography>
+                          </Stack>
+                          <Stack
+                            direction="row"
+                            spacing={0.5}
+                            alignItems="center"
+                            sx={{ color: 'primary.main', opacity: 0.8 }}
+                          >
+                            <FolderOpenIcon sx={{ fontSize: 14 }} />
+                            <Typography
+                              variant="caption"
+                              sx={{ fontFamily: 'monospace' }}
+                            >
+                              {entry.fileName}
+                            </Typography>
+                          </Stack>
                         </Stack>
                       </TableCell>
+                      <TableCell align="right" sx={{ verticalAlign: 'top' }}>
+                        {editingId === entry.id ? (
+                          <>
+                            <IconButton
+                              color="success"
+                              onClick={() => handleSave(entry.id)}
+                            >
+                              <SaveIcon />
+                            </IconButton>
+                            <IconButton onClick={() => setEditingId(null)}>
+                              <CloseIcon />
+                            </IconButton>
+                          </>
+                        ) : (
+                          <>
+                            <IconButton onClick={() => handleEditInit(entry)}>
+                              <EditIcon fontSize="small" />
+                            </IconButton>
+                            <IconButton
+                              color="error"
+                              onClick={() => handleDelete(entry.id)}
+                            >
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                          </>
+                        )}
+                      </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            component={Paper}
+            sx={{ borderRadius: '0 0 16px 16px', border: '1px solid divider' }}
+            rowsPerPageOptions={[5, 10, 25, 50]}
+            count={totalCount}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </>
       )}
     </Container>

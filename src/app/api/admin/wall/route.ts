@@ -10,10 +10,12 @@ interface WallEntry {
   color: string;
   ip: string;
   timestamp: number;
+  fileName: string;
 }
+
 const DATA_DIR = path.join(process.cwd(), 'data');
 const FILE_PREFIX = 'wall_';
-const ADMIN_SECRET = process.env.ADMIN_SECRET || 'abc';
+const ADMIN_SECRET = process.env.ADMIN_SECRET;
 
 async function getAllFilePaths() {
   try {
@@ -31,32 +33,47 @@ export async function GET(req: Request) {
   if (auth !== ADMIN_SECRET)
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
+  // Get Pagination Params
+  const { searchParams } = new URL(req.url);
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '50');
+  const skip = (page - 1) * limit;
+
   const paths = await getAllFilePaths();
   const all: WallEntry[] = [];
-  const rawFiles: { name: string; size: string }[] = []; // Track file details
+  const rawFiles: { name: string; size: string }[] = [];
   let totalSizeBytes = 0;
 
   for (const p of paths) {
     const content = await fs.readFile(p, 'utf8');
     const stats = await fs.stat(p);
+    const fileName = path.basename(p);
 
-    // Add to total size calculation
     totalSizeBytes += stats.size;
 
-    // Push file metadata for the UI
     rawFiles.push({
-      name: path.basename(p),
+      name: fileName,
       size: (stats.size / 1024).toFixed(2), // KB
     });
 
     try {
-      all.push(...JSON.parse(content));
+      const parsed = JSON.parse(content) as WallEntry[];
+      // Map the filename to each entry within this specific file
+      const entriesWithFileName = parsed.map((entry) => ({
+        ...entry,
+        fileName: fileName,
+      }));
+      all.push(...entriesWithFileName);
     } catch (e) {
       console.error(`Error parsing file ${p}:`, e);
     }
   }
 
+  // Sort full list first to ensure pagination is consistent
   const sortedEntries = all.sort((a, b) => b.timestamp - a.timestamp);
+
+  // Slice for current page
+  const paginatedEntries = sortedEntries.slice(skip, skip + limit);
 
   const statistics = {
     totalEntries: all.length,
@@ -70,12 +87,18 @@ export async function GET(req: Request) {
           )
         : 0,
     uniqueIPs: new Set(all.map((e) => e.ip)).size,
-    rawFiles: rawFiles, // Include the file list here
+    rawFiles: rawFiles,
   };
 
   return NextResponse.json({
-    entries: sortedEntries,
+    entries: paginatedEntries,
     stats: statistics,
+    pagination: {
+      total: all.length,
+      page,
+      limit,
+      totalPages: Math.ceil(all.length / limit),
+    },
   });
 }
 
@@ -86,7 +109,6 @@ export async function DELETE(req: Request) {
 
   const { id, fileName } = await req.json().catch(() => ({}));
 
-  // OPTION A: Delete an entire file
   if (fileName) {
     try {
       const filePath = path.join(DATA_DIR, fileName);
@@ -97,7 +119,6 @@ export async function DELETE(req: Request) {
     }
   }
 
-  // OPTION B: Delete a single ID (Existing logic)
   if (id) {
     const paths = await getAllFilePaths();
     for (const p of paths) {
@@ -139,12 +160,13 @@ export async function PATCH(req: Request) {
     const index = entries.findIndex((e) => e.id === id);
 
     if (index !== -1) {
-      // Update all provided fields
       if (name !== undefined) entries[index].name = name;
       if (message !== undefined) entries[index].message = message;
       if (emoji !== undefined) entries[index].emoji = emoji;
       if (color !== undefined) entries[index].color = color;
 
+      // Note: We don't save the fileName back into the JSON file
+      // as it's metadata derived from the filesystem itself.
       await fs.writeFile(p, JSON.stringify(entries, null, 2));
       updated = true;
       break;
