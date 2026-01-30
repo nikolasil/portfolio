@@ -28,8 +28,20 @@ import TimerIcon from '@mui/icons-material/Timer';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
-
-const EMOJIS = ['🔥', '💻', '🎨', '✨', '🤘', '🚀', '🍕', '❤️'];
+const EMOJIS = [
+  '🔥',
+  '💻',
+  '🎨',
+  '✨',
+  '🤘',
+  '🚀',
+  '🍕',
+  '❤️',
+  '💡',
+  '⚡',
+  '🧠',
+  '👾',
+];
 const COLORS = [
   '#FF4D4D', // Red
   '#FF9F43', // Orange
