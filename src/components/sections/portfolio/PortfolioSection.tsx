@@ -35,6 +35,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ComputerIcon from '@mui/icons-material/Computer';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export type Project = {
   catShort: string;
@@ -42,10 +43,11 @@ export type Project = {
   id: string;
   title: string;
   desc: string;
-  url: string;
+  githubUrl: string;
   tags: string[];
   important?: boolean;
   context?: string;
+  liveUrl?: string;
 };
 
 export type ProjectsData = {
@@ -60,7 +62,8 @@ const projectsData: ProjectsData = {
       id: 'ai-email-assistant',
       title: 'Async AI Property Assistant',
       desc: 'An industrial-grade backend service using Python Asyncio and OpenAI to automate property management. Features a concurrent workflow engine that parses tenant requests, classifies intent, and generates structured action tickets.',
-      url: 'https://github.com/nikolasil/property-management-assistant-ai',
+      githubUrl:
+        'https://github.com/nikolasil/property-management-assistant-ai',
       tags: ['Python', 'AI', 'LLMs', 'System Design'],
       important: true,
     },
@@ -71,7 +74,7 @@ const projectsData: ProjectsData = {
       important: true,
       title: 'Question Answering with Transformer Architectures',
       desc: 'Fine-tuned BERT and DistilBERT models for Extractive Question Answering. Performed cross-dataset validation between SQuAD 2.0 and TriviaQA, optimizing sequence lengths and memory management for Tesla P100 GPUs.',
-      url: 'https://github.com/nikolasil/transformer-qa-bert-squad',
+      githubUrl: 'https://github.com/nikolasil/transformer-qa-bert-squad',
       tags: ['Python', 'AI', 'Deep Learning', 'PyTorch', 'NLP'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -81,7 +84,8 @@ const projectsData: ProjectsData = {
       id: 'nlp-sentiment-evolution',
       title: 'NLP Evolution: Logistic Regression to LSTMs',
       desc: 'An end-to-end comparative study of sentiment classification. Progressed from classical ML (TF-IDF, Softmax) to Deep Learning (PyTorch FFNN) and Sequential Modeling (LSTM/GRU).',
-      url: 'https://github.com/nikolasil?tab=repositories&q=nlp-sentiment-analysis',
+      githubUrl:
+        'https://github.com/nikolasil?tab=repositories&q=nlp-sentiment-analysis',
       tags: ['Python', 'AI', 'Deep Learning', 'PyTorch', 'NLP'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -91,7 +95,8 @@ const projectsData: ProjectsData = {
       id: 'berkeley-pacman-master',
       title: 'Berkeley Pacman AI Suite',
       desc: 'Implementation of core AI foundations including Algorithmic Search (DFS, BFS, A*), Heuristic Design, and Adversarial Search (Minimax, Alpha-Beta Pruning, Expectimax).',
-      url: 'https://github.com/nikolasil?tab=repositories&q=Berkeley-Pacman',
+      githubUrl:
+        'https://github.com/nikolasil?tab=repositories&q=Berkeley-Pacman',
       tags: ['Python', 'AI', 'Algorithms'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -104,7 +109,8 @@ const projectsData: ProjectsData = {
       important: true,
       title: 'Algo Pulse: Diagnostic Pathfinding Engine',
       desc: 'A high-performance algorithmic visualizer featuring real-time telemetry for Pathfinding (A*, Dijkstra, Greedy) and Tree Traversal logic. Built with TypeScript using asynchronous generators for frame-by-frame execution control and interactive weight-mapping (Mud/Walls).',
-      url: 'https://github.com/nikolasil/algo-pulse',
+      githubUrl: 'https://github.com/nikolasil/algo-pulse',
+      liveUrl: 'https://algo-pulse-peach.vercel.app/',
       tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Algorithms', 'Frontend'],
     },
     {
@@ -114,7 +120,7 @@ const projectsData: ProjectsData = {
       important: true,
       title: 'Engineering Portfolio',
       desc: 'A modern, responsive web portfolio built with Next.js and MUI to showcase complex software engineering projects.',
-      url: 'https://github.com/nikolasil/portfolio',
+      githubUrl: 'https://github.com/nikolasil/portfolio',
       tags: [
         'Web',
         'React',
@@ -131,7 +137,7 @@ const projectsData: ProjectsData = {
       id: 'iliopoulosrent',
       title: 'Luxury Vacation Rental Platform',
       desc: 'High-performance Next.js web platform with SSR and advanced image optimization. Focused on SEO and conversion to reduce third-party booking dependency.',
-      url: 'https://github.com/nikolasil/iliopoulosrent',
+      githubUrl: 'https://github.com/nikolasil/iliopoulosrent',
       tags: [
         'Web',
         'React',
@@ -149,7 +155,7 @@ const projectsData: ProjectsData = {
       important: true,
       title: 'BidPoint Auction Platform',
       desc: 'BidPoint is a full-stack auction web platform that enables real-time bidding, item management, and personalized user experiences. Built with a focus on scalability and security, it leverages Spring Boot for a robust backend and React.js for a dynamic, responsive frontend.',
-      url: 'https://github.com/nikolasil/bidpoint-auction-platform',
+      githubUrl: 'https://github.com/nikolasil/bidpoint-auction-platform',
       tags: [
         'Web',
         'React',
@@ -170,7 +176,7 @@ const projectsData: ProjectsData = {
       important: true,
       title: 'Defensive Patching & Pentesting',
       desc: 'Security audit of Open eClass CMS. Implemented defenses against OWASP Top 10 and conducted penetration tests for SQLi, XSS, and CSRF.',
-      url: 'https://github.com/nikolasil/security-1-openeclass',
+      githubUrl: 'https://github.com/nikolasil/security-1-openeclass',
       tags: ['Web', 'Security', 'Systems', 'Docker'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -183,7 +189,7 @@ const projectsData: ProjectsData = {
       important: true,
       title: 'Parallel Inverted Search Engine',
       desc: 'A high-performance C++ search engine using a custom thread-pool and job scheduler. Implements BK-Trees for fuzzy matching and lock-free Inverted Hash Tables for near-linear scalability.',
-      url: 'https://github.com/nikolasil/InvertedSearchEngine',
+      githubUrl: 'https://github.com/nikolasil/InvertedSearchEngine',
       tags: ['C++', 'Systems', 'Concurrency', 'Algorithms'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -194,7 +200,7 @@ const projectsData: ProjectsData = {
       important: true,
       title: 'Networked TCP Monitor System',
       desc: 'A high-concurrency distributed system over TCP/IP. Implements a thread-pooled server with a synchronized Cyclic Buffer (Producer-Consumer) for real-time parallel data ingestion.',
-      url: 'https://github.com/nikolasil/vaccineMonitor_3',
+      githubUrl: 'https://github.com/nikolasil/vaccineMonitor_3',
       tags: ['C++', 'Systems', 'Networking', 'Concurrency'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -204,7 +210,8 @@ const projectsData: ProjectsData = {
       id: 'db-file-structures',
       title: 'Storage Engine: Heap & Hash Structures',
       desc: 'A low-level storage engine implementation in C. Developed custom Block-level management for Heap files and Primary/Secondary Hash Tables with overflow handling.',
-      url: 'https://github.com/nikolasil/FileStructure-BlockHeapHashFiles-SecondaryIndex',
+      githubUrl:
+        'https://github.com/nikolasil/FileStructure-BlockHeapHashFiles-SecondaryIndex',
       tags: ['C', 'Systems', 'Data Structures'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -214,7 +221,8 @@ const projectsData: ProjectsData = {
       id: 'os-ram-pagination',
       title: 'Virtual Memory & Pagination Simulator',
       desc: 'Architectural simulation of an MMU. Implements Hashed Page Tables and evaluates LRU vs. Second Chance (Clock) algorithms using real-world memory traces.',
-      url: 'https://github.com/nikolasil/HashedPagedTable-LRU-SecondChange',
+      githubUrl:
+        'https://github.com/nikolasil/HashedPagedTable-LRU-SecondChange',
       tags: ['C', 'Systems', 'Algorithms'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -224,7 +232,8 @@ const projectsData: ProjectsData = {
       id: 'ipc-shared-mem',
       title: 'IPC: Shared Memory & Semaphores',
       desc: 'Multi-process system utilizing POSIX Shared Memory and Semaphores. Features custom packet framing with checksums and thread-managed non-blocking UI.',
-      url: 'https://github.com/nikolasil/ipc-shared-memory-synchronization',
+      githubUrl:
+        'https://github.com/nikolasil/ipc-shared-memory-synchronization',
       tags: ['C', 'Systems', 'Concurrency'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -237,7 +246,7 @@ const projectsData: ProjectsData = {
       important: true,
       title: 'MiniJava to LLVM IR Compiler',
       desc: 'Full compiler backend for MiniJava. Implements Virtual Tables (VTables) for dynamic dispatch, heap allocation, and automated LLVM IR generation.',
-      url: 'https://github.com/nikolasil/compiler-llvm-generator',
+      githubUrl: 'https://github.com/nikolasil/compiler-llvm-generator',
       tags: ['Java', 'Compilers', 'Language Design'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -247,7 +256,7 @@ const projectsData: ProjectsData = {
       id: 'comp-minijava-check',
       title: 'MiniJava Semantic Analyzer',
       desc: 'Multi-pass static analysis tool. Implements a Symbol Table to handle class inheritance, method overriding, and nested scopes for type safety.',
-      url: 'https://github.com/nikolasil/compiler-minijava-check',
+      githubUrl: 'https://github.com/nikolasil/compiler-minijava-check',
       tags: ['Java', 'Compilers', 'Language Design'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -259,7 +268,7 @@ const projectsData: ProjectsData = {
       id: 'nyc-taxi-duration-predictor',
       title: 'NYC Taxi Geospatial Predictor',
       desc: 'End-to-end spatial-temporal regression. Uses Random Forest and K-Means to predict trip durations via geospatial outlier filtering and Manhattan distance calculations.',
-      url: 'https://github.com/nikolasil/nyc-taxi-duration-predictor',
+      githubUrl: 'https://github.com/nikolasil/nyc-taxi-duration-predictor',
       tags: ['Python', 'Data Science', 'Algorithms'],
       context: 'National and Kapodistrian University of Athens',
     },
@@ -269,13 +278,13 @@ const projectsData: ProjectsData = {
       id: 'vaccine-sentiment-lda',
       title: 'COVID-19 Vaccine Topic Modeling',
       desc: 'Large-scale discourse analysis using LDA to extract hidden discussion topics, optimized via Coherence Score analysis and time-series sentiment tracking.',
-      url: 'https://github.com/nikolasil/vaccine-sentiment-lda-mining',
+      githubUrl: 'https://github.com/nikolasil/vaccine-sentiment-lda-mining',
       tags: ['Python', 'Data Science', 'NLP'],
       context: 'National and Kapodistrian University of Athens',
     },
   ],
 };
-// Scroll-to-top component
+
 function ScrollTop() {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
@@ -333,7 +342,7 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
           mb={2}
         >
           <Box>
-            <Stack direction="row" spacing={1} mb={1}>
+            <Stack direction="row" spacing={1} mb={1} alignItems="center">
               {proj.important && (
                 <Chip
                   icon={<StarIcon sx={{ fontSize: '12px !important' }} />}
@@ -381,9 +390,30 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
               </Typography>
             )}
           </Box>
-          {proj.url?.includes('github') && (
-            <GitHubIcon sx={{ color: 'text.disabled', fontSize: 20, ml: 1 }} />
-          )}
+          <Stack direction="row" spacing={1} alignItems="center">
+            {proj.liveUrl && (
+              <Tooltip title="Live Preview Available">
+                <Box
+                  sx={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    bgcolor: '#4caf50',
+                    boxShadow: `0 0 0 0 ${alpha('#4caf50', 0.7)}`,
+                    animation: 'pulse 2s infinite',
+                    '@keyframes pulse': {
+                      '0%': { boxShadow: `0 0 0 0 ${alpha('#4caf50', 0.7)}` },
+                      '70%': { boxShadow: `0 0 0 6px ${alpha('#4caf50', 0)}` },
+                      '100%': { boxShadow: `0 0 0 0 ${alpha('#4caf50', 0)}` },
+                    },
+                  }}
+                />
+              </Tooltip>
+            )}
+            {proj.githubUrl?.includes('github') && (
+              <GitHubIcon sx={{ color: 'text.disabled', fontSize: 20 }} />
+            )}
+          </Stack>
         </Stack>
 
         <Typography
@@ -418,22 +448,51 @@ const ProjectCard = ({ proj, index }: { proj: Project; index: number }) => {
             ))}
           </Stack>
 
-          <Button
-            fullWidth
-            href={proj.url}
-            target="_blank"
-            variant="contained"
-            disableElevation
-            endIcon={<LaunchIcon sx={{ fontSize: 16 }} />}
-            sx={{
-              borderRadius: 2,
-              textTransform: 'none',
-              fontWeight: 'bold',
-              py: 1,
-            }}
-          >
-            View Source
-          </Button>
+          <Stack direction="row" spacing={1.5}>
+            <Button
+              fullWidth
+              href={proj.githubUrl}
+              target="_blank"
+              variant="outlined"
+              size="small"
+              startIcon={<GitHubIcon sx={{ fontSize: 16 }} />}
+              sx={{
+                borderRadius: 2,
+                textTransform: 'none',
+                fontWeight: 'bold',
+                py: 1,
+                borderColor: alpha(theme.palette.divider, 0.8),
+                color: 'text.primary',
+                '&:hover': {
+                  borderColor: theme.palette.primary.main,
+                  bgcolor: alpha(theme.palette.primary.main, 0.02),
+                },
+              }}
+            >
+              Source
+            </Button>
+            {proj.liveUrl && (
+              <Button
+                fullWidth
+                href={proj.liveUrl}
+                target="_blank"
+                variant="contained"
+                size="small"
+                disableElevation
+                startIcon={<VisibilityIcon sx={{ fontSize: 16 }} />}
+                endIcon={<LaunchIcon sx={{ fontSize: 14 }} />}
+                sx={{
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 'bold',
+                  py: 1,
+                  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                }}
+              >
+                Live Demo
+              </Button>
+            )}
+          </Stack>
         </Box>
       </Paper>
     </Grow>
@@ -459,7 +518,7 @@ const PortfolioSection = () => {
   const filteredProjectsData = useMemo(() => {
     const filtered: ProjectsData = {};
     const query = searchQuery.toLowerCase();
-    if (query.length == 1) return projectsData; // Skip filtering for very short queries
+    if (query.length == 1) return projectsData;
 
     Object.entries(projectsData).forEach(([key, projects]) => {
       const matches = projects.filter((proj) => {
@@ -482,7 +541,7 @@ const PortfolioSection = () => {
     setActiveCategory(index);
     const element = document.getElementById(id);
     if (element) {
-      const offset = 140; // Adjusted for mobile sticky header height
+      const offset = 140;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       window.scrollTo({
@@ -714,9 +773,7 @@ const PortfolioSection = () => {
           }}
         >
           {Object.keys(projectsData).map((key, index) => {
-            // Get category name safely from the original data source
             const categoryName = projectsData[key][0].catShort;
-            // Get count from filtered data, default to 0 if category is filtered out
             const count = filteredProjectsData[key]
               ? filteredProjectsData[key].length
               : 0;
@@ -725,7 +782,6 @@ const PortfolioSection = () => {
               <Tab
                 key={key}
                 label={`${categoryName} (${count})`}
-                // Disable tab if there are no results, as there is no section to scroll to
                 disabled={count === 0}
                 onClick={() => {
                   if (count > 0) scrollToCategory(key, index);
