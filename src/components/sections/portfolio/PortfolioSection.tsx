@@ -59,6 +59,16 @@ const projectsData: ProjectsData = {
     {
       catShort: 'AI & ML',
       cat: 'Artificial Intelligence & Machine Learning',
+      id: 'chronicle-mcp',
+      title: 'ChronicleMCP: Local Context Server',
+      desc: 'A privacy-centric Model Context Protocol (MCP) server that enables AI agents to securely query local browser history. Implements a "Shadow Copy" database engine to bypass SQLite file locks, providing agents with verifiable real-world context without cloud data exposure.',
+      githubUrl: 'https://github.com/nikolasil/chronicle-mcp',
+      tags: ['Python', 'AI', 'MCP', 'SQLite', 'Security'],
+      important: true,
+    },
+    {
+      catShort: 'AI & ML',
+      cat: 'Artificial Intelligence & Machine Learning',
       id: 'ai-email-assistant',
       title: 'Async AI Property Assistant',
       desc: 'An industrial-grade backend service using Python Asyncio and OpenAI to automate property management. Features a concurrent workflow engine that parses tenant requests, classifies intent, and generates structured action tickets.',
